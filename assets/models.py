@@ -1,6 +1,9 @@
 from django.db import models
 from settings import UPLOAD_PATH, PRIVACY
 from django.contrib.auth.models import User
+import tagging
+from tagging.models import Tag
+from tagging.fields import TagField
 
 from reflections.models import Reflection
 
@@ -30,6 +33,7 @@ class Asset(models.Model):
     filetype = models.ManyToManyField(FileType, blank=True, null=True)
     reflection = models.ManyToManyField(Reflection, blank=True, null=True)
     custom_meta_data = models.ManyToManyField(CustomMetaData, blank=True, null=True)
+    tags = TagField()
     
     def __unicode__(self):
         return self.name
