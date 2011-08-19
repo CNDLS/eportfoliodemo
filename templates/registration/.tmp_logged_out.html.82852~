@@ -1,0 +1,33 @@
+<html>
+<head>{% spaceless %}
+{% if request.mobile %}<meta name="viewport" content="width=320; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"/>{% endif %}
+{% endspaceless %}
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/default.css" />
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}admin/css/forms.css" />
+<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
+{% spaceless %}{% if request.mobile %}<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/iphone.css" />{% endif %}
+{% block head %}{% endblock %}
+{% endspaceless %}
+</head>
+<body>
+	<div id="wrap">
+	<div id="header" class="clearfix">
+	<a href="{{ request.META.SCRIPT_NAME }}/"><img src="{{ MEDIA_URL }}img/cndls.png" /></a>
+	</div>
+	
+	<div id="title">
+	<p id="breadcrumb"></p>
+	<h1>Administrative Database</h1>
+	</div>
+
+	<div id="content">
+	<div id="login">
+	<p>You are now logged out.</p>
+	<p><a href="{{ request.META.SCRIPT_NAME }}/">Log in again?</a></p>
+	</div>
+	</div>
+	
+	<div id="footer"></div>
+	</div>
+</body>	
+</html>	
