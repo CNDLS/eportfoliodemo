@@ -2,4 +2,4 @@
 .project
 *.pyc
 */*.pyc
-settings.py
+/settings.py
