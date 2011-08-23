@@ -49,27 +49,13 @@ class RequireLoginMiddleware(object):
     def process_request(self, request):
         s = request.path
         
-        m = re.search('/feeds/people/(.*)/', s)
+        m = re.search('/\//', s)
         if m is None:
-            #Not a match
-            user_feeds = False
+            public_pages = False
         else:
-            #Match
-            user_feeds = True
-
-        m = re.search('/setup/(.*)/', s)
-        if m is None:
-            inquiry = False
-        else:
-            inquiry = True
-
-        m = re.search('/api/(.*)/', s)
-        if m is None:
-            api_call = False
-        else:
-            api_call = True
-            
-        if request.path != self.require_login_path and request.path != self.feed_path and request.path != self.inquiry_feed_path and user_feeds != True and inquiry != True and api_call != True and request.user.is_anonymous():
+            public_pages = True            
+                
+        if request.path != self.require_login_path and request.path != self.feed_path and request.path != self.inquiry_feed_path and public_pages != True and request.user.is_anonymous():
             if request.POST:
                 return login(request)
             else:
