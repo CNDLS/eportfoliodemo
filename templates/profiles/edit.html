@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}My Profile{% endblock %}
+
+{% block navbar %}
+<h2>Nav</h2>
+<ul>
+  <li><a href="/profiles/">View My Profile</a></li>
+  <li><a href="/accounts/logout">Logout</a></li>
+</ul>
+{% endblock %}
+
+{% block content %}
+<h2>Contents</h2>
+<table>
+{{ user_profile_form.as_table }}
+</table>
+<input type="submit" value="Submit" />
+{% endblock %}

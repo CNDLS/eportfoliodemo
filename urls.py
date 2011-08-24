@@ -10,6 +10,7 @@ urlpatterns = patterns('',
     # (r'^eportfoliodemo/', include('eportfoliodemo.foo.urls')),
 
     (r'^$', direct_to_template, { 'template': 'index.html' }),
+    (r'^profiles/', include('eportfoliodemo.profiles.urls')),
     (r'^library/', include('eportfoliodemo.library.urls')),
     (r'^admin/doc/', include('django.contrib.admindocs.urls')),
     (r'^admin/', include(admin.site.urls)),
