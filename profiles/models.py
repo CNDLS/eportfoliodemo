@@ -18,6 +18,10 @@ class UserProfile(models.Model):
         return self.user.username + "'s Profile"
         
 
+class UserForm(ModelForm):
+    class Meta:
+        model = User
+        
 class UserProfileForm(ModelForm):
     class Meta:
         model = UserProfile
