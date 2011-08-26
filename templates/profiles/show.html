@@ -3,7 +3,7 @@
 {% block title %}My Profile{% endblock %}
 
 {% block navbar %}
-<h2>Nav</h2>
+
 <ul>
   <li><a href="/profiles/edit/">Edit My Profile</a></li>
   <li><a href="/accounts/logout">Logout</a></li>
@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block content %}
-<h2>Contents</h2>
+
 <ul>
     {% for field, value in user.fields.items %}
         <li><b>{{ field }}:</b> {{ value }}</li>

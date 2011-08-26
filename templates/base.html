@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="style.css" />
-    <title>{% block title %}EPort{% endblock %}</title>
+    <title>{% block title %}EPortfolio Tool{% endblock %}</title>
 </head>
 
 <body>
     <div id="navbar">
+      <h2>Nav</h2>
         {% block navbar %}
-        <h2>Nav</h2>
         <ul>
           <li><a href="/profiles/">My Profile</a></li>
           <li><a href="/accounts/logout">Logout</a></li>
@@ -17,6 +17,7 @@
     </div>
 
     <div id="content">
+      <h2>Contents</h2>
         {% block content %}{% endblock %}
     </div>
 </body>
