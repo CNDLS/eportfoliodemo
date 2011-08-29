@@ -1,20 +1,22 @@
 {% extends "base.html" %}
 
-{% block title %}My Profile{% endblock %}
+{% block title %}Edit User Profile{% endblock %}
 
 {% block navbar %}
 
 <ul>
-  <li><a href="/profiles/">View My Profile</a></li>
+  <li><a href="/profiles/{{ user.id }}">View This Profile</a></li>
   <li><a href="/accounts/logout">Logout</a></li>
 </ul>
 {% endblock %}
 
 {% block content %}
 
-<table>
-{{ user_form.as_table }}
-{{ user_profile_form.as_table }}
-</table>
-<input type="submit" value="Submit" />
+<form action="/profiles/{{ user.id }}/update/" method="POST">{% csrf_token %}
+    <table>
+        {{ user_form.as_table }}
+        {{ user_profile_form.as_table }}
+    </table>
+    <input type="submit" value="Submit" />
+</from>
 {% endblock %}

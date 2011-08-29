@@ -25,13 +25,13 @@ def index(request):
         user_profiles = UserProfile.objects.all()
         return render_to_response('profiles/index.html', { 'user_profiles': user_profiles, 'current_user': current_user }, context_instance=RequestContext(request))
     else:
-        return redirect('profiles/show/' + str(request.user.id))
+        return redirect('profiles/' + str(request.user.id))
 
 
 # show user profile for a designated user (cf. permissions)
 def show(request, user_id):
     requested_user = User.objects.get(pk=user_id)
-    logger.debug(requested_user)
+
     try:
         user_profile, created = UserProfile.objects.get_or_create(user=requested_user)
     except:
@@ -50,19 +50,29 @@ def show(request, user_id):
     
 def edit(request, user_id):
     requested_user = User.objects.get(pk=user_id)
-    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
-        
+    
     try:
+        user_profile, created = UserProfile.objects.get_or_create(user=requested_user)
+    except:
+        user_profile = UserProfile(user=requested_user)
+        user_profile.save()
+        
+    finally:
         user_form = UserForm(instance=requested_user)
         user_profile_form = UserProfileForm(instance=user_profile)
     
-        if user_form.is_valid() and user_profile_form.is_valid():
-            user_profile = user_profile_form.save()
+        return render_to_response('profiles/edit.html', { 'user_profile_form': user_profile_form, 'user_form': user_form }, context_instance=RequestContext(request))
         
-            return render_to_response('profiles/edit.html', { 'user_profile_form': user_profile_form, 'user_form': user_form }, context_instance=RequestContext(request))
-        
-        else:
-            raise Exception("Invalid Form")
-        
-    except:
-        return HttpResponse('Oops. Error.\n' + str(sys.exc_info()))
+
+
+# requires request.method == "POST"
+def update(request, user_id):
+    # user_form = UserForm(request.POST, instance=User())
+    user_profile_form = UserProfileForm(request.POST, instance=UserProfile())
+    # if 
+    # user_form.is_valid() 
+    user_profile_form.is_valid()
+    # user = user_form.save()
+    user_profile = user_profile_form.save()
+    return redirect('profiles/' + str(user_profile.user_id))
+    

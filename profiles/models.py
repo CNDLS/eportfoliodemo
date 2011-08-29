@@ -21,7 +21,9 @@ class UserProfile(models.Model):
 class UserForm(ModelForm):
     class Meta:
         model = User
+        exclude = ('password',)
         
 class UserProfileForm(ModelForm):
     class Meta:
         model = UserProfile
+        exclude = ('user',)

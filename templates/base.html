@@ -5,12 +5,18 @@
     <title>{% block title %}EPortfolio Tool{% endblock %}</title>
 </head>
 
-<body>
+<body><div id="wrap">
+
+    <div id="title">
+    <p id="breadcrumb"></p>
+    <h1>ePortfolio</h1>
+    </div>
+    
     <div id="navbar">
       <h2>Nav</h2>
         {% block navbar %}
         <ul>
-          <li><a href="/profiles/">My Profile</a></li>
+          <li><a href="/profiles/{{ request.user.id }}">My Profile</a></li>
           <li><a href="/accounts/logout">Logout</a></li>
         </ul>
         {% endblock %}
@@ -20,5 +26,8 @@
       <h2>Contents</h2>
         {% block content %}{% endblock %}
     </div>
+    
+    <div id="footer"></div>
+	</div>
 </body>
 </html>
