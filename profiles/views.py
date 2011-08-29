@@ -67,12 +67,23 @@ def edit(request, user_id):
 
 # requires request.method == "POST"
 def update(request, user_id):
-    # user_form = UserForm(request.POST, instance=User())
-    user_profile_form = UserProfileForm(request.POST, instance=UserProfile())
-    # if 
-    # user_form.is_valid() 
-    user_profile_form.is_valid()
-    # user = user_form.save()
-    user_profile = user_profile_form.save()
-    return redirect('profiles/' + str(user_profile.user_id))
+    # make user_profile from post
+    user_profile = UserProfile.objects.get(user=user_id)
+    for field_name in user_profile._meta.get_all_field_names():
+        # don't need primary key, user, or many-to-many associations
+        if (field_name != 'id') and (field_name != 'user') and (field_name[0] != "_"):
+            setattr(user_profile, field_name, request.POST[field_name])
+    user_profile_form = UserProfileForm(instance=user_profile)
+    
+    # hoy, pronto! make user from post, too.
+    user = User.objects.get(pk=user_id)
+    for field_name in ['username','first_name','last_name','email']:
+        setattr(user, field_name, request.POST[field_name])
+    user_form = UserForm(instance=user)
+    
+    # if user_profile_form.is_valid() and user_form.is_valid():
+    user_profile.save()
+    user.save()
+        
+    return redirect('/profiles/' + str(user_profile.user_id))
     
