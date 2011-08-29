@@ -5,9 +5,9 @@ import tagging
 from tagging.models import Tag
 from tagging.fields import TagField
 
-from settings import PRIVACY
-from assets.models import Asset
-from reflections.models import Reflection
+from eportfoliodemo.settings import PRIVACY
+from eportfoliodemo.assets.models import Asset
+from eportfoliodemo.reflections.models import Reflection
 
 class Collection(models.Model):
     name = models.CharField(max_length=255, blank=True)

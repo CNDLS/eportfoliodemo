@@ -2,8 +2,8 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin as RealUserAdmin
 
-from library.models import LibraryState
-from profiles.models import UserProfile
+from eportfoliodemo.library.models import LibraryState
+from eportfoliodemo.profiles.models import UserProfile
 
 class UserProfileInline(admin.StackedInline):
     model = UserProfile

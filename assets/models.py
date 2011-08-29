@@ -5,7 +5,7 @@ import tagging
 from tagging.models import Tag
 from tagging.fields import TagField
 
-from reflections.models import Reflection
+from eportfoliodemo.reflections.models import Reflection
 
 class FileType(models.Model):
     name = models.CharField(max_length=100)

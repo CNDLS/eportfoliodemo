@@ -1,4 +1,4 @@
 from django.contrib import admin
-from usercollections.models import Collection
+from eportfoliodemo.usercollections.models import Collection
 
 admin.site.register(Collection)

@@ -1,7 +1,7 @@
 from django.db import models
 
-from usercollections.models import Collection
-from folders.models import Folder
+from eportfoliodemo.usercollections.models import Collection
+from eportfoliodemo.folders.models import Folder
 
 
 class LibraryState(models.Model):

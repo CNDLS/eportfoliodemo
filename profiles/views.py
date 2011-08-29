@@ -7,7 +7,7 @@ from django.forms.models import model_to_dict
 from django.http import HttpResponse
 
 from django.contrib.auth.models import User
-from profiles.models import UserForm, UserProfile, UserProfileForm
+from eportfoliodemo.profiles.models import UserForm, UserProfile, UserProfileForm
 
 
 import logging

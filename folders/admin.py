@@ -1,4 +1,4 @@
 from django.contrib import admin
-from folders.models import Folder
+from eportfoliodemo.folders.models import Folder
 
 admin.site.register(Folder)

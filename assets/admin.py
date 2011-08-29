@@ -1,5 +1,5 @@
 from django.contrib import admin
-from assets.models import CustomMetaData, Asset, FileType
+from eportfoliodemo.assets.models import CustomMetaData, Asset, FileType
 
 admin.site.register(FileType)
 admin.site.register(CustomMetaData)
