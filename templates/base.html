@@ -16,8 +16,8 @@
       <h2>Nav</h2>
         {% block navbar %}
         <ul>
-          <li><a href="/profiles/{{ request.user.id }}">My Profile</a></li>
-          <li><a href="/accounts/logout">Logout</a></li>
+          <li><a href="profiles/{{ request.user.id }}">My Profile</a></li>
+          <li><a href="accounts/logout">Logout</a></li>
         </ul>
         {% endblock %}
     </div>
