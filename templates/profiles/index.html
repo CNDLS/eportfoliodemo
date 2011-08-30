@@ -4,7 +4,7 @@
 
 <ul>
     {% for user_profile in user_profiles %}
-        <li><a href="/profiles/{{ user_profile.id }}">{{ user_profile }}</a></li>
+        <li><a href="{{ request.META.SCRIPT_NAME }}/profiles/{{ user_profile.id }}">{{ user_profile }}</a></li>
     {% endfor %}
 </ul>
 {% endblock %}

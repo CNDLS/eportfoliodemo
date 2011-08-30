@@ -5,8 +5,8 @@
 {% block navbar %}
 
 <ul>
-  <li><a href="/profiles/{{ user.id }}/edit">Edit This Profile</a></li>
-  <li><a href="/accounts/logout">Logout</a></li>
+  <li><a href="{{ request.META.SCRIPT_NAME }}/profiles/{{ user.id }}/edit">Edit This Profile</a></li>
+  <li><a href="{{ request.META.SCRIPT_NAME }}/accounts/logout">Logout</a></li>
 </ul>
 {% endblock %}
 

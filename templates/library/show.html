@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% load mptt_tags %}
+
+{% block title %}
+    {{ requested_user.first_name }} {{ requested_user.last_name }}'s Library
+{% endblock %}
+
+
+{% block content %}
+<h3>Folders</h3>
+<ul class="root">
+    {% recursetree folders %}
+        <li>
+            {{ folder.name }}
+            {% if not folder.is_leaf_node %}
+                <ul class="children">
+                    {{ children }}
+                </ul>
+            {% endif %}
+        </li>
+    {% endrecursetree %}
+</ul>
+{% if requested_user == current_user %}
+    <a href="{{ request.META.SCRIPT_NAME }}/folders/new">+ Add Folder</a></li>
+{% endif %}
+
+<hr />
+<h3>Collections</h3>
+<ul>
+    {% for collection in collections %}
+        <li><a href="#">{{ collection }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}

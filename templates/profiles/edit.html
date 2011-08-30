@@ -5,14 +5,14 @@
 {% block navbar %}
 
 <ul>
-  <li><a href="/profiles/{{ user.id }}">View This Profile</a></li>
-  <li><a href="/accounts/logout">Logout</a></li>
+  <li><a href="{{ request.META.SCRIPT_NAME }}/profiles/{{ user.id }}">View This Profile</a></li>
+  <li><a href="{{ request.META.SCRIPT_NAME }}/accounts/logout">Logout</a></li>
 </ul>
 {% endblock %}
 
 {% block content %}
 
-<form action="/profiles/{{ user.id }}/update/" method="POST">{% csrf_token %}
+<form action="{{ request.META.SCRIPT_NAME }}/profiles/{{ user.id }}/update/" method="POST">{% csrf_token %}
     <table>
         {{ user_form.as_table }}
         {{ user_profile_form.as_table }}

@@ -42,7 +42,7 @@ class RequireLoginMiddleware(object):
     """
     def __init__(self):
        #self.require_login_path = getattr(settings, 'REQUIRE_LOGIN_PATH', '/accounts/login/') 
-        self.require_login_path = '/eportfoliodemo/accounts/login/'
+        self.require_login_path = '/accounts/login/'
         self.feed_path = '/feeds/latest/'
         self.inquiry_feed_path = '/feeds/inquiries/'
 

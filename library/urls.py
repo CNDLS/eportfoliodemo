@@ -1,5 +1,5 @@
 from django.conf.urls.defaults import *
 
 urlpatterns = patterns('',
-    (r'^$', 'library.views.index'),
+    (r'^(?P<user_id>\d+)$', 'library.views.show')
 )

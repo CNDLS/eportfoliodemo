@@ -1,6 +1,4 @@
 # Create your views here.
-import sys
-
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.forms.models import model_to_dict

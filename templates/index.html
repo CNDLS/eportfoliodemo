@@ -3,8 +3,8 @@
 {% block content %}
 
 <ul>
-  <li><a href="/library">Collect</a></li>
-  <li><a href="/library">Organize</a></li>
+  <li><a href="{{ request.META.SCRIPT_NAME }}/library">Collect</a></li>
+  <li><a href="{{ request.META.SCRIPT_NAME }}/library">Organize</a></li>
   <li><a href="#">Present</a></li>
   <li><a href="#">Assess</a></li>
 </ul>
