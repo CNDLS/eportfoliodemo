@@ -1,7 +1,5 @@
 {% extends "base.html" %}
 
-{% load mptt_tags %}
-
 {% block custom_scripts %}
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.core.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.core.js"></script>
@@ -64,18 +62,7 @@
 {% block content %}
 <h3>Folders</h3>
 <div id="folder_tree">
-    <ul class="tree root">
-        {% recursetree nodes %}
-            <li>
-                {{ node.name }}
-                {% if not node.is_leaf_node %}
-                    <ul class="children">
-                        {{ children }}
-                    </ul>
-                {% endif %}
-            </li>
-        {% endrecursetree %}
-    </ul>
+    {% include "folders/index.html" %}
 </div>    
 {% if requested_user == current_user %}
     <a href="{{ request.META.SCRIPT_NAME }}/folders/new">+ Add Folder</a></li>
