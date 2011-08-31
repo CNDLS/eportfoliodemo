@@ -6,7 +6,7 @@
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.core.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.core.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.themes.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.json.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.html.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.ui.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.types.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.dnd.js"></script>
@@ -18,7 +18,7 @@
         	$("#folder_tree")
         		// call `.jstree` with the options object
         		.jstree({
-        			"plugins" : ["themes","json_data","ui","types","dnd"],
+        			"plugins" : ["themes","html_data","ui","types","dnd"],
         			"themes" : {
         			            "url" : "{{ MEDIA_URL }}js/jstree/themes/apple/style.css",
                                 "theme" : "apple",
