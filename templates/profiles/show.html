@@ -2,14 +2,6 @@
 
 {% block title %}My Profile{% endblock %}
 
-{% block navbar %}
-
-<ul>
-  <li><a href="{{ request.META.SCRIPT_NAME }}/profiles/{{ user.id }}/edit">Edit This Profile</a></li>
-  <li><a href="{{ request.META.SCRIPT_NAME }}/accounts/logout">Logout</a></li>
-</ul>
-{% endblock %}
-
 {% block content %}
 
 <ul>
@@ -22,4 +14,7 @@
         <li><b>{{ field }}:</b> {{ value }}</li>
     {% endfor %}
 </ul>
+
+<a href="{{ request.META.SCRIPT_NAME }}/profiles/{{ user.id }}/edit">Edit This Profile</a>
+
 {% endblock %}

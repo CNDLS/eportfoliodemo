@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/default.css" />
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
+    {% block custom_scripts %}EPortfolio Tool{% endblock %}
+    
     <title>{% block title %}EPortfolio Tool{% endblock %}</title>
 </head>
 
@@ -19,7 +22,7 @@
           <li><a href="{{ request.META.SCRIPT_NAME }}">Home</a></li>
               <li><a href="{{ request.META.SCRIPT_NAME }}/library/{{ request.user.id }}">My Library</a></li>
           <li><a href="{{ request.META.SCRIPT_NAME }}/profiles/{{ request.user.id }}">My Profile</a></li>
-          <li><a href="{{ request.META.SCRIPT_NAME }}/accounts/logout">Logout</a></li>
+          <li>		{% if not request.user.is_anonymous %}{% if not request.mobile %}You're logged in as {% endif %}<a href="{{ request.user.get_absolute_url }}"><strong>{{ request.user.first_name }} {{ request.user.last_name }}</strong></a> (<a href="{{ request.META.SCRIPT_NAME }}/accounts/logout/">sign out?</a>){% endif %} 	</li>
         </ul>
         {% endblock %}
     </div>

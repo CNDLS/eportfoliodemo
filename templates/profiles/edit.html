@@ -1,15 +1,6 @@
 {% extends "base.html" %}
 
 {% block title %}Edit User Profile{% endblock %}
-
-{% block navbar %}
-
-<ul>
-  <li><a href="{{ request.META.SCRIPT_NAME }}/profiles/{{ user.id }}">View This Profile</a></li>
-  <li><a href="{{ request.META.SCRIPT_NAME }}/accounts/logout">Logout</a></li>
-</ul>
-{% endblock %}
-
 {% block content %}
 
 <form action="{{ request.META.SCRIPT_NAME }}/profiles/{{ user.id }}/update/" method="POST">{% csrf_token %}

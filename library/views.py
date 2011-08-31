@@ -11,17 +11,13 @@ from eportfoliodemo.usercollections.models import Collection
 
 
 def show(request, user_id):
-    current_user = User.objects.get(pk=request.user.id)
     requested_user = User.objects.get(pk=user_id)
+    current_user = User.objects.get(pk=request.user.id)
     
     # library_state allows us to return from presentation editing to the library as we left it.
     library_state, created = LibraryState.objects.get_or_create(owner=requested_user)
     
-    try:
-        folders = Folder.objects.get(owner=requested_user)
-        child_folders = Folder.tree.add_related_count(folders.get_children())
-    except:
-        folders = []
+    folders_in_tree = Folder.tree.get_query_set().filter(owner=requested_user)
         
     try:
         collections = Collection.objects.get(owner=requested_user)
@@ -31,7 +27,7 @@ def show(request, user_id):
     return render_to_response('library/show.html', \
                     { 'requested_user': requested_user, \
                       'current_user': current_user, \
-                      'folders': folders, \
+                      'nodes': folders_in_tree, \
                       'collections': collections, \
                     },\
                     context_instance=RequestContext(request))

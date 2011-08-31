@@ -15,13 +15,13 @@ from django.forms import ModelForm, ModelChoiceField, HiddenInput
 
 
 class Folder(MPTTModel):
-    name = models.CharField(max_length=255, blank=True)
+    name = models.CharField(max_length=50, unique=True)
     description = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
     privacy = models.CharField(max_length=1, choices=PRIVACY, blank=False, default='1')
     parent = models.ForeignKey('self', null=True, blank=True)
-    owner = models.ForeignKey(User, unique=True)
+    owner = models.ForeignKey(User, blank=False)
     assets = models.ManyToManyField(Asset, blank=True, null=True)
     tags = TagField()
     
