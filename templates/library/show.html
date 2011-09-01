@@ -40,6 +40,28 @@
 
 
 {% block content %}
+
+{% if current_assets %}
+	<h3>Items</h3>
+	<p>Your assets</p>
+	<ul>
+	{% for asset in current_assets %}
+		<li>{{ asset.file }}</li>
+	{% endfor %}
+	</ul>
+{% endif %}  
+
+<div id="fileupload">
+	<h3>Upload a file!</h3>
+	Add an item using the form below:
+	<form action="{{ request.META.SCRIPT_NAME }}/library/{{request.user.id}}" method="post" enctype="multipart/form-data">{% csrf_token %}
+	<p>
+		{{ form.file }}
+	</p>
+	<input type="submit" value="Upload File" />
+	</form>
+<div>	
+
 <h3>Folders</h3>
 <div id="folder_tree">
     {% include "folders/index.html" %}
