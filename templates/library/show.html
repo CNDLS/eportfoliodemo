@@ -13,43 +13,23 @@
         $(function () {
         	// TO CREATE AN INSTANCE
         	// select the tree container using jQuery
-        	$("#folder_tree")
-        		// call `.jstree` with the options object
-        		.jstree({
-        			"plugins" : ["themes","html_data","ui","types","dnd"],
-        			"themes" : {
-        			            "url" : "{{ MEDIA_URL }}js/jstree/themes/apple/style.css",
-                                "theme" : "apple",
-                                "dots" : false,
-                                "icons" : true
-                                },
-        			"json_data" : { 
-            			// This tree is ajax enabled - as this is most common, and maybe a bit more complex
-            			// All the options are almost the same as jQuery's AJAX (read the docs)
-            			"ajax" : {
-            				// the URL to fetch the data
-            				"url" : "folders/",
-            				// the `data` function is executed in the instance's scope
-            				// the parameter is the node being loaded 
-            				// (may be -1, 0, or undefined when loading the root nodes)
-            				"data" : function (n) { 
-            					// the result is fed to the AJAX request `data` option
-            					return { 
-            						"operation" : "get_children", 
-            						"id" : n.attr ? n.attr("id").replace("node_","") : 1 
-            					}; 
-            				}
-            			}
-            		},
-        			"core" : {}
-        		})
-        		// EVENTS
-        		// each instance triggers its own events - to process those listen on the container
-        		// all events are in the `.jstree` namespace
-        		// so listen for `function_name`.`jstree` - you can function names from the docs
-                // .bind("loaded.jstree", function (event, data) {
-                //  // you get two params - event & data - check the core docs for a detailed description
-                // });
+        	$("#folder_tree").jstree({
+    			"plugins" : ["themes","html_data","ui","types","dnd"],
+    			"themes" : {
+    			            "url" : "{{ MEDIA_URL }}js/jstree/themes/apple/style.css",
+                            "theme" : "apple",
+                            "dots" : false,
+                            "icons" : true
+                            },
+    			"html_data" : {
+        			"ajax" : {
+        				// the URL to fetch the data
+        				"url" : function(node_to_be_opened){
+        				    alert("node to be opened is " + node_to_be_opened);
+        				}
+        			}
+        		}
+    		})
         });
     </script>
 {% endblock %}
