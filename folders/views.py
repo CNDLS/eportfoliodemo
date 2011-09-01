@@ -4,7 +4,8 @@ from django.template.loader import render_to_string
 from django.utils import simplejson
 from django.template import RequestContext
 from django.contrib.auth.models import User
-from eportfoliodemo.folders.models import Folder, FolderForm
+from eportfoliodemo.folders.models import Folder
+from eportfoliodemo.folders.forms import FolderForm
 
 from eportfoliodemo.snippets.template import render_block_to_string
 

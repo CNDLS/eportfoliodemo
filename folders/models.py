@@ -9,9 +9,7 @@ from eportfoliodemo.settings import PRIVACY
 from eportfoliodemo.assets.models import Asset
 from eportfoliodemo.reflections.models import Reflection
 
-from mptt.models import MPTTModel #, TreeForeignKey (wait for v 0.5)
-
-from django.forms import ModelForm, ModelChoiceField, HiddenInput
+from eportfoliodemo.mptt.models import MPTTModel #, TreeForeignKey (wait for v 0.5)
 
 
 class Folder(MPTTModel):
@@ -34,11 +32,3 @@ class Folder(MPTTModel):
         order_insertion_by=['name']
         
 
-class FolderForm(ModelForm):
-    owner = ModelChoiceField(label="",
-                                      queryset=Folder.objects.all(),
-                                      widget=HiddenInput())
-    
-    class Meta:
-        model = Folder
-        exclude = ('assets',)
