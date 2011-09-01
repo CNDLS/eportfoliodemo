@@ -1,24 +1,16 @@
-{% extends "base.html" %}
-
 {% load mptt_tags %}
 
-
-{% block content %}
-    <div id="folder_tree">
-        <ul class="tree root">
-            {% recursetree nodes %}
-                <li>
-                    {{ node.name }}
-                    {% if not node.is_leaf_node %}
-                        <ul class="children">
-                            {{ children }}
-                        </ul>
-                    {% endif %}
-                </li>
-            {% endrecursetree %}
-        </ul>
-    </div>    
-    {% if requested_user == current_user %}
-        <a href="{{ request.META.SCRIPT_NAME }}/folders/new">+ Add Folder</a></li>
-    {% endif %}
-{% endblock %}
+<div id="folder_tree">
+    <ul class="tree root">
+        {% recursetree nodes %}
+            <li>
+                {{ node.name }}
+                {% if not node.is_leaf_node %}
+                    <ul class="children">
+                        {{ children }}
+                    </ul>
+                {% endif %}
+            </li>
+        {% endrecursetree %}
+    </ul>
+</div>
