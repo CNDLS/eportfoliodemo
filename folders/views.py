@@ -19,9 +19,6 @@ def show(request, user_id):
     # will use this with jsTree jQuery plugin to manipulate folder relationships
     folders_in_tree = Folder.tree.get_query_set().filter(owner=requested_user)
     return render_block_to_string('library/show', 'folder_tree', { 'nodes': folders_in_tree }, context_instance=RequestContext)
-    
-    # return render_to_string('folders/tree.json', { 'tree': folders_in_tree }) #  , context_instance=RequestContext)
-    # return render_to_response('folders/index.html', { 'nodes': folders_in_tree }, context_instance=RequestContext(request))
 
 
 def new(request):
