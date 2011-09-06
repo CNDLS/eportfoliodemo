@@ -44,9 +44,16 @@
 {% if current_assets %}
 	<h3>Items</h3>
 	<p>Your assets</p>
+	<p>Name, filetype, modified, size</p>
 	<ul>
 	{% for asset in current_assets %}
-		<li>{{ asset.file }}</li>
+		<li>{{ asset.name }}, 
+		{% for type in asset.filetype.all %}
+			{{ type.name }},
+		{% endfor %}
+		{{ asset.modified|timesince }} ago,
+		{{ asset.file.size|filesizeformat }}
+		</li>
 	{% endfor %}
 	</ul>
 {% endif %}  

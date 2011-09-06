@@ -9,8 +9,9 @@ from eportfoliodemo.library.models import LibraryState
 from eportfoliodemo.folders.models import Folder
 from eportfoliodemo.usercollections.models import Collection
 from eportfoliodemo.assets.forms import FileUploadForm
-from eportfoliodemo.assets.models import Asset
+from eportfoliodemo.assets.models import Asset, FileType
 
+from eportfoliodemo.settings import MEDIA_ROOT
 
 
 def show(request, user_id):
@@ -31,10 +32,15 @@ def show(request, user_id):
     
     form = FileUploadForm()
     if request.POST:
+        file_type = request.FILES['file'].content_type.split('/')[1]
         asset = Asset()
         asset.author = request.user
+        asset.name = str.replace(str(request.FILES['file']), MEDIA_ROOT, '')
+        asset_type, created = FileType.objects.get_or_create(name=file_type)
         asset.file = request.FILES['file']
+        
         asset.save()
+        asset.filetype.add(asset_type)
         
     return render_to_response('library/show.html', \
                     { 'requested_user': requested_user, \
@@ -44,14 +50,3 @@ def show(request, user_id):
                       'form': form, 'current_assets': current_assets \
                     },\
                     context_instance=RequestContext(request))
-
-def index(request):
-    current_assets = Asset.objects.filter(author = request.user)
-    
-    form = FileUploadForm()
-    if request.POST:
-        asset = Asset()
-        asset.author = request.user
-        asset.file = request.FILES['file']
-        asset.save()
-    return render_to_response('library/index.html', {'form': form, 'current_assets': current_assets}, context_instance=RequestContext(request))
