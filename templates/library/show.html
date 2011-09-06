@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block custom_scripts %}
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.core.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.core.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.themes.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.html.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.ui.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.types.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.dnd.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/vakata.js"></script>
+    <script type="text/javascript">
+        $(function () {
+        	// TO CREATE AN INSTANCE
+        	// select the tree container using jQuery
+        	$("#folder_tree").jstree({
+    			"plugins" : ["themes","html_data","ui","types","dnd"],
+    			"themes" : {
+    			            "url" : "{{ MEDIA_URL }}js/jstree/themes/apple/style.css",
+                            "theme" : "apple",
+                            "dots" : false,
+                            "icons" : true
+                            },
+    			"html_data" : {
+        			"ajax" : {
+        				// the URL to fetch the data
+        				"url" : function(node_to_be_opened){
+        				    alert("node to be opened is " + node_to_be_opened);
+        				}
+        			}
+        		}
+    		})
+        });
+    </script>
+{% endblock %}
+
+{% block title %}
+    {{ requested_user.first_name }} {{ requested_user.last_name }}'s Library
+{% endblock %}
+
+
+{% block content %}
+
+{% if current_assets %}
+	<h3>Items</h3>
+	<p>Your assets</p>
+	<ul>
+	{% for asset in current_assets %}
+		<li>{{ asset.file }}</li>
+	{% endfor %}
+	</ul>
+{% endif %}  
+
+<div id="fileupload">
+	<h3>Upload a file!</h3>
+	Add an item using the form below:
+	<form action="{{ request.META.SCRIPT_NAME }}/library/{{request.user.id}}" method="post" enctype="multipart/form-data">{% csrf_token %}
+	<p>
+		{{ form.file }}
+	</p>
+	<input type="submit" value="Upload File" />
+	</form>
+<div>	
+
+<h3>Folders</h3>
+<div id="folder_tree">
+    {% include "folders/index.html" %}
+</div>    
+{% if requested_user == current_user %}
+    <a href="{{ request.META.SCRIPT_NAME }}/folders/new">+ Add Folder</a></li>
+{% endif %}
+
+<hr />
+<h3>Collections</h3>
+<ul>
+    {% for collection in collections %}
+        <li><a href="#">{{ collection }}</a></li>
+    {% endfor %}
+</ul>
+{% endblock %}

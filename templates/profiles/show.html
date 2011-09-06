@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}My Profile{% endblock %}
+
+{% block content %}
+
+<ul>
+    {% for field, value in user.items %}
+        {% if field != 'password' %}
+            <li><b>{{ field }}:</b> {{ value }}</li>
+         {% endif %}
+    {% endfor %}
+    {% for field, value in user_profile.items %}
+        <li><b>{{ field }}:</b> {{ value }}</li>
+    {% endfor %}
+</ul>
+
+<a href="{{ request.META.SCRIPT_NAME }}/profiles/{{ user.id }}/edit">Edit This Profile</a>
+
+{% endblock %}
