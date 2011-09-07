@@ -9,28 +9,10 @@
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.types.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.dnd.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/vakata.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/library.js"></script>
     <script type="text/javascript">
-        $(function () {
-        	// TO CREATE AN INSTANCE
-        	// select the tree container using jQuery
-        	$("#folder_tree").jstree({
-    			"plugins" : ["themes","html_data","ui","types","dnd"],
-    			"themes" : {
-    			            "url" : "{{ MEDIA_URL }}js/jstree/themes/apple/style.css",
-                            "theme" : "apple",
-                            "dots" : false,
-                            "icons" : true
-                            },
-    			"html_data" : {
-        			"ajax" : {
-        				// the URL to fetch the data
-        				"url" : function(node_to_be_opened){
-        				    alert("node to be opened is " + node_to_be_opened);
-        				}
-        			}
-        		}
-    		})
-        });
+        var media_url = "{{ MEDIA_URL }}";
+        var app_url = "{{ request.META.SCRIPT_NAME }}";
     </script>
 {% endblock %}
 
