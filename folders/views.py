@@ -48,3 +48,11 @@ def update(request):
     folder.save()
 
     return redirect('/library/' + str(folder.owner_id))
+    
+    
+    
+# response to the user dragging and dropping folders.
+def move(request, dragged_folder_id, drop_folder_id):
+    dragged_folder = Folder.objects.get(pk=dragged_folder_id)
+    return redirect('/library/' + str(dragged_folder.owner_id))
+    

@@ -3,7 +3,7 @@
 <div id="folder_tree">
     <ul class="tree root">
         {% recursetree nodes %}
-            <li>
+            <li id="{{ node.id }}">
                 {{ node.name }}
                 {% if not node.is_leaf_node %}
                     <ul class="children">
