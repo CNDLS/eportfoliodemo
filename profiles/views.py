@@ -83,5 +83,5 @@ def update(request, user_id):
     user_profile.save()
     user.save()
         
-    return redirect('/profiles/' + str(user_profile.user_id))
+    return redirect('profiles/' + str(user_profile.user_id))
     
