@@ -9,7 +9,9 @@ from eportfoliodemo.settings import PRIVACY
 from eportfoliodemo.assets.models import Asset
 from eportfoliodemo.reflections.models import Reflection
 
+
 from eportfoliodemo.mptt.models import MPTTModel, TreeForeignKey # (v 0.5)
+
 
 
 class Folder(MPTTModel):
