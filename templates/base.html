@@ -19,10 +19,22 @@
       <h2>Navs</h2>
         {% block navbar %}
         <ul>
-		  <li><a href="{{ request.META.SCRIPT_NAME }}">Home</a></li>
+		      <li><a href="{{ request.META.SCRIPT_NAME }}">Home</a></li>
           <li><a href="{{ request.META.SCRIPT_NAME }}/library/{{ request.user.id }}">My Library</a></li>
           <li><a href="{{ request.META.SCRIPT_NAME }}/profiles/{{ request.user.id }}">My Profile</a></li>
-          <li>		{% if not request.user.is_anonymous %}{% if not request.mobile %}You're logged in as {% endif %}<a href="{{ request.user.get_absolute_url }}"><strong>{{ request.user.first_name }} {{ request.user.last_name }}</strong></a> (<a href="{{ request.META.SCRIPT_NAME }}/accounts/logout/">sign out?</a>){% endif %} 	</li>
+          <li>
+              {% if request.user.is_anonymous %}
+                <a href="{{ request.META.SCRIPT_NAME }}/accounts/login/">Login</a>
+              {% else %}
+                {% if not request.mobile %}
+                    You're logged in as 
+                {% endif %}
+                <a href="{{ request.user.get_absolute_url }}">
+                    <strong>{{ request.user.first_name }} {{ request.user.last_name }}</strong>
+                </a> 
+                (<a href="{{ request.META.SCRIPT_NAME }}/accounts/logout/">sign out?</a>)
+              {% endif %}
+            </li>
 
         </ul>
         {% endblock %}
