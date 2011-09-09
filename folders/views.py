@@ -15,7 +15,7 @@ def new(request):
     current_user = User.objects.get(pk=request.user.id)
     folder_form = FolderForm(instance=Folder(owner=current_user))
 
-    return render_to_response('edit.html', { 'folder_form': folder_form }, context_instance=RequestContext(request))
+    return render_to_response('folders/edit.html', { 'folder_form': folder_form }, context_instance=RequestContext(request))
     
     
 
