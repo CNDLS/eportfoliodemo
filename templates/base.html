@@ -24,7 +24,7 @@
           <li><a href="{{ request.META.SCRIPT_NAME }}/profiles/{{ request.user.id }}">My Profile</a></li>
           <li>
               {% if request.user.is_anonymous %}
-                <a href="{{ request.META.SCRIPT_NAME }}/accounts/login/">Login</a>
+                <a href="{{ request.META.SCRIPT_NAME }}/accounts/login/?next=/">Login</a>
               {% else %}
                 {% if not request.mobile %}
                     You're logged in as 
