@@ -1,1 +1,0 @@
-# this is to make it possible to have templatetags that can be used from any app's templates.

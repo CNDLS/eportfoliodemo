@@ -9,7 +9,6 @@ from eportfoliodemo.folders.models import Folder
 from eportfoliodemo.folders.forms import FolderForm
 
 from eportfoliodemo.snippets.template import render_block_to_string
-from eportfoliodemo.common import templatetags
 
 
 def new(request):
