@@ -2,7 +2,7 @@
 from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
 from django.forms.models import model_to_dict
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 
 from django.contrib.auth.models import User
 from eportfoliodemo.profiles.models import UserForm, UserProfile, UserProfileForm
@@ -23,7 +23,8 @@ def index(request):
         user_profiles = UserProfile.objects.all()
         return render_to_response('profiles/index.html', { 'user_profiles': user_profiles, 'current_user': current_user }, context_instance=RequestContext(request))
     else:
-        return redirect('profiles/' + str(request.user.id))
+        # return redirect('profiles/' + str(request.user.id))
+        HttpResponseRedirect(request.META['SCRIPT_NAME'] + '/profiles/' + str(request.user.id))
 
 
 # show user profile for a designated user (cf. permissions)
