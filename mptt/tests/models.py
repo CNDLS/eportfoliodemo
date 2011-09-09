@@ -1,7 +1,7 @@
 from django.db import models
 
 import mptt
-from mptt.models import MPTTModel
+from eportfoliodemo.mptt.models import MPTTModel
 
 class Category(MPTTModel):
     name = models.CharField(max_length=50)

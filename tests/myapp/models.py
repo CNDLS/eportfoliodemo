@@ -1,8 +1,8 @@
 from django.db import models
 
 import mptt
-from mptt.models import MPTTModel
-from mptt.managers import TreeManager
+from eportfoliodemo.mptt.models import MPTTModel
+from eportfoliodemo.mptt.managers import TreeManager
 
 class CustomTreeManager(TreeManager):
     pass

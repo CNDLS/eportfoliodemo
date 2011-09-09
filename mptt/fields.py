@@ -3,7 +3,7 @@ Model fields for working with trees.
 """
 
 from django.db import models
-from mptt.forms import TreeNodeChoiceField
+from eportfoliodemo.mptt.forms import TreeNodeChoiceField
 
 class TreeForeignKey(models.ForeignKey):
     """

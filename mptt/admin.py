@@ -12,7 +12,7 @@ from django.utils.translation import ugettext as _
 from django.utils.translation import ungettext
 from django.utils.encoding import force_unicode
 
-from mptt.forms import MPTTAdminForm, TreeNodeChoiceField
+from eportfoliodemo.mptt.forms import MPTTAdminForm, TreeNodeChoiceField
 
 __all__ = ('MPTTChangeList', 'MPTTModelAdmin', 'MPTTAdminForm')
 
@@ -40,7 +40,7 @@ class MPTTModelAdmin(ModelAdmin):
     form = MPTTAdminForm
     
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
-        from mptt.models import MPTTModel
+        from eportfoliodemo.mptt.models import MPTTModel
         if issubclass(db_field.rel.to, MPTTModel):
             return TreeNodeChoiceField(queryset=db_field.rel.to.objects.all(),
                                        required=False)

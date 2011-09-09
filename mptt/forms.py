@@ -8,7 +8,7 @@ from django.utils.encoding import smart_unicode
 from django.utils.html import conditional_escape, mark_safe
 from django.utils.translation import ugettext_lazy as _
 
-from mptt.exceptions import InvalidMove
+from eportfoliodemo.mptt.exceptions import InvalidMove
 
 __all__ = ('TreeNodeChoiceField', 'TreeNodeMultipleChoiceField', 'TreeNodePositionField', 'MoveNodeForm')
 

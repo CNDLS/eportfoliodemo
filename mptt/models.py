@@ -5,9 +5,9 @@ from django.db import models
 from django.db.models.base import ModelBase
 from django.db.models.query import Q
 
-from mptt.fields import TreeForeignKey
-from mptt.managers import TreeManager
-from mptt.utils import _exists
+from eportfoliodemo.mptt.fields import TreeForeignKey
+from eportfoliodemo.mptt.managers import TreeManager
+from eportfoliodemo.mptt.utils import _exists
 
 class MPTTOptions(object):
     """

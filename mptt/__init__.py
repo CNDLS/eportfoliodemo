@@ -9,7 +9,7 @@ def register(*args, **kwargs):
     Registers a model class as an MPTTModel, adding MPTT fields and adding MPTTModel to __bases__.
     This is equivalent to just subclassing MPTTModel, but works for an already-created model.
     """
-    from mptt.models import MPTTModelBase
+    from eportfoliodemo.mptt.models import MPTTModelBase
     return MPTTModelBase.register(*args, **kwargs)
 
 
