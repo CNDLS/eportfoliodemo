@@ -9,7 +9,10 @@ from eportfoliodemo.settings import PRIVACY
 from eportfoliodemo.assets.models import Asset
 from eportfoliodemo.reflections.models import Reflection
 
-
+# internally, mptt acts as though it is installed into the python PATH, rather than into a specific app.
+# this is trying to add it to the path dynamically when we use it.
+import sys
+sys.path.append("eportfoliodemo")
 from eportfoliodemo.mptt.models import MPTTModel, TreeForeignKey # (v 0.5)
 
 
