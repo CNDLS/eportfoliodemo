@@ -37,7 +37,7 @@ def update(request):
     # if folder_form.is_valid():
     folder.save()
 
-    return redirect('library/' + str(folder.owner_id))
+    return HttpResponseRedirect(request.META['SCRIPT_NAME'] + '/library/' + str(folder.owner_id))
     
     
     

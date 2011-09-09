@@ -23,7 +23,7 @@ def index(request):
         user_profiles = UserProfile.objects.all()
         return render_to_response('profiles/index.html', { 'user_profiles': user_profiles, 'current_user': current_user }, context_instance=RequestContext(request))
     else:
-        return redirect('profiles/' + str(request.user.id))
+        return HttpResponseRedirect(request.META['SCRIPT_NAME'] + '/profiles/' + str(request.user.id))
 
 
 # show user profile for a designated user (cf. permissions)
@@ -83,5 +83,5 @@ def update(request, user_id):
     user_profile.save()
     user.save()
         
-    return redirect('profiles/' + str(user_profile.user_id))
+    return HttpResponseRedirect(request.META['SCRIPT_NAME'] + '/profiles/' + str(user_profile.user_id))
     
