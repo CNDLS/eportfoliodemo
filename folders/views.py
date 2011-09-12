@@ -42,16 +42,23 @@ def update(request):
     
     
 # response to the user dragging and dropping folders.
-def move(request, dragged_folder_id, drop_target_id):
-    dragged_folder = Folder.objects.get(pk=dragged_folder_id)
-    drop_target = Folder.objects.get(pk=drop_target_id)
-    Folder.tree.move_node(dragged_folder, drop_target)
-    
-    folders_owner = User.objects.get(pk=dragged_folder.owner_id)
-    folders_in_tree = Folder.tree.get_query_set().filter(owner=folders_owner)
-    # return render_to_string ('folders/index.html', { 'nodes': folders_in_tree }, context_instance=RequestContext)
-    if request.is_ajax():
-        return render_to_response('folders/index.html', { 'nodes': folders_in_tree })
+def move(request):
+    dragged_folder = Folder.objects.get(pk=request.POST.get("id"))
+    position = int(request.POST.get("position"))
+    target_id = int(request.POST.get("target_id"))
+    if (target_id == -1):
+        dragged_folder.move_to(dragged_folder.get_root(), 'left' if (position == 0) else 'right')
+        return HttpResponse('')
     else:
-        return HttpResponseRedirect(request.META['SCRIPT_NAME'] + '/library/' + str(folders_owner.id))
+        drop_target = Folder.objects.get(pk=target_id)
+        prev_siblings = list(drop_target.get_children()[0:position])
+        prev_sibling = prev_siblings.pop() if (len(prev_siblings)) else None
     
+        # two moves. first, we move into the target space, defaulting to 'first-child'. 
+        # then we move relative to the target.
+        dragged_folder.move_to(drop_target)
+        if (prev_sibling != None):
+            dragged_folder.move_to(prev_sibling, 'right')
+        dragged_folder.save()
+    
+        return HttpResponse('')

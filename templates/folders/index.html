@@ -2,7 +2,7 @@
 
 <ul class="tree root">
     {% recursetree nodes %}
-        <li id="{{ node.id }}">
+        <li id="node_{{ node.id }}">
             {{ node.name }}
             {% if not node.is_leaf_node %}
                 <ul class="children">

@@ -31,6 +31,6 @@ class Folder(MPTTModel):
         
     class MPTTMeta:
         level_attr = 'mptt_level'
-        order_insertion_by=['name']
+        # order_insertion_by=['name']
         
 
