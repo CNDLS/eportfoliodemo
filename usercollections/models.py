@@ -9,6 +9,7 @@ from eportfoliodemo.settings import PRIVACY
 from eportfoliodemo.assets.models import Asset
 from eportfoliodemo.reflections.models import Reflection
 
+
 class Collection(models.Model):
     name = models.CharField(max_length=255, blank=True)
     description = models.TextField(blank=True)

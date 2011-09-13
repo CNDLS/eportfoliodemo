@@ -38,27 +38,3 @@ def update(request):
     folder.save()
 
     return HttpResponseRedirect(request.META['SCRIPT_NAME'] + '/library/' + str(folder.owner_id))
-    
-    
-    
-# response to the user dragging and dropping folders.
-def move(request):
-    dragged_folder = Folder.objects.get(pk=request.POST.get("id"))
-    position = int(request.POST.get("position"))
-    target_id = int(request.POST.get("target_id"))
-    if (target_id == -1):
-        dragged_folder.move_to(dragged_folder.get_root(), 'left' if (position == 0) else 'right')
-        return HttpResponse('')
-    else:
-        drop_target = Folder.objects.get(pk=target_id)
-        prev_siblings = list(drop_target.get_children()[0:position])
-        prev_sibling = prev_siblings.pop() if (len(prev_siblings)) else None
-    
-        # two moves. first, we move into the target space, defaulting to 'first-child'. 
-        # then we move relative to the target.
-        dragged_folder.move_to(drop_target)
-        if (prev_sibling != None):
-            dragged_folder.move_to(prev_sibling, 'right')
-        dragged_folder.save()
-    
-        return HttpResponse('')

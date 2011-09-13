@@ -2,7 +2,6 @@
 
 {% block custom_scripts %}
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.core.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.core.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.themes.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.html.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.ui.js"></script>
@@ -22,29 +21,12 @@
 
 {% block content %}
 
-{% if current_assets %}
-	<h3>Items</h3>
-	<p>Your assets</p>
-	<p>Name, filetype, modified, size</p>
-	<ul>
-	{% for asset in current_assets %}
-		<li>{{ asset.name }}, 
-		{% for type in asset.filetype.all %}
-			{{ type.name }},
-		{% endfor %}
-		{{ asset.modified|timesince }} ago,
-		{{ asset.file.size|filesizeformat }}
-		</li>
-	{% endfor %}
-	</ul>
-{% endif %}  
-
 <div id="fileupload">
 	<h3>Upload a file!</h3>
 	Add an item using the form below:
 	<form action="{{ request.META.SCRIPT_NAME }}/library/{{request.user.id}}" method="post" enctype="multipart/form-data">{% csrf_token %}
 	<p>
-		{{ form.file }}
+		{{ file_upload_form.file }}
 	</p>
 	<input type="submit" value="Upload File" />
 	</form>

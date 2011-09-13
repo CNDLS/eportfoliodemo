@@ -5,13 +5,19 @@ import tagging
 from tagging.models import Tag
 from tagging.fields import TagField
 
+from eportfoliodemo.folders.models import Folder
 from eportfoliodemo.reflections.models import Reflection
+from eportfoliodemo.libraryitems.models import LibraryItem
+
+from eportfoliodemo.mptt.models import MPTTModel
+
 
 class FileType(models.Model):
     name = models.CharField(max_length=100)
     
     def __unicode__(self):
         return self.name
+
 
 class CustomMetaData(models.Model):
     fieldname = models.CharField(max_length=255, blank=True)
@@ -21,7 +27,8 @@ class CustomMetaData(models.Model):
     def __unicode__(self):
         return self.fieldname
 
-class Asset(models.Model):
+
+class Asset(LibraryItem):
     name = models.CharField(max_length=255, blank=True)
     description = models.TextField(blank=True)
     file = models.FileField(upload_to=UPLOAD_PATH+'assets/', blank=True)
@@ -37,3 +44,14 @@ class Asset(models.Model):
     
     def __unicode__(self):
         return self.name
+        
+    class MPTTMeta:
+        level_attr = 'mptt_level'
+        
+        
+class AssetAlias(models.Model):
+    collection = models.ForeignKey('usercollections.Collection', blank=True, null=True)
+    asset = models.ManyToManyField(Asset, blank=True, null=True)
+    
+    def __unicode__(self):
+        return asset.name

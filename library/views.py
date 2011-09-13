@@ -3,6 +3,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.forms.models import model_to_dict
 from django.http import HttpResponse
+from itertools import chain
 
 from django.contrib.auth.models import User
 from eportfoliodemo.library.models import LibraryState
@@ -22,16 +23,18 @@ def show(request, user_id):
     # library_state allows us to return from presentation editing to the library as we left it.
     library_state, created = LibraryState.objects.get_or_create(owner=requested_user)
     
+    # get all the folders & assets. 
     folders_in_tree = Folder.tree.get_query_set().filter(owner=requested_user)
+    assets_in_tree = Asset.tree.get_query_set().filter(author = request.user)
+    items_in_tree = chain(folders_in_tree, assets_in_tree)
         
     try:
         collections = Collection.objects.get(owner=requested_user)
     except:
         collections = []
+
     
-    current_assets = Asset.objects.filter(author = request.user)
-    
-    form = FileUploadForm()
+    file_upload_form = FileUploadForm()
     if request.POST:
         file_type = request.FILES['file'].content_type.split('/')[1]
         asset = Asset()
@@ -43,13 +46,13 @@ def show(request, user_id):
         asset.save()
         asset.filetype.add(asset_type)
         
-    return render_to_response('library/show.html', \
-                    { 'requested_user': requested_user, \
-                      'current_user': current_user, \
-                      'nodes': folders_in_tree, \
+    return render_to_response('library/show.html',
+                    { 'requested_user': requested_user,
+                      'current_user': current_user,
+                      'nodes': items_in_tree,
                       'collections': collections,
-                      'form': form, 'current_assets': current_assets \
-                    },\
+                      'file_upload_form': file_upload_form
+                    },
                     context_instance=RequestContext(request))
 
 
