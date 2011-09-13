@@ -42,7 +42,7 @@ def show(request, user_id):
         
         asset.save()
         asset.filetype.add(asset_type)
-        
+    
     return render_to_response('library/show.html', \
                     { 'requested_user': requested_user, \
                       'current_user': current_user, \
@@ -51,15 +51,3 @@ def show(request, user_id):
                       'form': form, 'current_assets': current_assets \
                     },\
                     context_instance=RequestContext(request))
-
-
-def index(request):
-    current_assets = Asset.objects.filter(author = request.user)
-    
-    form = FileUploadForm()
-    if request.POST:
-        asset = Asset()
-        asset.author = request.user
-        asset.file = request.FILES['file']
-        asset.save()
-    return render_to_response('library/index.html', {'form': form, 'current_assets': current_assets}, context_instance=RequestContext(request))
