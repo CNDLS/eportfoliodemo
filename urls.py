@@ -10,6 +10,7 @@ urlpatterns = patterns('',
     # (r'^eportfoliodemo/', include('eportfoliodemo.foo.urls')),
 
     (r'^$', direct_to_template, { 'template': 'index.html' }),
+    (r'^assets/', include('eportfoliodemo.assets.urls')),
     (r'^profiles/', include('eportfoliodemo.profiles.urls')),
     (r'^library/', include('eportfoliodemo.library.urls')),
     (r'^libraryitems/', include('eportfoliodemo.libraryitems.urls')),
