@@ -4,9 +4,11 @@ from django.template import RequestContext
 from django.forms.models import model_to_dict
 from django.http import HttpResponse
 from itertools import chain
+import operator
 
 from django.contrib.auth.models import User
 from eportfoliodemo.library.models import LibraryState
+from eportfoliodemo.libraryitems.models import LibraryItem
 from eportfoliodemo.folders.models import Folder
 from eportfoliodemo.usercollections.models import Collection
 from eportfoliodemo.assets.forms import FileUploadForm
@@ -24,16 +26,21 @@ def show(request, user_id):
     library_state, created = LibraryState.objects.get_or_create(owner=requested_user)
     
     # get all the folders & assets. 
-    folders_in_tree = Folder.tree.get_query_set().filter(owner=requested_user)
-    assets_in_tree = Asset.tree.get_query_set().filter(author = request.user)
+    # can't tell folders from assets if we use LibraryItem to get the queryset.
+    # items_in_tree = LibraryItem.tree.get_query_set().filter(owner=requested_user)
+    folders_in_tree = Folder.tree.filter(owner=requested_user)
+    assets_in_tree = Asset.tree.filter(author=request.user)
     items_in_tree = chain(folders_in_tree, assets_in_tree)
+    items_in_tree = sorted(items_in_tree, key=lambda item: (item.tree_id, item.lft))
         
     try:
         collections = Collection.objects.get(owner=requested_user)
     except:
         collections = []
         
-    current_assets = Asset.objects.filter(author = request.user)
+    # we'll want to replace this with AJAX call to get current folder contents.
+    # think we'll be providing a default root folder for each library, just to keep this simple
+    current_assets = Asset.objects.filter(author=requested_user)
     
     
     file_upload_form = FileUploadForm()

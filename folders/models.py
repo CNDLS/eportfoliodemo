@@ -13,7 +13,6 @@ from eportfoliodemo.mptt.models import MPTTModel
 
 
 class Folder(LibraryItem):
-    name = models.CharField(max_length=50, unique=True)
     description = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
@@ -23,7 +22,6 @@ class Folder(LibraryItem):
     
     def __unicode__(self):
         return self.name
-    
-    
+
     class MPTTMeta:
         level_attr = 'mptt_level'

@@ -4,7 +4,7 @@
 {% block custom_scripts %}
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.core.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.themes.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.html.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.contextmenu.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.ui.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.dnd.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/vakata.js"></script>
@@ -65,6 +65,7 @@
     {{ requested_user.first_name }} {{ requested_user.last_name }}'s Library
 {% endblock %}
 
+{% block debug %}{{nodes}}{% endblock %}
 
 {% block content %}
 
@@ -95,7 +96,7 @@
 	</p>
 	<input type="submit" value="Upload File" />
 	</form>
-<div>
+</div>
 	
 <div id="file-metadata">
 	<h3>Metadata</h3>

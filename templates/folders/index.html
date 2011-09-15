@@ -1,5 +1,6 @@
 {% load mptt_tags %}
 
+
 <ul class="tree root">
     {% recursetree nodes %}
         <li id="node_{{ node.id }}" data-node-class="{{ node.klass }}">

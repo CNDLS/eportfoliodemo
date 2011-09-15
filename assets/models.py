@@ -29,7 +29,6 @@ class CustomMetaData(models.Model):
 
 
 class Asset(LibraryItem):
-    name = models.CharField(max_length=255, blank=True)
     description = models.TextField(blank=True)
     file = models.FileField(upload_to=UPLOAD_PATH+'assets/', blank=True)
     created = models.DateTimeField(auto_now_add=True)
@@ -44,7 +43,7 @@ class Asset(LibraryItem):
     
     def __unicode__(self):
         return self.name
-        
+
     class MPTTMeta:
         level_attr = 'mptt_level'
         
