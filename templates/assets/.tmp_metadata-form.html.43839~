@@ -1,3 +1,0 @@
-<form id="metadata-form" action="" method="post">
-		{{ metadata_form }}
-</form>
