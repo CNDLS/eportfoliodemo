@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 {% load metadataform_tags %}
 
+{% block extra_styles %}<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/library.css" />{% endblock %}
+
 {% block custom_scripts %}
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.core.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.themes.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.contextmenu.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.html.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.ui.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.dnd.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/vakata.js"></script>
@@ -65,59 +67,130 @@
     {{ requested_user.first_name }} {{ requested_user.last_name }}'s Library
 {% endblock %}
 
-{% block debug %}{{nodes}}{% endblock %}
 
 {% block content %}
+        
+    <div id="panels">
 
-{% if current_assets %}
-	<h3>Items</h3>
-	<p>Your assets</p>
-	<p>Name, filetype, modified, size</p>
-	<ul class="items">
-	{% for asset in current_assets %}
-		<li id="{{asset.id}}"><a href="#">{{ asset.name }}, 
-		{% for type in asset.filetype.all %}
-			{{ type.name }},
-		{% endfor %}
-		{{ asset.modified|timesince }} ago,
-		{{ asset.file.size|filesizeformat }}
-		</a>
-		</li>
-	{% endfor %}
-	</ul>
-{% endif %}  
+        <div id="left">
+            <header class="panelheader">
+                <h2>Folders</h2>
+            </header>
+            <div class="handle"></div>
+            <div id="folder_tree">
+                {% include "folders/index.html" %}                
+                {% if requested_user == current_user %}
+                    <a href="{{ request.META.SCRIPT_NAME }}/folders/new">+ Add Folder</a></li>
+                {% endif %}
+            </div>  
+            
+            <div class="collections">
+                <h2>Your Collections</h2>
+                <ul>
+                    {% for collection in collections %}
+                        <li><a href="#">{{ collection }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+       </div><!--/#left-->
+       
+        
+        <div id="library" role="main" class="center">
+        
+            <div id="library-items">
+        
+                <header class="panelheader">
+                    <h2>Your items</h2>
+                    <!--
+                    <nav>
+                        View as: <a href="#">List</a>
+                    </nav>
+                    -->
+                </header>
+                
+                {% comment %}
+            
+				{% if current_assets %}
+                    <div id="files" class="innerpane">
+                        <header>
+                            <abbr class="size">Size</abbr>
+                            <abbr class="modified">Last Modified</abbr>
+                            <abbr class="filetype">Type</abbr>
+                            <h3>Item</h3>
+                        </header>
+                        <ol class="items"> 
+							{% for asset in current_assets %}
+                                <li id="{{asset.id}}">
+                                    <a href="#">
+                                        <abbr class="size">{{ asset.file.size|filesizeformat }}</abbr>
+                                        <abbr class="modified">{{ asset.modified|timesince }} ago</abbr>
+                                        <abbr class="filetype">
+                                            {% for type in asset.filetype.all %}
+                                                {{ type.name }}
+                                            {% endfor %}
+                                        </abbr>
+                                        <h3>{{ asset.name }}</h3>                                        
+                                    </a>
+                                </li>  
+							{% endfor %}                             
+                        </ol>
+                    </div>  
+				{% endif %} 
+                {% endcomment %}
+                 
+                <div id="fileupload">
+                    Add an item using the form below:
+                    <form action="{{ request.META.SCRIPT_NAME }}/library/{{request.user.id}}" method="post" enctype="multipart/form-data">{% csrf_token %}
+                    <p>
+                        {{ file_upload_form.file }}
+                    </p>
+                    <input type="submit" value="Upload File" />
+                    </form>
+                </div>	 
+                
+            </div><!--/#library-items-->
+                    
+        </div><!--/#library-->
+        
+        <div id="right">
+            <header class="panelheader">
+                    <h2>Meta</h2>
+            </header>
+            <div class="handle"></div>
+            <!--<div class="meta default">
+                <div class="data">
+                    <div class="preview empty">
+                        No item Selected!
+                    </div>
+                </div>
+            </div>-->
+            <div class="meta">
+                <div class="data">
+                    <p id="metadata-details"></p>
+                    <p> Add new metadata</p>
+                    {% display_metadata_form request %}
+                </div>
+            </div>
+        </div><!--/#right-->
+        
+    </div><!--/#panels-->
+        
+{% endblock %}
 
-<div id="fileupload">
-	<h3>Upload a file!</h3>
-	Add an item using the form below:
-	<form action="{{ request.META.SCRIPT_NAME }}/library/{{request.user.id}}" method="post" enctype="multipart/form-data">{% csrf_token %}
-	<p>
-		{{ file_upload_form.file }}
-	</p>
-	<input type="submit" value="Upload File" />
-	</form>
-</div>
-	
-<div id="file-metadata">
-	<h3>Metadata</h3>
-	<p id="metadata-details"></p>
-	<p> Add new metadata</p>
-	{% display_metadata_form request %}
-</div>		
+{% block footer %}	
+        
+    <div id="upload">
+        <p>Upload +</p>
+    </div>
+        
+    <nav id="actions">
+        <ul>
+            <li><a href="#">Edit</a></li>
+            <li><a href="#">Reflect</a></li>
+            <li><a href="#">Publish</a></li>
+            <li><a href="#">Share</a></li>
+            <li><a href="#">Submit</a></li>
+        </ul>
+    </nav>
 
-<h3>Folders</h3>
-<div id="folder_tree">
-    {% include "folders/index.html" %}
-</div>    
-{% if requested_user == current_user %}
-    <a href="{{ request.META.SCRIPT_NAME }}/folders/new">+ Add Folder</a></li>
-{% endif %}
-
-<hr />
-<h3>Collections</h3>
-<ul>
-    {% for collection in collections %}
-        <li><a href="#">{{ collection }}</a></li>
-    {% endfor %}
-</ul>
 {% endblock %}

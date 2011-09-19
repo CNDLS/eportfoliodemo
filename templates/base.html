@@ -1,52 +1,87 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <head>
-    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/default.css" />
-    <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
-    {% block custom_scripts %}EPortfolio Tool{% endblock %}
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="description" content="">
+	<meta name="author" content="">	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+       
+    <title>{% block title %}EPortfolio Tool{% endblock %}</title>    
     
-    <title>{% block title %}EPortfolio Tool{% endblock %}</title>
+    <!-- stylesheets -->
+    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/base.css" /> 
+    {% block extra_styles %} {% endblock %}
+    
+    <!-- icons -->
+	<link rel="shortcut icon" href="{{ MEDIA_URL }}favicon.ico">
+	<link rel="apple-touch-icon" href="{{ MEDIA_URL }}apple-touch-icon.png">
+
+	<!--[if lt IE 9]>
+	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->  
 </head>
 
-<body><div id="wrap">
+<body>
 
-    <div id="title">
-    <p id="breadcrumb"></p>
-    <h1>ePortfolio</h1>
-    </div>
+    <header id="header">
+        <h1>Pegasus</h1>
+        <h2 id="georgetown"><a href="#">Georgetown University</a></h2>
+        <!--<p id="breadcrumb">breadcrumbs</p>-->
     
-    <div id="debug">{% block debug %}debugging info goes here.{% endblock %} </div>
+        <nav id="navbar">
+            {% block navbar %}
+            <ul>
+              <li><a href="{{ request.META.SCRIPT_NAME }}">Home</a></li>
+              <li><a href="{{ request.META.SCRIPT_NAME }}/library/{{ request.user.id }}">My Library</a></li>
+              <li><a href="{{ request.META.SCRIPT_NAME }}/profiles/{{ request.user.id }}">My Profile</a></li>
+              <li>
+                  {% if request.user.is_anonymous %}
+                    <a href="{{ request.META.SCRIPT_NAME }}/accounts/login/?next={{ request.META.SCRIPT_NAME }}/">Login</a>
+                  {% else %}
+                    {% if not request.mobile %}
+                        You're logged in as 
+                    {% endif %}
+                    <a href="{{ request.user.get_absolute_url }}">
+                        <strong>{{ request.user.first_name }} {{ request.user.last_name }}</strong>
+                    </a> 
+                    (<a href="{{ request.META.SCRIPT_NAME }}/accounts/logout/">sign out?</a>)
+                  {% endif %}
+                </li>
     
-    <div id="navbar">
-      <h2>Navigation</h2>
-        {% block navbar %}
-        <ul>
-		      <li><a href="{{ request.META.SCRIPT_NAME }}">Home</a></li>
-          <li><a href="{{ request.META.SCRIPT_NAME }}/library/{{ request.user.id }}">My Library</a></li>
-          <li><a href="{{ request.META.SCRIPT_NAME }}/profiles/{{ request.user.id }}">My Profile</a></li>
-          <li>
-              {% if request.user.is_anonymous %}
-                <a href="{{ request.META.SCRIPT_NAME }}/accounts/login/?next={{ request.META.SCRIPT_NAME }}/">Login</a>
-              {% else %}
-                {% if not request.mobile %}
-                    You're logged in as 
-                {% endif %}
-                <a href="{{ request.user.get_absolute_url }}">
-                    <strong>{{ request.user.first_name }} {{ request.user.last_name }}</strong>
-                </a> 
-                (<a href="{{ request.META.SCRIPT_NAME }}/accounts/logout/">sign out?</a>)
-              {% endif %}
-            </li>
-
-        </ul>
-        {% endblock %}
-    </div>
-
-    <div id="content">
+            </ul>
+            {% endblock %}
+        </nav>
+    
+        <nav id="tabs">
+            <ul>
+                <li><a href="#" class="active">Library</a></li>
+                <li><a class="new-project" href="#">+</a></li>
+            </ul>
+        </nav>
+                
+    </header>
+        
+    <section id="content">
         {% block content %}{% endblock %}
-    </div>
+    </section>
+    <!-- /middle-->
     
-    <div id="footer"></div>
-	</div>
+
+    <footer id="footer">  
+        {% block footer %}{% endblock %}      
+    </footer>
+    
+    
+    <!-- scripts and extras -->
+    <script src="{{ MEDIA_URL }}js/jquery.js"></script>
+	<script src="{{ MEDIA_URL }}js/plugins.js"></script>
+	<script src="{{ MEDIA_URL }}js/resize.js"></script>
+    {% block custom_scripts %}EPortfolio Tool{% endblock %}
+    
 </body>
 </html>
