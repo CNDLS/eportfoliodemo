@@ -19,8 +19,8 @@
 		/* JS needed for metadata (of files) */
 		$(document).ready(function() {
   			
-			$(".items li").click(function(){
-				var asset_id = $(this).attr("id")
+			$(".items li a, [data-node-class=Asset]").click(function(){
+				var asset_id = strip_id_prefix($(this), "node_");
 				$.ajax({
 					url: '{% url ajax_get_asset %}',
 					dataType: "json",
