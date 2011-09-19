@@ -13,7 +13,7 @@ from eportfoliodemo.folders.models import Folder
 from eportfoliodemo.usercollections.models import Collection
 from eportfoliodemo.assets.forms import FileUploadForm
 
-from eportfoliodemo.assets.models import Asset, FileType
+from eportfoliodemo.assets.models import Asset, FileType, AssetAlias
 
 from eportfoliodemo.settings import MEDIA_ROOT
 
@@ -25,18 +25,19 @@ def show(request, user_id):
     # library_state allows us to return from presentation editing to the library as we left it.
     library_state, created = LibraryState.objects.get_or_create(owner=requested_user)
     
-    # get all the folders & assets. 
-    # can't tell folders from assets if we use LibraryItem to get the queryset.
-    # items_in_tree = LibraryItem.tree.get_query_set().filter(owner=requested_user)
+    # get all the folders & assets.
     folders_in_tree = Folder.tree.filter(owner=requested_user)
     assets_in_tree = Asset.tree.filter(author=request.user)
     items_in_tree = chain(folders_in_tree, assets_in_tree)
     items_in_tree = sorted(items_in_tree, key=lambda item: (item.tree_id, item.lft))
         
-    try:
-        collections = Collection.objects.get(owner=requested_user)
-    except:
-        collections = []
+    # get all the collections & asset aliases.
+    # it's a tree, but without hierarchy (gets us dragging, renaming, etc. parallel to lib).
+    collections_in_tree = Collection.tree.filter(owner=requested_user)
+    asset_aliases_in_tree = AssetAlias.tree.filter(asset__author=request.user)
+    collection_items_in_tree = chain(collections_in_tree, asset_aliases_in_tree)
+    collection_items_in_tree = sorted(collection_items_in_tree, key=lambda item: (item.tree_id, item.lft))
+
         
     # we'll want to replace this with AJAX call to get current folder contents.
     # think we'll be providing a default root folder for each library, just to keep this simple
@@ -59,8 +60,8 @@ def show(request, user_id):
                     { 'requested_user': requested_user,
                       'current_user': current_user,
                       'current_assets': current_assets,
-                      'nodes': items_in_tree,
-                      'collections': collections,
+                      'folder_nodes': items_in_tree,
+                      'collections_nodes': collection_items_in_tree,
                       'file_upload_form': file_upload_form
                     },
                     context_instance=RequestContext(request))

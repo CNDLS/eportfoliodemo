@@ -8,6 +8,7 @@ from tagging.fields import TagField
 from eportfoliodemo.folders.models import Folder
 from eportfoliodemo.reflections.models import Reflection
 from eportfoliodemo.libraryitems.models import LibraryItem
+from eportfoliodemo.collectionitems.models import CollectionItem
 
 from eportfoliodemo.mptt.models import MPTTModel
 
@@ -48,9 +49,13 @@ class Asset(LibraryItem):
         level_attr = 'mptt_level'
         
         
-class AssetAlias(models.Model):
+class AssetAlias(CollectionItem):
     collection = models.ForeignKey('usercollections.Collection', blank=True, null=True)
-    asset = models.ManyToManyField(Asset, blank=True, null=True)
+    reflection = models.ManyToManyField(Reflection, blank=True, null=True)
+    asset = models.ForeignKey(Asset, blank=True, null=True)
     
     def __unicode__(self):
         return asset.name
+
+    class MPTTMeta:
+        level_attr = 'mptt_level'
