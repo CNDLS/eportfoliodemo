@@ -52,7 +52,7 @@ def show(request, user_id):
         asset.name = str.replace(str(request.FILES['file']), MEDIA_ROOT, '')
         asset_type, created = FileType.objects.get_or_create(name=file_type)
         asset.file = request.FILES['file']
-        
+        asset.size = request.FILES['file'].size
         asset.save()
         asset.filetype.add(asset_type)
         

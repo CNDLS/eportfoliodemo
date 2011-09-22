@@ -13,6 +13,7 @@ from eportfoliodemo.mptt.models import MPTTModel
 
 
 class Folder(LibraryItem):
+    name = models.CharField(max_length=255, blank=True)
     description = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
