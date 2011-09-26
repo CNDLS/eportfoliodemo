@@ -5,6 +5,7 @@
 
 {% block custom_scripts %}
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.core.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.contextmenu.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.themes.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.html.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.ui.js"></script>
@@ -77,20 +78,24 @@
                 <h2>Folders</h2>
             </header>
             <div class="handle"></div>
+            
             <div id="folder_tree">
-                {% include "folders/index.html" %}                
-                {% if requested_user == current_user %}
-                    <a href="{{ request.META.SCRIPT_NAME }}/folders/new">+ Add Folder</a></li>
-                {% endif %}
-            </div>  
+                {% include "folders/index.html" %}
+            </div>                    
+            {% if requested_user == current_user %}
+                <a href="{{ request.META.SCRIPT_NAME }}/folders/new">+ Add Folder</a>
+            {% endif %}
             
             <div class="collections">
                 <h2>Your Collections</h2>
-                <ul>
-                    {% for collection in collections %}
-                        <li><a href="#">{{ collection }}</a></li>
-                    {% endfor %}
-                </ul>
+                
+                <div id="collection_tree">
+                    {% include "usercollections/index.html" %}
+                </div>
+                {% if requested_user == current_user %}
+                    <a href="{{ request.META.SCRIPT_NAME }}/collections/new">+ Add Collection</a>
+                {% endif %}
+                
             </div>
        </div><!--/#left-->
        
@@ -107,8 +112,6 @@
                     </nav>
                     -->
                 </header>
-                
-                {% comment %}
             
 				{% if current_assets %}
                     <div id="files" class="innerpane">
@@ -135,8 +138,7 @@
 							{% endfor %}                             
                         </ol>
                     </div>  
-				{% endif %} 
-                {% endcomment %}
+				{% endif %}
                  
                 <div id="fileupload">
                     Add an item using the form below:

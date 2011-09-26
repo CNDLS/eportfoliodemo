@@ -6,7 +6,7 @@
 
 <ul class="tree root">
     {% recursetree nodes %}
-        <li id="node_{{ node.id }}" data-node-class="{{ node.klass }}">
+        <li id="collections_node_{{ node.id }}" data-node-class="{{ node.klass }}">
             {{ node.name }}
             {% if not node.is_leaf_node %}
                 <ul class="children">
