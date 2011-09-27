@@ -79,12 +79,14 @@
             </header>
             <div class="handle"></div>
             
-            <div id="folder_tree">
-                {% include "folders/index.html" %}
-            </div>                    
-            {% if requested_user == current_user %}
-                <a href="{{ request.META.SCRIPT_NAME }}/folders/new">+ Add Folder</a>
-            {% endif %}
+            <div id="folders">
+                <div id="folder_tree">
+                    {% include "folders/index.html" %}   
+                </div>  
+                {% if requested_user == current_user %}
+                    <a id="new_folder" class="button" href="{{ request.META.SCRIPT_NAME }}/folders/new">add&nbsp;a&nbsp;folder</a>
+                {% endif %}          
+            </div>  
             
             <div class="collections">
                 <h2>Your Collections</h2>
@@ -106,11 +108,10 @@
         
                 <header class="panelheader">
                     <h2>Your items</h2>
-                    <!--
-                    <nav>
-                        View as: <a href="#">List</a>
-                    </nav>
-                    -->
+                    <ul class="view">
+                        <li><a class="button active" href="#" id="list_view">List</a></li>
+                        <li><a class="button" href="#" id="icon_view">Icon</a></li>
+                    </ul>
                 </header>
             
 				{% if current_assets %}
