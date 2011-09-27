@@ -84,18 +84,17 @@
                     {% include "folders/index.html" %}   
                 </div>  
                 {% if requested_user == current_user %}
-                    <a id="new_folder" class="button" href="{{ request.META.SCRIPT_NAME }}/folders/new">add&nbsp;a&nbsp;folder</a>
+                    <a id="new_folder" class="button modal" href="{{ request.META.SCRIPT_NAME }}/folders/new">new&nbsp;folder</a>
                 {% endif %}          
             </div>  
             
-            <div class="collections">
-                <h2>Your Collections</h2>
-                
+            <div id="collections">
+                <h2>Your Collections</h2>                
                 <div id="collection_tree">
                     {% include "usercollections/index.html" %}
                 </div>
                 {% if requested_user == current_user %}
-                    <a href="{{ request.META.SCRIPT_NAME }}/collections/new">+ Add Collection</a>
+                    <a id="new_collection" class="button" href="{{ request.META.SCRIPT_NAME }}/collections/new">new&nbsp;collection</a>
                 {% endif %}
                 
             </div>
