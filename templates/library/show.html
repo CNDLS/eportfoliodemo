@@ -18,9 +18,38 @@
 	</script>
 	<script type="text/javascript">
 		/* JS needed for metadata (of files) */
+		
+			
 		$(document).ready(function() {
-  			
-			$(".items li a, [data-node-class=Asset]").click(function(){
+			$("#upload_target").load(function() {
+				var ret = $("#upload_target").contents().find("body").html();
+				ret = ret.replace('<pre style="word-wrap: break-word; white-space: pre-wrap;">','') //Remove the crap that safari adds
+				ret = ret.replace("<pre>",'')
+				ret = ret.replace("</pre>",'')
+				
+				if (ret == "File type is not supported, please try again"){
+					$("#upload-error").html(ret)
+					$("#id_file").val(null)
+				} else {
+					var data = eval("("+ ret +")"); //Parse JSON
+					var upload_doc = '<li><a href="#'+ data[0].pk + '/">'+ data[0].fields.name + '</a></li>'
+					$("#folder_tree").prepend(upload_doc)
+					// Clear the form values after upload
+					$(':input','#upload-form')
+						.not(':button, :submit, :reset, :hidden')
+						.val('')
+						.removeAttr('checked')
+						.removeAttr('selected');
+					$('#document-upload').show();
+				}
+			}); //End: #upload_target.load
+			
+			$('#id_file').click(function() {
+				var findFileField = $(this).attr('class');
+				$('#'+findFileField).click();
+				});
+			
+  			$(".items li a, [data-node-class=Asset]").click(function(){
 				var asset_id = strip_id_prefix($(this), "node_");
 				$.ajax({
 					url: '{% url ajax_get_asset %}',
@@ -112,7 +141,7 @@
                     </nav>
                     -->
                 </header>
-            
+            	
 				{% if current_assets %}
                     <div id="files" class="innerpane">
                         <header>
@@ -138,15 +167,23 @@
 							{% endfor %}                             
                         </ol>
                     </div>  
+
 				{% endif %}
-                 
+				
+                <iframe id="upload_target" name="upload_target" src="" style="width:0px;height:0px;"></iframe>
                 <div id="fileupload">
                     Add an item using the form below:
-                    <form action="{{ request.META.SCRIPT_NAME }}/library/{{request.user.id}}" method="post" enctype="multipart/form-data">{% csrf_token %}
+                    <form action="{% url ajax_create_asset %}" method="post" enctype="multipart/form-data" id="fileupload-form" target="upload_target">{% csrf_token %}
                     <p>
                         {{ file_upload_form.file }}
                     </p>
+                    <!-- This is the file input goes -->
+                    <noscript>          
+                    	<p>Please enable JavaScript to use file uploader.</p>
+                        <!-- or put a simple form for upload here -->
+                    </noscript> 
                     <input type="submit" value="Upload File" />
+                    
                     </form>
                 </div>	 
                 
