@@ -1,0 +1,11 @@
+{% extends "modal.html" %}
+
+{% block content %}
+
+<form action="{% url create_folder %}" method="POST">{% csrf_token %}
+    <table>
+        {{ folder_form.as_table }}
+    </table>
+    <input type="submit" value="Submit" />
+</from>
+{% endblock %}

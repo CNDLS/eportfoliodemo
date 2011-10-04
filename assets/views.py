@@ -44,3 +44,18 @@ def ajax_save_metadata(request):
     
     return HttpResponse(metadata, mimetype='application/json')
     
+
+
+def ajax_rename_asset(request, asset_id):
+    if request.is_ajax():
+        asset = Asset.objects.get(pk=asset_id)
+        asset.name = request.POST.get("name")
+        asset.save()
+        return HttpResponse (asset, mimetype='application/json')
+
+
+def ajax_delete_asset(request, asset_id):
+    if request.is_ajax():
+        asset = Asset.objects.get(pk=asset_id)
+        asset.delete()
+        return HttpResponseRedirect(request.META['SCRIPT_NAME'] + '/folders/index' + str(asset.author_id))
