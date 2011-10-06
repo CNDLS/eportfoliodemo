@@ -56,29 +56,8 @@ m{% extends "base.html" %}
 				$('#'+findFileField).click();
 				});
 			
-            /* When files are clicked from the folder area - display the details in the metadata section */
-  			$(".items li a, [data-node-class=Asset]").click(function(){
-                var asset_id = strip_id_prefix($(this), "node_");
-                asset_id = asset_id.replace('folders_','');
-                $.ajax({
-					url: '{% url ajax_get_asset %}',
-					dataType: "json",
-					data: {
-						asset: asset_id
-					}, 
-					success: function( data ) {
-						if (data.error) {
-							alert (data.error)
-							return false;
-						}
-						$('#metadata-details').html('<ul><li>'+data[0].fields.name+'</li></ul> <input type="hidden" id="selected-item" name="selected-item" value="'+data[0].pk+'" />')
-					}
-				}); //End ajax call
- 			}); // End .items li click
-
-            /* When files are clicked from the files area in the main section - display the details in the metadata section */
-            $("#files .items li").click(function(){
-                var asset_id = strip_id_prefix($(this), "node_");
+            function get_asset_details(asset_info) {
+                var asset_id = strip_id_prefix(asset_info, "node_");
                 asset_id = asset_id.replace('folders_','');
                 $.ajax({
                     url: '{% url ajax_get_asset %}',
@@ -101,6 +80,16 @@ m{% extends "base.html" %}
                         $('#metadata-details').html('<ul><li>'+asset[0].fields.name+'</li>'+ meta_data_list +'</ul> <input type="hidden" id="selected-item" name="selected-item" value="'+asset[0].pk+'" />')
                     }
                 }); //End ajax call
+            }
+
+            /* When files are clicked from the folder area - display the details in the metadata section */
+  			$(".items li a, [data-node-class=Asset]").click(function(){
+                get_asset_details($(this));
+ 			}); // End .items li click
+
+            /* When files are clicked from the files area in the main section - display the details in the metadata section */
+            $("#files .items li").click(function(){
+                get_asset_details($(this));
             }); // End .items li click
  			
 			$('#metadata-form').submit(function(){
