@@ -2,6 +2,7 @@ from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidde
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template import RequestContext
 from django.core import serializers
+from django.utils import simplejson
 from django.core.urlresolvers import reverse
 
 from django.contrib.auth.models import User
@@ -30,8 +31,14 @@ def ajax_create_asset(request):
 def ajax_get_asset(request):
     requested_asset = request.GET['asset']
     json_serializer = serializers.get_serializer("json")()
-    asset = json_serializer.serialize(Asset.objects.filter(id=requested_asset))
-    return HttpResponse (asset, mimetype='application/json')
+    asset = Asset.objects.get(id=requested_asset)
+    related_meta_data = asset.custom_meta_data.all()
+    asset_details = {}
+    asset_details['asset'] = json_serializer.serialize([asset])
+    asset_details['related_meta_data'] = json_serializer.serialize(related_meta_data)
+    #asset_details = json_serializer.serialize(asset_details)
+    asset_details = simplejson.dumps(asset_details)
+    return HttpResponse (asset_details, mimetype='application/json')
 
 def ajax_save_metadata(request):
     form = MetaDataForm()

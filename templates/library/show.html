@@ -91,7 +91,14 @@ m{% extends "base.html" %}
                             alert (data.error)
                             return false;
                         }
-                        $('#metadata-details').html('<ul><li>'+data[0].fields.name+'</li></ul> <input type="hidden" id="selected-item" name="selected-item" value="'+data[0].pk+'" />')
+                        var asset = eval( '(' + data.asset + ')' )
+                        var related_meta_data = eval( '(' + data.related_meta_data + ')' )
+                        //alert (related_meta_data[0].pk)
+                        var meta_data_list = ''
+                        for (i=0;i<related_meta_data.length;i++) {
+                            meta_data_list += '<li>'+ related_meta_data[i].fields.fieldname +' - '+ related_meta_data[i].fields.value +'</li>'
+                        }
+                        $('#metadata-details').html('<ul><li>'+asset[0].fields.name+'</li>'+ meta_data_list +'</ul> <input type="hidden" id="selected-item" name="selected-item" value="'+asset[0].pk+'" />')
                     }
                 }); //End ajax call
             }); // End .items li click
