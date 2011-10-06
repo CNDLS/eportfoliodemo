@@ -2,13 +2,24 @@
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponse
+from django.core import serializers
+
+from django.contrib.auth.models import User
 
 from eportfoliodemo.libraryitems.models import LibraryItem
+from eportfoliodemo.assets.models import Asset
 from eportfoliodemo.folders.models import Folder
+from itertools import chain
 
 
+
+def index(request, owner_id):
+    items_owner = User.objects.get(pk=owner_id)
+    return render_to_response('libraryitems/index.html', { 'folder_nodes': get_tree_items_for(items_owner) }, context_instance=RequestContext(request))
+    
+    
 # response to the user dragging and dropping folders and assets.
-def move(request):
+def ajax_move_item(request):
     dragged_item = LibraryItem.objects.get(pk=int(request.POST.get("id")))
     position = int(request.POST.get("position"))
     target_id = int(request.POST.get("target_id"))
@@ -35,13 +46,10 @@ def move(request):
         return HttpResponse(content=exception, status=500)
         
         
-
-def rename(request):    
-    try:
-        item_to_rename = LibraryItem.objects.get(pk=request.POST.get("id"))
-        item_to_rename.name = request.POST.get("new_name")
-        item_to_rename.save()
-        return HttpResponse('')
-            
-    except Exception as exception:
-        return HttpResponse(content=exception, status=500)
+        
+        
+def get_tree_items_for(user):
+    folders_in_tree = Folder.tree.filter(owner=user)
+    assets_in_tree = Asset.tree.filter(owner=user)
+    items_in_tree = chain(folders_in_tree, assets_in_tree)
+    return sorted(items_in_tree, key=lambda item: (item.tree_id, item.lft))

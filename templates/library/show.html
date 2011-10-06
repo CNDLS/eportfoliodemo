@@ -18,9 +18,9 @@ m{% extends "base.html" %}
         var app_url = "{{ request.META.SCRIPT_NAME }}";
 	</script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/inflection.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}js/library.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}js/folders.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}js/collections.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/application.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/libraryitems.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/collectionitems.js"></script>
 	<script type="text/javascript">
 		
 		$(document).ready(function() {
@@ -38,7 +38,7 @@ m{% extends "base.html" %}
 				} else {
 					var data = eval("("+ ret +")"); //Parse JSON
                     var asset_item = '<li data-node-class="Asset" id="folders_node_'+ data[0].pk + '" class="jstree-leaf" ><ins class="jstree-icon jstree-ocl">&nbsp;</ins><a href="#'+ data[0].pk + '"><ins class="jstree-icon jstree-themeicon">&nbsp;</ins>'+ data[0].fields.name + '</a></li>'
-					$("#folder_tree ul").prepend(asset_item);
+					$("#folder_tree > ul").prepend(asset_item);
 					initialize_folder_tree();
 					
 					// Clear the form values after upload
@@ -139,7 +139,7 @@ m{% extends "base.html" %}
             
             <div id="folders">
                 <div id="folder_tree">
-                    {% include "folders/index.html" %}   
+                    {% include "libraryitems/index.html" %}   
                 </div>  
                 {% if requested_user == current_user %}
                     <a id="new_folder" class="button modal" href="{{ request.META.SCRIPT_NAME }}/folders/new">new&nbsp;folder</a>

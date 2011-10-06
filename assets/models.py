@@ -36,7 +36,7 @@ class Asset(LibraryItem):
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
     privacy = models.CharField(max_length=1, choices=PRIVACY, blank=False, default='1')
-    author = models.ForeignKey(User, null=True, blank=True)
+    owner = models.ForeignKey(User, null=True, blank=True)
     size = models.CharField(max_length=10, blank=True)
     filetype = models.ManyToManyField(FileType, blank=True, null=True)
     reflection = models.ManyToManyField(Reflection, blank=True, null=True)

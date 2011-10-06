@@ -2,17 +2,21 @@ from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidde
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template import RequestContext
 from django.core import serializers
+from django.core.urlresolvers import reverse
 
 from django.contrib.auth.models import User
 from eportfoliodemo.assets.models import Asset, CustomMetaData, FileType
 from eportfoliodemo.assets.forms import MetaDataForm
 from eportfoliodemo.settings import MEDIA_ROOT
 
+from eportfoliodemo.libraryitems.views import get_tree_items_for
+
+
 def ajax_create_asset(request):
     if request.method == "POST":
         file_type = request.FILES['file'].content_type.split('/')[1]
         asset = Asset()
-        asset.author = request.user
+        asset.owner = request.user
         asset.name = str.replace(str(request.FILES['file']), MEDIA_ROOT, '')
         asset_type, created = FileType.objects.get_or_create(name=file_type)
         asset.file = request.FILES['file']
@@ -48,14 +52,20 @@ def ajax_save_metadata(request):
 
 def ajax_rename_asset(request, asset_id):
     if request.is_ajax():
-        asset = Asset.objects.get(pk=asset_id)
-        asset.name = request.POST.get("name")
-        asset.save()
-        return HttpResponse (asset, mimetype='application/json')
+        try:
+            asset = Asset.objects.get(pk=asset_id)
+            asset.name = request.POST.get("name")
+            asset.save()
+            json_serializer = serializers.get_serializer("json")()
+            return HttpResponse (json_serializer.serialize([asset]), mimetype='application/json')
+
+        except Exception as exception:
+            return HttpResponse(content=exception, status=500)
 
 
 def ajax_delete_asset(request, asset_id):
     if request.is_ajax():
         asset = Asset.objects.get(pk=asset_id)
+        asset_owner_id = asset.owner_id
         asset.delete()
-        return HttpResponseRedirect(request.META['SCRIPT_NAME'] + '/folders/index' + str(asset.author_id))
+        return HttpResponseRedirect(reverse('libraryitems_index', args=[asset_owner_id]))
