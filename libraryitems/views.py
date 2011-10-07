@@ -19,7 +19,7 @@ def index(request, owner_id):
     
     
 # response to the user dragging and dropping folders and assets.
-def ajax_move_item(request):
+def ajax_move_libraryitem(request):
     dragged_item = LibraryItem.objects.get(pk=int(request.POST.get("id")))
     position = int(request.POST.get("position"))
     target_id = int(request.POST.get("target_id"))

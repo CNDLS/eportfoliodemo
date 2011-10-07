@@ -7,8 +7,15 @@ from eportfoliodemo.collectionitems.models import CollectionItem
 from eportfoliodemo.folders.models import Folder
 
 
+
+def index(request, owner_id):
+    items_owner = User.objects.get(pk=owner_id)
+    return render_to_response('usercollections/index.html', { 'collections_nodes': get_tree_items_for(items_owner) }, context_instance=RequestContext(request))
+
+
+
 # response to the user dragging and dropping folders and assets.
-def move(request):
+def ajax_move_collectionitem(request):
     dragged_item = CollectionItem.objects.get(pk=int(request.POST.get("id")))
     position = int(request.POST.get("position"))
     target_id = int(request.POST.get("target_id"))
@@ -30,18 +37,6 @@ def move(request):
             #     dragged_item.move_to(prev_sibling, 'right')
 
             return HttpResponse('')
-            
-    except Exception as exception:
-        return HttpResponse(content=exception, status=500)
-        
-        
-
-def rename(request):    
-    try:
-        item_to_rename = CollectionItem.objects.get(pk=request.POST.get("id"))
-        item_to_rename.name = request.POST.get("new_name")
-        item_to_rename.save()
-        return HttpResponse('')
             
     except Exception as exception:
         return HttpResponse(content=exception, status=500)

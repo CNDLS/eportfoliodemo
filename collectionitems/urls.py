@@ -1,6 +1,6 @@
 from django.conf.urls.defaults import *
 
 urlpatterns = patterns('',
-    (r'^move/$', 'eportfoliodemo.collectionitems.views.move'),
-    (r'^rename/$', 'eportfoliodemo.collectionitems.views.rename')
+    url(r'^move/$', 'collectionitems.views.ajax_move_collectionitem', name='ajax_move_collectionitem'),
+    url(r'^(?P<owner_id>\d+)/index/$', 'collectionitems.views.index', name='collectionitems_index')
 )
