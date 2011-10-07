@@ -15,7 +15,7 @@ from itertools import chain
 
 def index(request, owner_id):
     items_owner = User.objects.get(pk=owner_id)
-    return render_to_response('libraryitems/index.html', { 'folder_nodes': get_tree_items_for(items_owner) }, context_instance=RequestContext(request))
+    return render_to_response('libraryitems/index.html', { 'folder_nodes': get_librarytree_items_for(items_owner) }, context_instance=RequestContext(request))
     
     
 # response to the user dragging and dropping folders and assets.
@@ -48,7 +48,7 @@ def ajax_move_libraryitem(request):
         
         
         
-def get_tree_items_for(user):
+def get_librarytree_items_for(user):
     folders_in_tree = Folder.tree.filter(owner=user)
     assets_in_tree = Asset.tree.filter(owner=user)
     items_in_tree = chain(folders_in_tree, assets_in_tree)

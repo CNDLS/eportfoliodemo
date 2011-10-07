@@ -15,9 +15,10 @@ from eportfoliodemo.folders.models import Folder
 from eportfoliodemo.usercollections.models import Collection
 from eportfoliodemo.assets.forms import FileUploadForm
 
-from eportfoliodemo.assets.models import Asset, FileType, AssetAlias
+from eportfoliodemo.libraryitems.views import get_librarytree_items_for
+from eportfoliodemo.collectionitems.views import get_collectiontree_items_for
 
-from eportfoliodemo.libraryitems.views import get_tree_items_for
+from eportfoliodemo.assets.models import Asset, FileType, AssetAlias
 
 from eportfoliodemo.settings import MEDIA_ROOT
 
@@ -30,14 +31,11 @@ def show(request, user_id):
     library_state, created = LibraryState.objects.get_or_create(owner=requested_user)
     
     # get all the folders & assets.
-    items_in_tree = get_tree_items_for(requested_user)
+    items_in_library_tree = get_librarytree_items_for(requested_user)
         
     # get all the collections & asset aliases.
     # it's a tree, but without hierarchy (gets us dragging, renaming, etc. parallel to lib).
-    collections_in_tree = Collection.tree.filter(owner=requested_user)
-    asset_aliases_in_tree = AssetAlias.tree.filter(asset__owner=request.user)
-    collection_items_in_tree = chain(collections_in_tree, asset_aliases_in_tree)
-    collection_items_in_tree = sorted(collection_items_in_tree, key=lambda item: (item.tree_id, item.lft))
+    items_in_collections_tree = get_collectiontree_items_for(requested_user)
 
         
     # we'll want to replace this with AJAX call to get current folder contents.
@@ -61,8 +59,8 @@ def show(request, user_id):
                     { 'requested_user': requested_user,
                       'current_user': current_user,
                       'current_assets': current_assets,
-                      'folder_nodes': items_in_tree,
-                      'collections_nodes': collection_items_in_tree,
+                      'folder_nodes': items_in_library_tree,
+                      'collections_nodes': items_in_collections_tree,
                       'file_upload_form': file_upload_form
                     },
                     context_instance=RequestContext(request))

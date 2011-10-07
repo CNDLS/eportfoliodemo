@@ -3,14 +3,18 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponse
 
+from django.contrib.auth.models import User
+
+from eportfoliodemo.usercollections.models import Collection
 from eportfoliodemo.collectionitems.models import CollectionItem
-from eportfoliodemo.folders.models import Folder
+from eportfoliodemo.assets.models import Asset, AssetAlias
+from itertools import chain
 
 
 
 def index(request, owner_id):
     items_owner = User.objects.get(pk=owner_id)
-    return render_to_response('usercollections/index.html', { 'collections_nodes': get_tree_items_for(items_owner) }, context_instance=RequestContext(request))
+    return render_to_response('usercollections/index.html', { 'collections_nodes': get_collectiontree_items_for(items_owner) }, context_instance=RequestContext(request))
 
 
 
@@ -40,3 +44,10 @@ def ajax_move_collectionitem(request):
             
     except Exception as exception:
         return HttpResponse(content=exception, status=500)
+        
+
+def get_collectiontree_items_for(user):
+    collections_in_tree = Collection.tree.filter(owner=user)
+    asset_aliases_in_tree = AssetAlias.tree.filter(asset__owner=user)
+    collection_items_in_tree = chain(collections_in_tree, asset_aliases_in_tree)
+    return sorted(collection_items_in_tree, key=lambda item: (item.tree_id, item.lft))
