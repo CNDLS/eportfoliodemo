@@ -22,6 +22,10 @@ class Collection(CollectionItem):
     
     def __unicode__(self):
         return self.name
+
+    def klass( self ):
+        return self.__class__.__name__
+        
         
     def save(self, *args, **kwargs):
         self.parent_id = None
