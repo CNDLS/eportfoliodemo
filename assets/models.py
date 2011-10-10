@@ -55,8 +55,11 @@ class AssetAlias(CollectionItem):
     reflection = models.ManyToManyField(Reflection, blank=True, null=True)
     asset = models.ForeignKey(Asset, blank=True, null=True)
     
+    def name(self):
+        return self.asset.name
+            
     def __unicode__(self):
-        return asset.name
+        return self.name
 
     class MPTTMeta:
         level_attr = 'mptt_level'

@@ -3,6 +3,8 @@ from django.shortcuts import render_to_response, redirect
 from django.template.loader import render_to_string
 from django.http import HttpResponse, HttpResponseRedirect
 from django.utils import simplejson
+from django.core import serializers
+from django.core.urlresolvers import reverse
 from django.template import RequestContext
 from django.contrib.auth.models import User
 from eportfoliodemo.usercollections.models import Collection
@@ -31,10 +33,12 @@ def create(request):
 
     collection_form = CollectionForm(instance=collection)
 
-    # if folder_form.is_valid():
+    # if collection_form.is_valid():
     collection.save()
 
-    return HttpResponseRedirect(request.META['SCRIPT_NAME'] + '/library/' + str(collection.owner_id))
+    # return HttpResponseRedirect(request.META['SCRIPT_NAME'] + '/library/' + str(collection.owner_id))
+    json_serializer = serializers.get_serializer("json")()
+    return HttpResponse (json_serializer.serialize([collection]), mimetype='application/json')
 
 
 
@@ -57,12 +61,22 @@ def update(request, collection_id):
 
 
 
-def rename(request):    
-    try:
-        collection_to_rename = Collection.objects.get(pk=request.POST.get("id"))
-        collection_to_rename.name = request.POST.get("new_name")
-        collection_to_rename.save()
-        return HttpResponse('')
+def ajax_rename_collection(request, collection_id):
+    if request.is_ajax():
+        try:
+            collection = Collection.objects.get(pk=collection_id)
+            collection.name = request.POST.get("name")
+            collection.save()
+            json_serializer = serializers.get_serializer("json")()
+            return HttpResponse (json_serializer.serialize([collection]), mimetype='application/json')
 
-    except Exception as exception:
-        return HttpResponse(content=exception, status=500)
+        except Exception as exception:
+            return HttpResponse(content=exception, status=500)
+
+
+def ajax_delete_collection(request, collection_id):
+    if request.is_ajax():
+        collection = Collection.objects.get(pk=collection_id)
+        collection_owner_id = collection.owner_id
+        collection.delete()
+        return HttpResponseRedirect(reverse('collectionitems_index', args=[collection_owner_id]))

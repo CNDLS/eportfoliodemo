@@ -106,6 +106,9 @@ def ajax_create_alias_in(request, asset_id, collection_id):
         except Exception as exception:
             return HttpResponse(content=exception, status=500)
                     
-        return HttpResponseRedirect(reverse('collectionitems_index', args=[asset_owner_id]))
+        # return HttpResponseRedirect(reverse('collectionitems_index', args=[asset_owner_id]))
+        
+        json_serializer = serializers.get_serializer("json")()
+        return HttpResponse (json_serializer.serialize([asset]), mimetype='application/json')
         
         
