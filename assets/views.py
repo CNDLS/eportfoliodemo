@@ -7,8 +7,11 @@ from django.core.urlresolvers import reverse
 
 from django.contrib.auth.models import User
 from eportfoliodemo.assets.models import Asset, CustomMetaData, FileType
-from eportfoliodemo.assets.forms import MetaDataForm
+from eportfoliodemo.assets.forms import MetaDataForm, TagForm
 from eportfoliodemo.settings import MEDIA_ROOT
+
+import tagging
+from tagging.models import Tag
 
 from eportfoliodemo.libraryitems.views import get_tree_items_for
 
@@ -36,7 +39,6 @@ def ajax_get_asset(request):
     asset_details = {}
     asset_details['asset'] = json_serializer.serialize([asset])
     asset_details['related_meta_data'] = json_serializer.serialize(related_meta_data)
-    #asset_details = json_serializer.serialize(asset_details)
     asset_details = simplejson.dumps(asset_details)
     return HttpResponse (asset_details, mimetype='application/json')
 
@@ -54,8 +56,27 @@ def ajax_save_metadata(request):
     asset_update.save()
     
     return HttpResponse(metadata, mimetype='application/json')
-    
 
+def ajax_save_asset_tags(request):
+    form = TagForm()
+
+    asset_update = Asset.objects.get(id=request.GET['asset'])
+    
+    tags_list = request.GET['tags'].split(',')
+
+    # Process tags
+    try:
+        tag_list = [x.strip() for x in request.GET['tags'].split(',')]
+        for tag in tag_list:
+            if tag != '':
+                Tag.objects.add_tag(asset_update, '"' + tag + '"')
+    except:
+        pass
+    
+    asset_tags = Tag.objects.usage_for_model(Asset, filters=dict(id=asset_update.id))
+    json_serializer = serializers.get_serializer("json")()
+    asset_tags = json_serializer.serialize(asset_tags)
+    return HttpResponse(asset_tags, mimetype='application/json')
 
 def ajax_rename_asset(request, asset_id):
     if request.is_ajax():

@@ -1,0 +1,5 @@
+<form id="tag-form" action=" " method="post"> {% csrf_token %}
+		<p> <label for="id_tags">Tags: </label> <input type="text" name="tags" id="id_tags" /> </p>
+		<input type="hidden" name="owner" id="id_owner" value="{{ request.user }}" />
+		<p> <input type="submit" value="save" /> </p>
+</form>

@@ -80,7 +80,7 @@ m{% extends "base.html" %}
                         $('#metadata-details').html('<ul><li>'+asset[0].fields.name+'</li>'+ meta_data_list +'</ul> <input type="hidden" id="selected-item" name="selected-item" value="'+asset[0].pk+'" />')
                     }
                 }); //End ajax call
-            }
+            } //End: get_asset_details
 
             /* When files are clicked from the folder area - display the details in the metadata section */
   			$(".items li a, [data-node-class=Asset]").click(function(){
@@ -114,6 +114,34 @@ m{% extends "base.html" %}
 				}); //End ajax call
 			
 			}); // End: #metadata-form submit
+
+            /* Save tags */
+            $('#tag-form').submit(function(){
+                event.preventDefault();
+                //alert ($('#id_tags').val());
+                $.ajax({
+                    url: '{% url ajax_save_asset_tags %}',
+                    dataType: "json",
+                    data: {
+                        tags: $('#id_tags').val(),
+                        //owner: $('#id_owner').val(),
+                        asset: $('#selected-item').val(),
+                    }, 
+                    success: function( data ) {
+                        if (data.error) {
+                            alert (data.error)
+                            return false;
+                        }
+                        var tag_list = ''
+                        for (i=0;i<data.length;i++) {
+                            tag_list += '<li>'+ data[i].fields.name +'</li>'
+                        }
+                        $('#tag-details').html('<ul>'+ tag_list +'</ul>')
+                    }
+                    
+                }); //End ajax call
+            
+            }); // End: #metadata-form submit
 		});
     </script>
 {% endblock %}
@@ -231,8 +259,12 @@ m{% extends "base.html" %}
             <div class="meta">
                 <div class="data">
                     <p id="metadata-details"></p>
-                    <p> Add new metadata</p>
+                    <p id="tag-details"></p>
+                    <h3> Add new metadata</h3>
                     {% display_metadata_form request %}
+
+                    <h3> Add tags </h3>
+                    {% display_tag_form request %}
                 </div>
             </div>
         </div><!--/#right-->
