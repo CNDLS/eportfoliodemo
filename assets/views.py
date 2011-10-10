@@ -49,6 +49,7 @@ def ajax_get_asset(request):
     asset_details = {}
     asset_details['asset'] = json_serializer.serialize([asset])
     asset_details['related_meta_data'] = json_serializer.serialize(related_meta_data)
+    asset_details['tags'] = json_serializer.serialize(Tag.objects.usage_for_model(Asset, filters=dict(id=asset.id)))
     asset_details = simplejson.dumps(asset_details)
     return HttpResponse (asset_details, mimetype='application/json')
 
@@ -65,14 +66,16 @@ def ajax_save_metadata(request):
     asset_update = Asset.objects.get(id=request.GET['asset'])
     asset_update.custom_meta_data.add(metadata)
     asset_update.save()
-    
+    json_serializer = serializers.get_serializer("json")()
+    metadata = json_serializer.serialize([metadata])
     return HttpResponse(metadata, mimetype='application/json')
 
 def ajax_save_asset_tags(request):
     form = TagForm()
 
     asset_update = Asset.objects.get(id=request.GET['asset'])
-    
+    asset_tags = Tag.objects.usage_for_model(Asset, filters=dict(id=asset_update.id))
+
     tags_list = request.GET['tags'].split(',')
 
     # Process tags
@@ -80,7 +83,10 @@ def ajax_save_asset_tags(request):
         tag_list = [x.strip() for x in request.GET['tags'].split(',')]
         for tag in tag_list:
             if tag != '':
-                Tag.objects.add_tag(asset_update, '"' + tag + '"')
+                if len(asset_tags) == 0:
+                    Tag.objects.add_tag(asset_update, '"' + tag + '"')
+                else:
+                    Tag.objects.update_tags(asset_update, '"' + tag + '"')
     except:
         pass
     
