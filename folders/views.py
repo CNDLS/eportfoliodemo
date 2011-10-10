@@ -1,4 +1,4 @@
-# Create your views here.
+# Folder views.
 from django.shortcuts import render_to_response, redirect
 from django.template.loader import render_to_string
 from django.http import HttpResponse, HttpResponseRedirect

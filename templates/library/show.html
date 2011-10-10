@@ -37,9 +37,8 @@ m{% extends "base.html" %}
 					$("#id_file").val(null)
 				} else {
 					var data = eval("("+ ret +")"); //Parse JSON
-                    var asset_item = '<li data-node-class="Asset" id="folders_node_'+ data[0].pk + '" class="jstree-leaf" ><ins class="jstree-icon jstree-ocl">&nbsp;</ins><a href="#'+ data[0].pk + '"><ins class="jstree-icon jstree-themeicon">&nbsp;</ins>'+ data[0].fields.name + '</a></li>'
-					$("#folder_tree > ul").prepend(asset_item);
-					initialize_folder_tree();
+          var jstree_node_json = { "title" : data[0].fields.name, "li_attr" : { "id" : "folders_node_"+ data[0].pk, "data-node-class" : "Asset" } };
+          var li_node = folder_tree.tree_container.jstree("create_node", -1, jstree_node_json, "last");
 					
 					// Clear the form values after upload
 					$('#fileupload-form:input')
@@ -56,9 +55,7 @@ m{% extends "base.html" %}
 				$('#'+findFileField).click();
 				});
 			
-            function get_asset_details(asset_info) {
-                var asset_id = strip_id_prefix(asset_info, "node_");
-                asset_id = asset_id.replace('folders_','');
+            function get_asset_details(asset_id) {
                 $.ajax({
                     url: '{% url ajax_get_asset %}',
                     dataType: "json",
@@ -84,8 +81,15 @@ m{% extends "base.html" %}
 
             /* When files are clicked from the folder area - display the details in the metadata section */
   			$(".items li a, [data-node-class=Asset]").click(function(){
-                get_asset_details($(this));
+              var asset_id = strip_id_prefix($(this), "node_");
+              asset_id = asset_id.replace('folders_','');
+                get_asset_details(asset_id);
  			}); // End .items li click
+ 			
+ 			$(".[data-node-class=AssetAlias]").click(function(){
+ 			  var asset_id = $(this).attr("data-asset-id");
+              get_asset_details(asset_id);
+		});
 
             /* When files are clicked from the files area in the main section - display the details in the metadata section */
             $("#files .items li").click(function(){
@@ -173,7 +177,7 @@ m{% extends "base.html" %}
             <div id="collections">
                 <h2>Your Collections</h2>                
                 <div id="collection_tree">
-                    {% include "usercollections/index.html" %}
+                    {% include "collectionitems/index.html" %}
                 </div>
                 {% if requested_user == current_user %}
                     <a id="new_collection" class="button modal" href="{{ request.META.SCRIPT_NAME }}/collections/new">new&nbsp;collection</a>

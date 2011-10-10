@@ -1,3 +1,4 @@
+# Asset views
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidden, Http404
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template import RequestContext
@@ -6,6 +7,7 @@ from django.utils import simplejson
 from django.core.urlresolvers import reverse
 
 from django.contrib.auth.models import User
+
 from eportfoliodemo.assets.models import Asset, CustomMetaData, FileType
 from eportfoliodemo.assets.forms import MetaDataForm, TagForm
 from eportfoliodemo.settings import MEDIA_ROOT
@@ -14,6 +16,13 @@ import tagging
 from tagging.models import Tag
 
 from eportfoliodemo.libraryitems.views import get_tree_items_for
+
+from eportfoliodemo.assets.models import Asset, AssetAlias, CustomMetaData, FileType
+from eportfoliodemo.collectionitems.models import CollectionItem
+from eportfoliodemo.assets.forms import MetaDataForm
+from eportfoliodemo.settings import MEDIA_ROOT
+
+from eportfoliodemo.libraryitems.views import get_librarytree_items_for
 
 
 def ajax_create_asset(request):
@@ -31,6 +40,7 @@ def ajax_create_asset(request):
         new_asset = json_serializer.serialize(Asset.objects.filter(id=asset.id))
         return HttpResponse (new_asset, mimetype='application/json')
 
+
 def ajax_get_asset(request):
     requested_asset = request.GET['asset']
     json_serializer = serializers.get_serializer("json")()
@@ -41,6 +51,7 @@ def ajax_get_asset(request):
     asset_details['related_meta_data'] = json_serializer.serialize(related_meta_data)
     asset_details = simplejson.dumps(asset_details)
     return HttpResponse (asset_details, mimetype='application/json')
+
 
 def ajax_save_metadata(request):
     form = MetaDataForm()
@@ -97,3 +108,35 @@ def ajax_delete_asset(request, asset_id):
         asset_owner_id = asset.owner_id
         asset.delete()
         return HttpResponseRedirect(reverse('libraryitems_index', args=[asset_owner_id]))
+        
+        
+def ajax_create_alias_in(request, asset_id, collection_id):
+    position = int(request.POST.get("position"))
+    target_id = int(request.POST.get("target_id"))
+    
+    if request.is_ajax():
+        asset = Asset.objects.get(pk=asset_id)
+        asset_owner_id = asset.owner_id
+        asset_alias = AssetAlias()
+        asset_alias.asset_id = asset.id
+        asset_alias.collection_id = collection_id
+        asset_alias.save()
+        
+        try:
+            drop_target = CollectionItem.objects.get(pk=target_id)
+            prev_siblings = list(drop_target.get_children()[0:position])
+            prev_sibling = prev_siblings.pop() if (len(prev_siblings)) else None
+
+            # two moves. first, we move into the target space, defaulting to 'first-child'. 
+            # then we move relative to the target.
+            asset_alias.move_to(drop_target, 'first-child')
+                
+        except Exception as exception:
+            return HttpResponse(content=exception, status=500)
+                    
+        # return HttpResponseRedirect(reverse('collectionitems_index', args=[asset_owner_id]))
+        
+        json_serializer = serializers.get_serializer("json")()
+        return HttpResponse (json_serializer.serialize([asset]), mimetype='application/json')
+        
+        
