@@ -15,7 +15,7 @@ from eportfoliodemo.settings import MEDIA_ROOT
 import tagging
 from tagging.models import Tag
 
-from eportfoliodemo.libraryitems.views import get_tree_items_for
+#from eportfoliodemo.libraryitems.views import get_tree_items_for
 
 from eportfoliodemo.assets.models import Asset, AssetAlias, CustomMetaData, FileType
 from eportfoliodemo.collectionitems.models import CollectionItem
