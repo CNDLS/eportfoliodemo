@@ -123,10 +123,10 @@ def ajax_create_alias_in(request, asset_id, collection_id):
     if request.is_ajax():
         asset = Asset.objects.get(pk=asset_id)
         asset_owner_id = asset.owner_id
-        asset_alias = AssetAlias()
-        asset_alias.asset_id = asset.id
-        asset_alias.collection_id = collection_id
-        asset_alias.save()
+        assetalias = AssetAlias()
+        assetalias.asset_id = asset.id
+        assetalias.collection_id = collection_id
+        assetalias.save()
         
         try:
             drop_target = CollectionItem.objects.get(pk=target_id)
@@ -135,12 +135,18 @@ def ajax_create_alias_in(request, asset_id, collection_id):
 
             # two moves. first, we move into the target space, defaulting to 'first-child'. 
             # then we move relative to the target.
-            asset_alias.move_to(drop_target, 'first-child')
+            assetalias.move_to(drop_target, 'first-child')
                 
         except Exception as exception:
             return HttpResponse(content=exception, status=500)
         
         json_serializer = serializers.get_serializer("json")()
-        return HttpResponse (json_serializer.serialize([asset_alias]), mimetype='application/json')
+        return HttpResponse (json_serializer.serialize([assetalias]), mimetype='application/json')
         
-        
+
+def ajax_delete_assetalias(request, assetalias_id):
+    if request.is_ajax():
+        assetalias = AssetAlias.objects.get(pk=assetalias_id)
+        asset_owner_id = assetalias.asset.owner_id
+        assetalias.delete()
+        return HttpResponseRedirect(reverse('libraryitems_index', args=[asset_owner_id]))
