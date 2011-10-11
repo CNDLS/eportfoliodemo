@@ -12,7 +12,8 @@ from eportfoliodemo.folders.forms import FolderForm
 
 from eportfoliodemo.snippets.template import render_block_to_string
     
-    
+from eportfoliodemo.libraryitems.models import LibraryItem
+from eportfoliodemo.assets.models import Asset
 
 def new(request):
     current_user = User.objects.get(pk=request.user.id)
@@ -83,3 +84,10 @@ def ajax_delete_folder(request, folder_id):
         folder_owner_id = folder.owner_id
         folder.delete()
         return HttpResponseRedirect(reverse('libraryitems_index', args=[folder_owner_id]))
+
+def ajax_get_folder_items(request):
+    if request.is_ajax():
+        folder = LibraryItem.objects.get(pk=request.GET['folder_id'])
+        folder_items = Asset.tree.filter(parent=folder)
+        json_serializer = serializers.get_serializer("json")()
+        return HttpResponse (json_serializer.serialize(folder_items), mimetype='application/json')
