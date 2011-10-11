@@ -1,6 +1,6 @@
 <form id="metadata-form" action=" " method="post"> {% csrf_token %}
-		<p> <label for="id_fieldname">Field</label> <input type="text" name="fieldname" id="id_fieldname" /> </p>
-		<p> <label for="id_value">Value</label> <textarea rows="10" name="value" id="id_value"></textarea> </p>
+		<p> <label for="id_fieldname">Field</label> <input type="text" name="fieldname" id="id_fieldname" value="Field" /> </p>
+		<p> <label for="id_value">Value</label> <textarea rows="10" name="value" id="id_value">Value</textarea> </p>
 		<input type="hidden" name="owner" id="id_owner" value="{{ request.user }}" />
 		<p> <input type="submit" value="save" /> </p>
 </form>
