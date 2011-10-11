@@ -47,7 +47,9 @@ def create(request):
     # if folder_form.is_valid():
     folder.save()
 
-    return HttpResponseRedirect(request.META['SCRIPT_NAME'] + '/library/' + str(folder.owner_id))
+    # return HttpResponseRedirect(request.META['SCRIPT_NAME'] + '/library/' + str(folder.owner_id))
+    json_serializer = serializers.get_serializer("json")()
+    return HttpResponse (json_serializer.serialize([folder]), mimetype='application/json')
 
 
 def update(request, folder_id):
@@ -57,8 +59,8 @@ def update(request, folder_id):
         if request.POST.get(field_name) and (field_name != 'owner') and (field_name != 'parent'):
             setattr(folder, field_name, request.POST.get(field_name))
     folder.save()
-    # json_serializer = serializers.get_serializer("json")()
-    # folder = json_serializer.serialize([folder])
+    json_serializer = serializers.get_serializer("json")()
+    folder = json_serializer.serialize([folder])
     return HttpResponse (folder, mimetype='application/json')
 
 

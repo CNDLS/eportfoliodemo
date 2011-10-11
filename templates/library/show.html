@@ -44,7 +44,7 @@ m{% extends "base.html" %}
                     {% include "libraryitems/index.html" %}   
                 </div>  
                 {% if requested_user == current_user %}
-                    <a id="new_folder" class="button modal" href="{{ request.META.SCRIPT_NAME }}/folders/new">new&nbsp;folder</a>
+                    <a id="new_folder" class="button modal remote" href="{{ request.META.SCRIPT_NAME }}/folders/new">new&nbsp;folder</a>
                 {% endif %}          
             </div>  
             
@@ -54,7 +54,7 @@ m{% extends "base.html" %}
                     {% include "collectionitems/index.html" %}
                 </div>
                 {% if requested_user == current_user %}
-                    <a id="new_collection" class="button modal" href="{{ request.META.SCRIPT_NAME }}/collections/new">new&nbsp;collection</a>
+                    <a id="new_collection" class="button modal remote" href="{{ request.META.SCRIPT_NAME }}/collections/new">new&nbsp;collection</a>
                 {% endif %}
                 
             </div>
