@@ -89,5 +89,6 @@ def ajax_get_folder_items(request):
     if request.is_ajax():
         folder = LibraryItem.objects.get(pk=request.GET['folder_id'])
         folder_items = Asset.tree.filter(parent=folder)
+        folder_details = {}
         json_serializer = serializers.get_serializer("json")()
         return HttpResponse (json_serializer.serialize(folder_items), mimetype='application/json')

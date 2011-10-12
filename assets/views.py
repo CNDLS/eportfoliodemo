@@ -53,6 +53,13 @@ def ajax_get_asset(request):
     asset_details = simplejson.dumps(asset_details)
     return HttpResponse (asset_details, mimetype='application/json')
 
+def ajax_get_file_type(request):
+    if request.is_ajax:
+        filetype = FileType.objects.filter(id=request.GET['filetypeid'][0])
+        json_serializer = serializers.get_serializer("json")()
+        filetype = json_serializer.serialize(filetype)
+        return HttpResponse(filetype, mimetype='application/json')
+
 
 def ajax_save_metadata(request):
     form = MetaDataForm()
