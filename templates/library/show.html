@@ -23,6 +23,7 @@ m{% extends "base.html" %}
     <script type="text/javascript" src="{{ MEDIA_URL }}js/libraryitems.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/collectionitems.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.timeago.js"></script>
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/windowflip.js"></script>
 	<script type="text/javascript" src="{{ MEDIA_URL }}js/librarydisplay.js"></script>
     
 {% endblock %}
@@ -65,6 +66,24 @@ m{% extends "base.html" %}
        
         
         <div id="library" role="main" class="center">
+            
+            <div id="collect">
+    
+                <header class="panelheader">
+                </header>
+                
+                <div id="collection_options">
+                	<h1>Collect stuff to add to your Library!</h1>
+                    <h2>How should you collect? Here are your options.</h2>
+                    <ul>
+                    	<li><a href="#" id="upload"><h3>Simple File Upload</h3> Upload documents one at-a-time (or as a batch)!</a></li>
+                    	<li><a href="#" id="dropbox"><h3>Sync with DropBox</h3> Install a plug-in to manage your files easily from your DropBox folder.</a></li>
+                    	<li><a href="#" id="citations"><h3>Import citations</h3> Connect your Zotero, Diigo, or Endnote account.</a></li>
+                    	<li><a href="#" id="email"><h3>E-mail attachments</h3> Add items to your library by attaching them to an e-mail!</a></li>
+                    </ul>
+                </div>
+                
+            </div>
         
             <div id="library-items">
         
@@ -157,7 +176,7 @@ m{% extends "base.html" %}
 
 {% block footer %}	
         
-    <div id="upload">
+    <div id="upload-button">
         <p>Upload +</p>
     </div>
         
