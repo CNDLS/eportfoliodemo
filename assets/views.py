@@ -107,7 +107,6 @@ def ajax_save_asset_tags(request):
     asset_tags = json_serializer.serialize(asset_tags)
     return HttpResponse(asset_tags, mimetype='application/json')
 
-####### COMEBACK TO THIS ############
 def ajax_delete_asset_tags(request):
     if request.is_ajax():
         tag_id = request.GET['tag_id']
