@@ -14,6 +14,7 @@ from eportfoliodemo.settings import MEDIA_ROOT
 
 import tagging
 from tagging.models import Tag
+from tagging.models import TaggedItem
 
 #from eportfoliodemo.libraryitems.views import get_tree_items_for
 
@@ -83,24 +84,41 @@ def ajax_save_asset_tags(request):
     asset_update = Asset.objects.get(id=request.GET['asset'])
     asset_tags = Tag.objects.usage_for_model(Asset, filters=dict(id=asset_update.id))
 
-    tags_list = request.GET['tags'].split(',')
+    #tags_list = request.GET['tags'].split(',')
 
     # Process tags
-    try:
-        tag_list = [x.strip() for x in request.GET['tags'].split(',')]
-        for tag in tag_list:
-            if tag != '':
-                if len(asset_tags) == 0:
-                    Tag.objects.add_tag(asset_update, '"' + tag + '"')
-                else:
-                    Tag.objects.update_tags(asset_update, '"' + tag + '"')
-    except:
-        pass
-    
+    # try:
+    #     tag_list = [x.strip() for x in request.GET['tags'].split(',')]
+    #     for tag in tag_list:
+    #         if tag != '':
+    #             if len(asset_tags) == 0:
+    #                 Tag.objects.add_tag(asset_update, '"' + tag + '"')
+    #             else:
+    #                 Tag.objects.update_tags(asset_update, '"' + tag + '"')
+    # except:
+    #     pass
+
+    tag_list = [x.strip() for x in request.GET['tags'].split(',')]
+    for tag in tag_list:
+        Tag.objects.add_tag(asset_update, '"' + tag + '"')
+
     asset_tags = Tag.objects.usage_for_model(Asset, filters=dict(id=asset_update.id))
     json_serializer = serializers.get_serializer("json")()
     asset_tags = json_serializer.serialize(asset_tags)
     return HttpResponse(asset_tags, mimetype='application/json')
+
+####### COMEBACK TO THIS ############
+def ajax_delete_asset_tags(request):
+    if request.is_ajax():
+        tag_id = request.GET['tag_id']
+        asset_id = request.GET['asset']
+        asset_tag = TaggedItem.objects.filter(object_id=asset_id, tag=tag_id)
+        asset_tag.delete()
+
+        updated_asset_tags = Tag.objects.usage_for_model(Asset, filters=dict(id=asset_id))
+        json_serializer = serializers.get_serializer("json")()
+        updated_asset_tags = json_serializer.serialize(updated_asset_tags)
+        return HttpResponse(updated_asset_tags, mimetype='application/json')
 
 def ajax_rename_asset(request, asset_id):
     if request.is_ajax():

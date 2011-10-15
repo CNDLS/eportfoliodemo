@@ -159,12 +159,13 @@ m{% extends "base.html" %}
             <div class="meta">
                 <div class="data">
                     <ul id="metadata-details"></ul>
-                    <p id="tag-details"></p>
                     <br class="clear" />
                     <h3>Add new metadata</h3>
                     {% display_metadata_form request %}
 
-                    <h3> Add tags </h3>
+                    <h3>Tags <span class="tags-edit"><a href="#">Add | Update Tags</a></span></h3>
+                    <p id="tag-details"></p>
+                    <!-- <h3> Add tags </h3> -->
                     {% display_tag_form request %}
                 </div>
             </div>
