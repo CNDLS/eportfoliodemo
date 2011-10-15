@@ -39,7 +39,8 @@ def ajax_create_asset(request):
         asset.filetype.add(asset_type)
         json_serializer = serializers.get_serializer("json")()
         new_asset = json_serializer.serialize(Asset.objects.filter(id=asset.id))
-        return HttpResponse (new_asset, mimetype='application/json')
+        # return HttpResponse (new_asset, mimetype='application/json')
+        return HttpResponse (new_asset, mimetype='text/plain')
 
 
 def ajax_get_asset(request):
