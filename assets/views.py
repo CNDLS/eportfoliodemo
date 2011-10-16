@@ -24,6 +24,7 @@ from eportfoliodemo.assets.forms import MetaDataForm
 from eportfoliodemo.settings import MEDIA_ROOT
 
 from eportfoliodemo.libraryitems.views import get_librarytree_items_for
+from eportfoliodemo.libraryitems.models import LibraryItem
 
 
 def ajax_create_asset(request):
@@ -42,7 +43,6 @@ def ajax_create_asset(request):
         # return HttpResponse (new_asset, mimetype='application/json')
         return HttpResponse (new_asset, mimetype='text/plain')
 
-
 def ajax_get_asset(request):
     requested_asset = request.GET['asset']
     json_serializer = serializers.get_serializer("json")()
@@ -54,6 +54,20 @@ def ajax_get_asset(request):
     asset_details['tags'] = json_serializer.serialize(Tag.objects.usage_for_model(Asset, filters=dict(id=asset.id)))
     asset_details = simplejson.dumps(asset_details)
     return HttpResponse (asset_details, mimetype='application/json')
+
+def ajax_update_asset(request):
+    if request.is_ajax():
+        asset_id = request.GET['asset_id']
+        folder_id = request.GET['folder_id']
+
+        asset = LibraryItem.objects.get(id=asset_id)
+        folder = LibraryItem.objects.get(id=folder_id)
+        asset.move_to(folder, 'first-child')
+        json_serializer = serializers.get_serializer("json")()
+        new_asset = json_serializer.serialize(Asset.objects.filter(id=asset.id))
+        return HttpResponse (new_asset, mimetype='text/plain')
+
+
 
 def ajax_get_file_type(request):
     if request.is_ajax:
