@@ -105,7 +105,7 @@ m{% extends "base.html" %}
                         </header>
                         <ol class="items"> 
 							{% for asset in current_assets %}
-                                <li id="{{asset.id}}">
+                                <li id="{{asset.id}}" data-asset-id="{{asset.id}}">
                                     <a href="#">
                                         <abbr class="size">{{ asset.file.size|filesizeformat }}</abbr>
                                         <abbr class="modified">{{ asset.modified|timesince }} ago</abbr>
