@@ -16,7 +16,10 @@ m{% extends "base.html" %}
     <script type="text/javascript">
         var media_url = "{{ MEDIA_URL }}";
         var app_url = "{{ request.META.SCRIPT_NAME }}";
+        var ajax_prefix = "{{ AJAX_PREFIX }}";
+        alert(ajax_prefix)
 	</script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/dutils.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/inflection.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/application.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/libraryinteractions.js"></script> <!-- Mine -->

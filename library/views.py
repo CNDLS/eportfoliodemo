@@ -20,7 +20,7 @@ from eportfoliodemo.collectionitems.views import get_collectiontree_items_for
 
 from eportfoliodemo.assets.models import Asset, FileType, AssetAlias
 
-from eportfoliodemo.settings import MEDIA_ROOT
+from eportfoliodemo.settings import MEDIA_ROOT, AJAX_PREFIX
 
 
 def show(request, user_id):
@@ -61,6 +61,7 @@ def show(request, user_id):
                       'current_assets': current_assets,
                       'folder_nodes': items_in_library_tree,
                       'collections_nodes': items_in_collections_tree,
-                      'file_upload_form': file_upload_form
+                      'file_upload_form': file_upload_form,
+                      'AJAX_PREFIX': AJAX_PREFIX
                     },
                     context_instance=RequestContext(request))
