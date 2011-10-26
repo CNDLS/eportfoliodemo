@@ -3,6 +3,7 @@ from django.conf.urls.defaults import *
 urlpatterns = patterns('',
     url(r'^asset/$', 'assets.views.ajax_get_asset',name='ajax_get_asset'),
     url(r'^metadata/save/$','assets.views.ajax_save_metadata', name='ajax_save_metadata'),
+    url(r'^metadata/autocomplete/$','assets.views.ajax_metadata_autocomplete', name='ajax_metadata_autocomplete'),
     url(r'tags/save/$', 'assets.views.ajax_save_asset_tags', name='ajax_save_asset_tags'),
     url(r'tags/delete/$', 'assets.views.ajax_delete_asset_tags', name='ajax_delete_asset_tags'),
     url(r'^ajax/create/$','assets.views.ajax_create_asset', name='ajax_create_asset'),

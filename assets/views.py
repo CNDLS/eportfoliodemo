@@ -80,11 +80,14 @@ def ajax_get_file_type(request):
 def ajax_save_metadata(request):
     form = MetaDataForm()
     
-    metadata = CustomMetaData()
-    metadata.fieldname = request.GET['fieldname']
-    metadata.value = request.GET['value']
-    metadata.owner = User.objects.get(username=request.GET['owner'])
-    metadata.save()
+    try:
+        metadata = CustomMetaData.objects.get(fieldname=request.GET['fieldname'], value=request.GET['value'], owner=User.objects.get(username=request.GET['owner']))
+    except CustomMetaData.DoesNotExist:    
+        metadata = CustomMetaData()
+        metadata.fieldname = request.GET['fieldname']
+        metadata.value = request.GET['value']
+        metadata.owner = User.objects.get(username=request.GET['owner'])
+        metadata.save()
     
     asset_update = Asset.objects.get(id=request.GET['asset'])
     asset_update.custom_meta_data.add(metadata)
@@ -189,3 +192,12 @@ def ajax_delete_assetalias(request, assetalias_id):
         asset_owner_id = assetalias.asset.owner_id
         assetalias.delete()
         return HttpResponseRedirect(reverse('libraryitems_index', args=[asset_owner_id]))
+
+def ajax_metadata_autocomplete(request):
+    if request.is_ajax():
+        requested_metadata = request.GET['term']
+        current_metadata = CustomMetaData.objects.filter(owner=request.user, fieldname__icontains=requested_metadata)
+        json_serializer = serializers.get_serializer("json")()
+        return HttpResponse(json_serializer.serialize(current_metadata), mimetype='application/json')
+    else:
+        return HttpResponse()

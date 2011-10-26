@@ -19,15 +19,17 @@ m{% extends "base.html" %}
         var ajax_prefix = "{{ AJAX_PREFIX }}";
         //alert(ajax_prefix)
 	</script>
+    
     <script type="text/javascript" src="{{ MEDIA_URL }}js/inflection.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/application.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/metadata.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/libraryinteractions.js"></script> <!-- Mine -->
     <script type="text/javascript" src="{{ MEDIA_URL }}js/libraryitems.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/collectionitems.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.timeago.js"></script>
 	<script type="text/javascript" src="{{ MEDIA_URL }}js/windowflip.js"></script>
 	<script type="text/javascript" src="{{ MEDIA_URL }}js/librarydisplay.js"></script>
-    
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-ui-1.8.16.custom.min.js"></script>
 {% endblock %}
 
 {% block title %}
