@@ -89,7 +89,7 @@ m{% extends "base.html" %}
                 
             </div>
         
-            <div id="library-items">
+            <div id="project-items">
         
                 <header class="panelheader">
                     <h2>Your items</h2>
@@ -99,52 +99,17 @@ m{% extends "base.html" %}
                     </ul>
                 </header>
             	
-				{% if current_assets %}
-                    <div id="files" class="innerpane">
-                        <header>
-                            <abbr class="size">Size</abbr>
-                            <abbr class="modified">Last Modified</abbr>
-                            <abbr class="filetype">Type</abbr>
-                            <h3>Item</h3>
-                        </header>
-                        <ol class="items"> 
-							{% for asset in current_assets %}
-                                <li id="{{asset.id}}" data-asset-id="{{asset.id}}">
-                                    <a href="#">
-                                        <abbr class="size">{{ asset.file.size|filesizeformat }}</abbr>
-                                        <abbr class="modified">{{ asset.modified|timesince }} ago</abbr>
-                                        <abbr class="filetype">
-                                            {% for type in asset.filetype.all %}
-                                                {{ type.name }}
-                                            {% endfor %}
-                                        </abbr>
-                                        <h3>{{ asset.name }}</h3>                                        
-                                    </a>
-                                </li>  
-							{% endfor %}                             
-                        </ol>
-                    </div>  
-
+				{% if projects %}
+                    <h1> Current Projects </h1>
+					<ul>
+                    {% for project in projects %}
+	                    <li><a href="{{request.user.id}}/public/{{project.slug}}"> {{ project }} </a></li>
+	                {% endfor %}    
+	                </ul>
 				{% endif %}
+				<h2> <a href="{{request.META.SCRIPT_NAME}}/present/{{request.user.id}}/project/create/"> Create a new project </a></h2>
 				
-                <iframe id="upload_target" name="upload_target" src="" style="width:0px;height:0px;"></iframe>
-                <div id="fileupload">
-                    Add an item using the form below:
-                    <form action="{% url ajax_create_asset %}" method="post" enctype="multipart/form-data" id="fileupload-form" target="upload_target">{% csrf_token %}
-                    <p>
-                        {{ file_upload_form.file }}
-                    </p>
-                    <!-- This is the file input goes -->
-                    <noscript>          
-                    	<p>Please enable JavaScript to use file uploader.</p>
-                        <!-- or put a simple form for upload here -->
-                    </noscript> 
-                    <input type="submit" value="Upload File" />
-                    
-                    </form>
-                </div>	 
-                
-            </div><!--/#library-items-->
+            </div><!--/#project-items-->
                     
         </div><!--/#library-->
         
