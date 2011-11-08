@@ -8,6 +8,7 @@ from tagging.fields import TagField
 
 class Page(models.Model):
     name = models.CharField(max_length=255, blank=True)
+    slug = models.SlugField()
     content = models.TextField(blank=True)
     owner = models.ForeignKey(User, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)

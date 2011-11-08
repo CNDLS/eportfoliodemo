@@ -89,7 +89,7 @@ m{% extends "base.html" %}
                 
             </div>
         
-            <div id="project-items">
+            <div id="create-project">
         
                 <header class="panelheader">
                     <h2>Your items</h2>
@@ -99,20 +99,16 @@ m{% extends "base.html" %}
                     </ul>
                 </header>
             	
-				{% if projects %}
-                    <h1> Current Projects </h1>
-					<ul>
-                    {% for project in projects %}
-	                    <li><a href="{{request.META.SCRIPT_NAME}}/present/{{request.user.id}}/public/{{project.slug}}/"> {{ project }} - </a> 
-                            <a href="{{request.META.SCRIPT_NAME}}/present/{{request.user.id}}/project/{{project.slug}}/update/"> edit | </a>
-                            <a href="{{request.META.SCRIPT_NAME}}/present/{{request.user.id}}/project/{{project.slug}}/pages/add/"> Attach Pages </a>
-                        </li>
-	                {% endfor %}    
-	                </ul>
-				{% endif %}
-				<h2> <a href="{{request.META.SCRIPT_NAME}}/present/{{request.user.id}}/project/create/"> Create a new project </a></h2>
-				
-            </div><!--/#project-items-->
+                <!-- Project creation form goes here -->
+				<form id="page-form" name="page-form" method="post" action=""> {% csrf_token %}
+                    <p> <label for="id_name">Name:</label> {{ form.name }} </p>
+                    <p> <label for="id_slug">Slug:</label> {{ form.slug }} </p>
+                    <p> <label for="id_content">Content:</label> {{ form.content }} </p>
+                    <p> <label for="id_privacy">Privacy:</label> {{ form.privacy }} </p>
+                    <input type="submit" value="Create" />
+                </form>
+			    
+            </div><!--/#create-project-->
                     
         </div><!--/#library-->
         
