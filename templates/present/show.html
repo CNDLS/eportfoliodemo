@@ -104,8 +104,8 @@ m{% extends "base.html" %}
 					<ul>
                     {% for project in projects %}
 	                    <li><a href="{{request.META.SCRIPT_NAME}}/present/{{request.user.id}}/public/{{project.slug}}/"> {{ project }} - </a> 
-                            <a href="{{request.META.SCRIPT_NAME}}/present/{{request.user.id}}/project/{{project.slug}}/update/"> edit | </a>
-                            <a href="{{request.META.SCRIPT_NAME}}/present/{{request.user.id}}/project/{{project.slug}}/pages/add/"> Attach Pages </a>
+                            <a href="{{request.META.SCRIPT_NAME}}/present/{{request.user.id}}/project/{{project.slug}}/update/" class="button"> edit &nbsp;&nbsp;</a>
+                            <a href="{{request.META.SCRIPT_NAME}}/present/{{request.user.id}}/project/{{project.slug}}/pages/add/" class="button"> Attach Pages </a>
                         </li>
 	                {% endfor %}    
 	                </ul>
