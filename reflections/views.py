@@ -19,7 +19,13 @@ def ajax_new(request, content_type = None, object_id = None):
     'object_id': object_id,
     'user_id': request.user.id
     })
-    reflectedOnType = ContentType.objects.get(app_label=content_type+"s", model=content_type)
+    
+    if (content_type == "asset"):
+        app_label = "assets"
+    elif (content_type == "assetalias"):
+        app_label = "assets"
+    
+    reflectedOnType = ContentType.objects.get(app_label=app_label, model=content_type)
     obj = reflectedOnType.get_object_for_this_type(id=object_id)
     
     return render_to_response('reflections/edit.html', { 'form': form, 'obj':obj }, context_instance=RequestContext(request))
@@ -28,7 +34,13 @@ def ajax_new(request, content_type = None, object_id = None):
 def ajax_create(request):
     if request.method == "POST":
         reflection = Reflection()
-        reflection.content_type = ContentType.objects.get(app_label=request.POST["content_type"]+"s", model=request.POST["content_type"])
+        content_type = request.POST["content_type"]
+        if (content_type == "asset"):
+            app_label = "assets"
+        elif (content_type == "assetalias"):
+            app_label = "assets"
+        
+        reflection.content_type = ContentType.objects.get(app_label=app_label, model=content_type)
         reflection.author = request.user
         for field_name in ['title','object_id','comment']:
             if (field_name != 'id') and (field_name[0] != "_"):
