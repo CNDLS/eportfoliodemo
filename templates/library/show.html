@@ -25,6 +25,7 @@ m{% extends "base.html" %}
     <script type="text/javascript" src="{{ MEDIA_URL }}js/metadata.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/libraryinteractions.js"></script> <!-- Mine -->
     <script type="text/javascript" src="{{ MEDIA_URL }}js/libraryitems.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/library_contextual_buttons.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/collectionitems.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.timeago.js"></script>
 	<script type="text/javascript" src="{{ MEDIA_URL }}js/windowflip.js"></script>
@@ -187,11 +188,11 @@ m{% extends "base.html" %}
         
     <nav id="actions">
         <ul>
-            <li><a href="#">Edit</a></li>
-            <li><a href="#">Reflect</a></li>
-            <li><a href="{{ request.META.SCRIPT_NAME }}/present/{{ request.user.id }}">Publish</a></li>
-            <li><a href="#">Share</a></li>
-            <li><a href="#">Submit</a></li>
+            <li><a href="#" class="disabled" id="edit_btn">Edit</a></li>
+            <li><a href="{{ request.META.SCRIPT_NAME }}/reflect/on" class="disabled" id="reflect_btn">Reflect</a></li>
+            <li><a href="{{ request.META.SCRIPT_NAME }}/present/{{ request.user.id }}" id="publish_btn">Publish</a></li>
+            <li><a href="#" class="disabled" id="share_btn">Share</a></li>
+            <li><a href="#" class="disabled" id="submit_btn">Submit</a></li>
         </ul>
     </nav>
 
