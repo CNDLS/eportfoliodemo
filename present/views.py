@@ -19,13 +19,15 @@ def show(request, user_id):
 	# get all the collections & asset aliases.
 	# it's a tree, but without hierarchy (gets us dragging, renaming, etc. parallel to lib).
 	items_in_collections_tree = get_collectiontree_items_for(requested_user)
+	form = ProjectForm()
 	return render_to_response('present/show.html',
                     { 'projects': projects,
                       'folder_nodes': items_in_library_tree,
                       'collections_nodes': items_in_collections_tree,
+                      'form': form
                     },
                     context_instance=RequestContext(request))
-
+ 
 def display_project(request, user_id, project_slug):
 	project = Project.objects.get(slug = project_slug)
 
@@ -50,6 +52,7 @@ def create_project(request, user_id, project_slug = None):
 			'privacy': project.privacy,
 			'template': project.template
 		})
+		return HttpResponse('blah', mimetype='text/plain')
 
 	if request.method == 'POST':
 		for field_name in ['name','slug','description','privacy']:
