@@ -24,6 +24,8 @@ def ajax_new(request, content_type = None, object_id = None):
         app_label = "assets"
     elif (content_type == "assetalias"):
         app_label = "assets"
+    elif (content_type == "collection"):
+        app_label = "usercollections"
     
     reflectedOnType = ContentType.objects.get(app_label=app_label, model=content_type)
     obj = reflectedOnType.get_object_for_this_type(id=object_id)
@@ -39,8 +41,12 @@ def ajax_create(request):
             app_label = "assets"
         elif (content_type == "assetalias"):
             app_label = "assets"
+        elif (content_type == "collection"):
+            app_label = "usercollections"
         
         reflection.content_type = ContentType.objects.get(app_label=app_label, model=content_type)
+        obj = reflection.content_type.get_object_for_this_type(id=request.POST["object_id"])
+        
         reflection.author = request.user
         for field_name in ['title','object_id','comment']:
             if (field_name != 'id') and (field_name[0] != "_"):
@@ -48,9 +54,11 @@ def ajax_create(request):
         reflection.created = datetime.now()
         reflection.modified = datetime.now()
         reflection.save()
+        
         json_serializer = serializers.get_serializer("json")()
-        new_reflection = json_serializer.serialize(Reflection.objects.filter(id=reflection.id))
+        new_reflection = json_serializer.serialize([reflection, obj]) #Reflection.objects.filter(id=reflection.id))
         return HttpResponse(new_reflection, mimetype='text/plain')
+
 
 def ajax_show(request, reflection_id):
     form = ReflectionForm(instance=Reflection.objects.get(pk=reflection_id))
