@@ -1,0 +1,20 @@
+{% if reflections %}
+    <div id="reflections" class="innerpane">
+        <header>
+            <abbr class="date">Date</abbr>
+            <abbr class="title">Title</abbr>
+            <abbr class="comment">comment</abbr>
+            <h3>Item</h3>
+        </header>
+        <ol class="items"> 
+			{% for reflection in reflections %}
+                <li id="{{reflection.id}}">
+                    <abbr class="date">{{ reflection.modified }}</abbr>
+                    <abbr class="title">{{ reflection.title || on {{ obj.name }} }}</abbr>
+                    <abbr class="comment">{{ reflection.comment }} </abbr>     
+                </li>  
+			{% endfor %}                             
+        </ol>
+    </div>  
+
+{% endif %}
