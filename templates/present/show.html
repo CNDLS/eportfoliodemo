@@ -36,14 +36,17 @@
             /** TODO: ICON FOR CLOSING TABS **/
             var $tabs = $( "#tabs").tabs({
                 tabTemplate: "<li><a href='#{href}'>#{label}</a> <span class='ui-icon ui-icon-close'>Close</span></li>",
-                ajaxOptions: {
-                error: function( xhr, status, index, anchor ) {
-                    $( anchor.hash ).html(
-                        "Couldn't load this tab. We'll try to fix this as soon as possible. " +
-                        "If this wouldn't be a demo." );
-                }
-            }
+                // ajaxOptions: {
+                // error: function( xhr, status, index, anchor ) {
+                //     $( anchor.hash ).html(
+                //         "Couldn't load this tab. We'll try to fix this as soon as possible. " +
+                //         "If this wouldn't be a demo." );
+                // }
+                // add: function(event, ui) {
+                //     $tabs.tabs('select', '#' + ui.panel.id);
+                // }
             });
+            
 
             $('#project-form').hide();
             $('#create-new-project').click(function(){
@@ -66,10 +69,29 @@
                 //         //     return data;
                 //         // }
                 //     });
-                $('#tabs').tabs("add","{{request.META.SCRIPT_NAME}}/present/{{request.user.id}}/project/"+project_slug+"/update/",title, 1);
-                $('#tabs').tabs("select", "{{request.META.SCRIPT_NAME}}/present/{{request.user.id}}/project/"+project_slug+"/update/")
+                //$('#tabs').tabs("add","{{request.META.SCRIPT_NAME}}/present/{{request.user.id}}/project/"+project_slug+"/update/",title, 1);
+                $('#tabs').tabs("add","#"+project_slug,title, 1);
+                
+        
+                
+            }); //End click event
 
-            })
+            $( "#tabs" ).live( "tabsselect", function(event, ui) {
+                var project_slug = ui.panel.id
+                $.ajax({
+                    url: "{{request.META.SCRIPT_NAME}}/present/{{request.user.id}}/project/"+project_slug+"/update/",
+                    dataType: "json",
+                    success: function( data ) {
+                        if (data.error) {
+                            alert (data.error)
+                            return false;
+                        }
+                        $("#tabs").html(data)
+                        $("#project-items").html(data)
+                        $("#tabs").tabs('load', data); //Display the content over
+                    }    
+                }); //End ajax call
+            });
 
             $( "#tabs span.ui-icon-close" ).live( "click", function() {
                 var index = $( "li", $tabs ).index( $( this ).parent() );
