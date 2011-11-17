@@ -28,13 +28,15 @@
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.timeago.js"></script>
 	<script type="text/javascript" src="{{ MEDIA_URL }}js/windowflip.js"></script>
 	<script type="text/javascript" src="{{ MEDIA_URL }}js/librarydisplay.js"></script>
-    
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/base/jquery-ui.css" type="text/css" media="all" />
+
 
     <script type="text/javascript">
         $(document).ready(function() {
             
             /** TODO: ICON FOR CLOSING TABS **/
-            var $tabs = $( "#tabs").tabs({
+            var $tabs = $( "#project-tabs").tabs({
+            //var $tabs = $( "#tabs").tabs({
                 tabTemplate: "<li><a href='#{href}'>#{label}</a> <span class='ui-icon ui-icon-close'>Close</span></li>",
                 // ajaxOptions: {
                 // error: function( xhr, status, index, anchor ) {
@@ -44,6 +46,43 @@
                 // }
                 // add: function(event, ui) {
                 //     $tabs.tabs('select', '#' + ui.panel.id);
+                // }
+                add: function( event, ui ) {
+                    // var tab_content = 'WORK';
+                    // $( "ui.panel" ).html( "<p>" + tab_content + "</p>" );
+                    var project_slug = ui.panel.id
+                    $.ajax({
+                    url: "{{request.META.SCRIPT_NAME}}/present/{{request.user.id}}/project/"+project_slug+"/update/",
+                    success: function( data ) {
+                        if (data.error) {
+                            alert (data.error)
+                            return false;
+                        }
+                        //alert(data)
+                        $( ui.panel ).append('<form>'+data+'<input type="submit" value="update" /></form>')
+                        //$("#project-items").html(data)
+                        //$("#tabs").tabs('load', data); //Display the content over
+                    }    
+                    }); //End ajax call
+                },
+                // select: function( event, ui ) {
+                //     //var tab_content = 'WORK';
+                //     //$( "#default-projects" ).html( "<p>" + tab_content + "</p>" );
+                //     //$( ui.panel ).append( "<p>" + tab_content + "</p>" );
+                //     var project_slug = ui.panel.id
+                //     $.ajax({
+                //     url: "{{request.META.SCRIPT_NAME}}/present/{{request.user.id}}/project/"+project_slug+"/update/",
+                //     success: function( data ) {
+                //         if (data.error) {
+                //             alert (data.error)
+                //             return false;
+                //         }
+                //         //alert(data)
+                //         $( ui.panel ).append('<form>'+data+'<input type="submit" value="update" /></form>')
+                //         //$("#project-items").html(data)
+                //         //$("#tabs").tabs('load', data); //Display the content over
+                //     }    
+                //     }); //End ajax call
                 // }
             });
             
@@ -56,44 +95,32 @@
             $('.edit-project').click(function(){
                 var title = $(this).attr('data-project-name')
                 var project_slug = $(this).attr('data-project-slug')
-                //$('#tabs').tabs("add","#tabs-news", title, 1);
-                //$('#tabs').tabs("url", 0, "{{request.META.SCRIPT_NAME}}/present/{{request.user.id}}/project/{{project.slug}}/update/")
-                // $('#tabs').tabs("add",{
-                //         title:title,
-                //         // href:"{{request.META.SCRIPT_NAME}}/present/{{request.user.id}}/project/{{project.slug}}/update/",
-                //         // closable:true,
-                //         // extractor:function(data){
-                //         //     var tmp = $('<div></div>').html(data);
-                //         //     data = tmp.find('#content').html();
-                //         //     tmp.remove();
-                //         //     return data;
-                //         // }
-                //     });
                 //$('#tabs').tabs("add","{{request.META.SCRIPT_NAME}}/present/{{request.user.id}}/project/"+project_slug+"/update/",title, 1);
-                $('#tabs').tabs("add","#"+project_slug,title, 1);
+                $('#project-tabs').tabs("add","#"+project_slug,title, 1);
                 
         
                 
             }); //End click event
 
-            $( "#tabs" ).live( "tabsselect", function(event, ui) {
-                var project_slug = ui.panel.id
-                $.ajax({
-                    url: "{{request.META.SCRIPT_NAME}}/present/{{request.user.id}}/project/"+project_slug+"/update/",
-                    dataType: "json",
-                    success: function( data ) {
-                        if (data.error) {
-                            alert (data.error)
-                            return false;
-                        }
-                        $("#tabs").html(data)
-                        $("#project-items").html(data)
-                        $("#tabs").tabs('load', data); //Display the content over
-                    }    
-                }); //End ajax call
-            });
+            // $( "#project-tabs" ).live( "tabsselect", function(event, ui) {
+            //     var project_slug = ui.panel.id
+            //     $.ajax({
+            //         url: "{{request.META.SCRIPT_NAME}}/present/{{request.user.id}}/project/"+project_slug+"/update/",
+            //         dataType: "json",
+            //         success: function( data ) {
+            //             if (data.error) {
+            //                 alert (data.error)
+            //                 return false;
+            //             }
+            //             alert(data)
+            //             $(ui.panel).append('ewr')
+            //             //$("#project-items").html(data)
+            //             //$("#tabs").tabs('load', data); //Display the content over
+            //         }    
+            //     }); //End ajax call
+            // });
 
-            $( "#tabs span.ui-icon-close" ).live( "click", function() {
+            $( "#project-tabs span.ui-icon-close" ).live( "click", function() {
                 var index = $( "li", $tabs ).index( $( this ).parent() );
                 $tabs.tabs( "remove", index );
             });
@@ -159,7 +186,10 @@
             </div>
         
             <div id="project-items">
-        
+            <div id="project-tabs">
+                <ul>
+                <li><a href="#default-projects">One</a></li>
+                </ul>
                 <header class="panelheader">
                     <h2>Your items</h2>
                     <ul class="view">
@@ -168,6 +198,7 @@
                     </ul>
                 </header>
             	
+                <div id="default-projects">
 				{% if projects %}
                     <h1> Current Projects </h1>
 					<ul>
@@ -189,7 +220,9 @@
                     <p> <label for="id_privacy">Privacy:</label> {{ form.privacy }} </p>
                     <input type="submit" value="Create" />
                 </form>
+                </div> <!-- #default-projects -->
 
+            </div>  <!-- #project-tabs -->
             </div><!--/#project-items-->
                     
         </div><!--/#library-->

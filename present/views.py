@@ -9,6 +9,8 @@ from django.contrib.auth.models import User
 from eportfoliodemo.libraryitems.views import get_librarytree_items_for
 from eportfoliodemo.collectionitems.views import get_collectiontree_items_for
 
+from django.core import serializers
+
 # Shows a list of the user's projects
 def show(request, user_id):
 	projects = Project.objects.filter(owner=user_id)
@@ -52,7 +54,9 @@ def create_project(request, user_id, project_slug = None):
 			'privacy': project.privacy,
 			'template': project.template
 		})
-		return HttpResponse('blah', mimetype='text/plain')
+		# json_serializer = serializers.get_serializer("json")()
+		# form = json_serializer.serialize([form])
+		return HttpResponse(form, mimetype='text/plain')
 
 	if request.method == 'POST':
 		for field_name in ['name','slug','description','privacy']:
