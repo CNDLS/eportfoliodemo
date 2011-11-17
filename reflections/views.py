@@ -49,8 +49,8 @@ def ajax_list(request, content_type = None, object_id = None):
     
 
 def ajax_show(request, reflection_id):
-    form = ReflectionForm(instance=Reflection.objects.get(pk=reflection_id))
-    return render_to_response('reflections/edit.html', { 'form': form }, context_instance=RequestContext(request))
+    reflection = Reflection.objects.get(pk=reflection_id)
+    return render_to_response('reflections/show.html', { 'reflection': reflection }, context_instance=RequestContext(request))
 
 
 def ajax_update(request, reflection_id):

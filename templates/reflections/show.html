@@ -1,0 +1,7 @@
+<h4 class="date">{{ reflection.modified }}</h4>
+{% if reflection.title != "" %}
+        <h4 class="title">{{ reflection.title }}</h4>
+    {% else %}
+        <h4 class="title">on {{ obj.name }}</h4>
+    {% endif %}
+<div class="comment">{{ reflection.comment }}</div>

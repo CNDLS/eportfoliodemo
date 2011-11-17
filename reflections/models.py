@@ -17,3 +17,8 @@ class Reflection(models.Model):
     def __unicode__(self):
         return self.title
     
+    def comment_abbr(self):
+        if (len(self.comment) > 23):
+            return self.comment[:20] + " ..."
+        else:
+            return self.comment
