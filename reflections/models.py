@@ -17,8 +17,23 @@ class Reflection(models.Model):
     def __unicode__(self):
         return self.title
     
+    
     def comment_abbr(self):
         if (len(self.comment) > 23):
             return self.comment[:20] + " ..."
         else:
             return self.comment
+            
+            
+    def reflected_on_object():
+        if (content_type == "asset"):
+            app_label = "assets"
+        elif (content_type == "assetalias"):
+            app_label = "assets"
+        elif (content_type == "collection"):
+            app_label = "usercollections"
+        else:
+            app_label = "unknown"
+
+        reflectedOnType = ContentType.objects.get(app_label=app_label, model=content_type)
+        return reflectedOnType.get_object_for_this_type(id=object_id)

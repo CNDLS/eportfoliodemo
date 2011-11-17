@@ -20,32 +20,32 @@ def ajax_new(request, content_type = None, object_id = None):
     'user_id': request.user.id
     })
     
-    obj = get_object_of_reflection(content_type, object_id)
-    return render_to_response('reflections/edit.html', { 'form': form, 'obj':obj }, context_instance=RequestContext(request))
+    obj_array = get_content_type_and_object(content_type, object_id)
+    return render_to_response('reflections/edit.html', { 'form': form, 'obj':obj_array[1] }, context_instance=RequestContext(request))
 
 
 def ajax_create(request):
     if request.method == "POST":
         reflection = Reflection()
-        obj = get_object_of_reflection(request.POST["content_type"], request.POST["object_id"])
+        obj_array = get_content_type_and_object(request.POST["content_type"], request.POST["object_id"])
         
         reflection.author = request.user
         for field_name in ['title','object_id','comment']:
             if (field_name != 'id') and (field_name[0] != "_"):
                 setattr(reflection, field_name, request.POST[field_name])
+        setattr(reflection, 'content_type', obj_array[0])
         reflection.created = datetime.now()
         reflection.modified = datetime.now()
         reflection.save()
-        
-        json_serializer = serializers.get_serializer("json")()
-        new_reflection = json_serializer.serialize([reflection, obj]) #Reflection.objects.filter(id=reflection.id))
-        return HttpResponse(new_reflection, mimetype='text/plain')
+        # return all reflections, so we're always in sync with the whole list for an object
+        return ajax_list(request, request.POST["content_type"], request.POST["object_id"])
 
 
 def ajax_list(request, content_type = None, object_id = None):
     # obj = get_object_of_reflection(content_type, object_id)
     reflections = Reflection.objects.filter(object_id=object_id)
-    return render_to_response('reflections/list.html', { 'reflections': reflections }, context_instance=RequestContext(request))
+    obj_array = get_content_type_and_object(content_type, object_id)
+    return render_to_response('reflections/list.html', { 'reflections': reflections, 'obj':obj_array[1] }, context_instance=RequestContext(request))
     
 
 def ajax_show(request, reflection_id):
@@ -63,7 +63,7 @@ def ajax_delete(request, reflection_id):
     return render_to_response('reflections/edit.html', { 'form': form }, context_instance=RequestContext(request))
     
     
-def get_object_of_reflection(content_type = None, object_id = None):
+def get_content_type_and_object(content_type = None, object_id = None):
     if (content_type == "asset"):
         app_label = "assets"
     elif (content_type == "assetalias"):
@@ -74,4 +74,4 @@ def get_object_of_reflection(content_type = None, object_id = None):
         app_label = "unknown"
         
     reflectedOnType = ContentType.objects.get(app_label=app_label, model=content_type)
-    return reflectedOnType.get_object_for_this_type(id=object_id)
+    return [reflectedOnType, reflectedOnType.get_object_for_this_type(id=object_id)]
