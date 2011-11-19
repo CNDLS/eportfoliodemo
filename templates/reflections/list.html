@@ -6,7 +6,7 @@
                     {% if reflection.title != "" %}
                             <h4 class="title">{{ reflection.title }}</h4>
                         {% else %}
-                            <h4 class="title">on {{ obj.name }}</h4>
+                            <h4 class="title">on '{{ reflection.content_object.name }}'</h4>
                         {% endif %}
                     <div class="comment"><a href="{{ AJAX_PREFIX }}/reflections/{{ reflection.id }}" class="fancybox">{{ reflection.comment_abbr }}</a></div>     
                 </li>  

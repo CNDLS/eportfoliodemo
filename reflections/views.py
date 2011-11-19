@@ -21,7 +21,7 @@ def ajax_new(request, content_type = None, object_id = None):
     })
     
     obj_array = get_content_type_and_object(content_type, object_id)
-    return render_to_response('reflections/edit.html', { 'form': form, 'obj':obj_array[1] }, context_instance=RequestContext(request))
+    return render_to_response('reflections/edit.html', { 'form': form, 'action': 'create', 'obj':obj_array[1] }, context_instance=RequestContext(request))
 
 
 def ajax_create(request):
@@ -40,12 +40,11 @@ def ajax_create(request):
         # return all reflections, so we're always in sync with the whole list for an object
         return ajax_list(request, request.POST["content_type"], request.POST["object_id"])
 
-
+# list reflections for a selected object
 def ajax_list(request, content_type = None, object_id = None):
     # obj = get_object_of_reflection(content_type, object_id)
     reflections = Reflection.objects.filter(object_id=object_id)
-    obj_array = get_content_type_and_object(content_type, object_id)
-    return render_to_response('reflections/list.html', { 'reflections': reflections, 'obj':obj_array[1] }, context_instance=RequestContext(request))
+    return render_to_response('reflections/list.html', { 'reflections': reflections }, context_instance=RequestContext(request))
     
 
 def ajax_show(request, reflection_id):
@@ -53,14 +52,29 @@ def ajax_show(request, reflection_id):
     return render_to_response('reflections/show.html', { 'reflection': reflection }, context_instance=RequestContext(request))
 
 
-def ajax_update(request, reflection_id):
-    form = ReflectionForm(instance=Reflection.objects.get(pk=reflection_id))
-    return render_to_response('reflections/edit.html', { 'form': form }, context_instance=RequestContext(request))
+def ajax_edit(request, reflection_id):
+    reflection = Reflection.objects.get(pk=reflection_id)
+    form = ReflectionForm(instance=reflection)
+    return render_to_response('reflections/edit.html', { 'form': form, 'action': 'edit', 'reflection': reflection, 'obj': reflection.content_object }, context_instance=RequestContext(request))
 
+
+def ajax_update(request, reflection_id):
+    if request.method == "POST":
+        reflection = Reflection.objects.get(pk=reflection_id)
+        reflection.title = request.POST['title']
+        reflection.comment = request.POST['comment']
+        reflection.modified = datetime.now()
+        reflection.save()
+        # return all reflections, so we're always in sync with the whole list for an object
+        return ajax_list(request, request.POST["content_type"], request.POST["object_id"])
 
 def ajax_delete(request, reflection_id):
-    form = ReflectionForm(instance=Reflection.objects.get(pk=reflection_id))
-    return render_to_response('reflections/edit.html', { 'form': form }, context_instance=RequestContext(request))
+    if request.is_ajax():
+        reflection = Reflection.objects.get(pk=reflection_id)
+        content_type = reflection.content_type
+        object_id = reflection.object_id
+        reflection.delete()
+        return ajax_list(request, content_type, object_id)
     
     
 def get_content_type_and_object(content_type = None, object_id = None):
