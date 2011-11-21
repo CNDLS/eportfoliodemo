@@ -10,7 +10,7 @@ from eportfoliodemo.libraryitems.views import get_librarytree_items_for
 from eportfoliodemo.collectionitems.views import get_collectiontree_items_for
 
 from django.core import serializers
-
+from django.utils import simplejson
 # Shows a list of the user's projects
 def show(request, user_id):
 	projects = Project.objects.filter(owner=user_id)
@@ -42,7 +42,7 @@ def display_project(request, user_id, project_slug):
                   
 def create_project(request, user_id, project_slug = None):
 	form = ProjectForm()
-	project = Project()
+	
 
 	# If a project needs to be updated, then supply the form with the current values
 	if project_slug != None:
@@ -54,11 +54,23 @@ def create_project(request, user_id, project_slug = None):
 			'privacy': project.privacy,
 			'template': project.template
 		})
+		# current_form = {}
+		# current_form = {'name': project.name, 'slug': project.slug, 'description':project.description, 'privacy':project.privacy, 'template':project.template.name}
 		# json_serializer = serializers.get_serializer("json")()
-		# form = json_serializer.serialize([form])
-		return HttpResponse(form, mimetype='text/plain')
+		# current_form = json_serializer.serialize([current_form])
+		# return HttpResponse(form, mimetype='text/plain')
+		# return HttpResponse(simplejson.dumps(current_form))
+		return render_to_response('present/editform.html', { 'form': form, 'project_slug':project_slug }, context_instance=RequestContext(request))
 
 	if request.method == 'POST':
+		# try:
+		# 	project = Project.objects.get(owner=user_id, slug=project_slug)
+		# except:
+		# 	project = Project()
+		try:
+			project = Project.objects.get(owner=user_id, slug=request.POST['project_slug'])
+		except:
+			project = Project()
 		for field_name in ['name','slug','description','privacy']:
 			if (field_name != 'id') and (field_name[0] != "_"):
 				setattr(project, field_name, request.POST[field_name])

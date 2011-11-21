@@ -18,7 +18,7 @@
         var app_url = "{{ request.META.SCRIPT_NAME }}";
         var ajax_prefix = "{{ AJAX_PREFIX }}";
         //alert(ajax_prefix)
-	</script>
+    </script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/inflection.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/application.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/metadata.js"></script>
@@ -26,8 +26,8 @@
     <script type="text/javascript" src="{{ MEDIA_URL }}js/libraryitems.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/collectionitems.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.timeago.js"></script>
-	<script type="text/javascript" src="{{ MEDIA_URL }}js/windowflip.js"></script>
-	<script type="text/javascript" src="{{ MEDIA_URL }}js/librarydisplay.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/windowflip.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/librarydisplay.js"></script>
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/base/jquery-ui.css" type="text/css" media="all" />
 
 
@@ -35,21 +35,12 @@
         $(document).ready(function() {
             
             /** TODO: ICON FOR CLOSING TABS **/
+            
             var $tabs = $( "#project-tabs").tabs({
             //var $tabs = $( "#tabs").tabs({
                 tabTemplate: "<li><a href='#{href}'>#{label}</a> <span class='ui-icon ui-icon-close'>Close</span></li>",
-                // ajaxOptions: {
-                // error: function( xhr, status, index, anchor ) {
-                //     $( anchor.hash ).html(
-                //         "Couldn't load this tab. We'll try to fix this as soon as possible. " +
-                //         "If this wouldn't be a demo." );
-                // }
-                // add: function(event, ui) {
-                //     $tabs.tabs('select', '#' + ui.panel.id);
-                // }
                 add: function( event, ui ) {
-                    // var tab_content = 'WORK';
-                    // $( "ui.panel" ).html( "<p>" + tab_content + "</p>" );
+
                     var project_slug = ui.panel.id
                     $.ajax({
                     url: "{{request.META.SCRIPT_NAME}}/present/{{request.user.id}}/project/"+project_slug+"/update/",
@@ -59,33 +50,12 @@
                             return false;
                         }
                         //alert(data)
-                        $( ui.panel ).append('<form>'+data+'<input type="submit" value="update" /></form>')
-                        //$("#project-items").html(data)
-                        //$("#tabs").tabs('load', data); //Display the content over
+                        $( ui.panel ).append(data)
                     }    
                     }); //End ajax call
-                },
-                // select: function( event, ui ) {
-                //     //var tab_content = 'WORK';
-                //     //$( "#default-projects" ).html( "<p>" + tab_content + "</p>" );
-                //     //$( ui.panel ).append( "<p>" + tab_content + "</p>" );
-                //     var project_slug = ui.panel.id
-                //     $.ajax({
-                //     url: "{{request.META.SCRIPT_NAME}}/present/{{request.user.id}}/project/"+project_slug+"/update/",
-                //     success: function( data ) {
-                //         if (data.error) {
-                //             alert (data.error)
-                //             return false;
-                //         }
-                //         //alert(data)
-                //         $( ui.panel ).append('<form>'+data+'<input type="submit" value="update" /></form>')
-                //         //$("#project-items").html(data)
-                //         //$("#tabs").tabs('load', data); //Display the content over
-                //     }    
-                //     }); //End ajax call
-                // }
+                },                
             });
-            
+    
 
             $('#project-form').hide();
             $('#create-new-project').click(function(){
@@ -97,28 +67,8 @@
                 var project_slug = $(this).attr('data-project-slug')
                 //$('#tabs').tabs("add","{{request.META.SCRIPT_NAME}}/present/{{request.user.id}}/project/"+project_slug+"/update/",title, 1);
                 $('#project-tabs').tabs("add","#"+project_slug,title, 1);
-                
-        
-                
+                //return false;
             }); //End click event
-
-            // $( "#project-tabs" ).live( "tabsselect", function(event, ui) {
-            //     var project_slug = ui.panel.id
-            //     $.ajax({
-            //         url: "{{request.META.SCRIPT_NAME}}/present/{{request.user.id}}/project/"+project_slug+"/update/",
-            //         dataType: "json",
-            //         success: function( data ) {
-            //             if (data.error) {
-            //                 alert (data.error)
-            //                 return false;
-            //             }
-            //             alert(data)
-            //             $(ui.panel).append('ewr')
-            //             //$("#project-items").html(data)
-            //             //$("#tabs").tabs('load', data); //Display the content over
-            //         }    
-            //     }); //End ajax call
-            // });
 
             $( "#project-tabs span.ui-icon-close" ).live( "click", function() {
                 var index = $( "li", $tabs ).index( $( this ).parent() );
@@ -173,13 +123,13 @@
                 </header>
                 
                 <div id="collection_options">
-                	<h1>Collect stuff to add to your Library!</h1>
+                    <h1>Collect stuff to add to your Library!</h1>
                     <h2>How should you collect? Here are your options.</h2>
                     <ul>
-                    	<li><a href="#" id="upload"><h3>Simple File Upload</h3> Upload documents one at-a-time (or as a batch)!</a></li>
-                    	<li><a href="#" id="dropbox"><h3>Sync with DropBox</h3> Install a plug-in to manage your files easily from your DropBox folder.</a></li>
-                    	<li><a href="#" id="citations"><h3>Import citations</h3> Connect your Zotero, Diigo, or Endnote account.</a></li>
-                    	<li><a href="#" id="email"><h3>E-mail attachments</h3> Add items to your library by attaching them to an e-mail!</a></li>
+                        <li><a href="#" id="upload"><h3>Simple File Upload</h3> Upload documents one at-a-time (or as a batch)!</a></li>
+                        <li><a href="#" id="dropbox"><h3>Sync with DropBox</h3> Install a plug-in to manage your files easily from your DropBox folder.</a></li>
+                        <li><a href="#" id="citations"><h3>Import citations</h3> Connect your Zotero, Diigo, or Endnote account.</a></li>
+                        <li><a href="#" id="email"><h3>E-mail attachments</h3> Add items to your library by attaching them to an e-mail!</a></li>
                     </ul>
                 </div>
                 
@@ -197,20 +147,21 @@
                         <li><a class="button" href="#" id="icon_view">Icon</a></li>
                     </ul>
                 </header>
-            	
+                
                 <div id="default-projects">
-				{% if projects %}
+                {% if projects %}
                     <h1> Current Projects </h1>
-					<ul>
+                    <ul>
                     {% for project in projects %}
-	                    <li><a href="{{request.META.SCRIPT_NAME}}/present/{{request.user.id}}/public/{{project.slug}}/"> {{ project }} - </a> 
+                        <li><a href="{{request.META.SCRIPT_NAME}}/present/{{request.user.id}}/public/{{project.slug}}/"> {{ project }} - </a> 
                             <a href="#" class="button edit-project" data-project-name="{{project.name}}" data-project-slug="{{project.slug}}"> edit &nbsp;&nbsp;</a>
+                            <!-- <a href="{{request.META.SCRIPT_NAME}}/present/{{request.user.id}}/project/{{ project.slug }}/update/" class="button edit-project" data-project-name="{{project.name}}" data-project-slug="{{project.slug}}"> edit &nbsp;&nbsp;</a> -->
                             <a href="{{request.META.SCRIPT_NAME}}/present/{{request.user.id}}/project/{{project.slug}}/pages/add/" class="button"> Attach Pages </a>
                         </li>
-	                {% endfor %}    
-	                </ul>
-				{% endif %}
-				<h2> <a href="#" id="create-new-project"> Create a new project </a></h2>
+                    {% endfor %}    
+                    </ul>
+                {% endif %}
+                <h2> <a href="#" id="create-new-project"> Create a new project </a></h2>
 
                 <form id="project-form" name="project-form" method="post" action="{{request.META.SCRIPT_NAME}}/present/{{request.user.id}}/project/create/"> {% csrf_token %}
                     <p> <label for="id_name">Name:</label> {{ form.name }} </p>
@@ -258,7 +209,7 @@
         
 {% endblock %}
 
-{% block footer %}	
+{% block footer %}  
         
     <div id="upload-button">
         <p>Upload +</p>
