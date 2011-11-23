@@ -4,6 +4,7 @@ from django.template import RequestContext
 
 from eportfoliodemo.reflections.models import Reflection
 from eportfoliodemo.reflections.forms import ReflectionForm
+
 from datetime import datetime
 
 from django.contrib.contenttypes.models import ContentType

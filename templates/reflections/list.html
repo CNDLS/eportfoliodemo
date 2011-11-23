@@ -8,7 +8,7 @@
                         {% else %}
                             <h4 class="title">on '{{ reflection.content_object.name }}'</h4>
                         {% endif %}
-                    <div class="comment"><a href="{{ AJAX_PREFIX }}/reflections/{{ reflection.id }}" class="fancybox">{{ reflection.comment_abbr }}</a></div>     
+                    <div class="comment"><a href="{{ AJAX_PREFIX }}/reflections/{{ reflection.id }}" class="fancybox">{{ reflection.comment_abbr|safe }}</a></div>     
                 </li>  
 			{% endfor %}                             
         </ol>

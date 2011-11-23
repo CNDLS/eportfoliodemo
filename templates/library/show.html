@@ -1,7 +1,10 @@
 m{% extends "base.html" %}
 {% load metadataform_tags %}
 
-{% block extra_styles %}<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/library.css" />{% endblock %}
+{% block extra_styles %}
+  <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/library.css" />
+  <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/jquery.wysiwyg.css" />
+{% endblock %}
 
 {% block custom_scripts %}
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.core.js"></script>
@@ -32,6 +35,9 @@ m{% extends "base.html" %}
 	<script type="text/javascript" src="{{ MEDIA_URL }}js/windowflip.js"></script>
 	<script type="text/javascript" src="{{ MEDIA_URL }}js/librarydisplay.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-ui-1.8.16.custom.min.js"></script>
+      <script type="text/javascript" src="{{ MEDIA_URL }}js/jwysiwyg/jquery.wysiwyg.js"></script>
+        <script type="text/javascript" src="{{ MEDIA_URL }}js/jwysiwyg/wysiwyg.link.js"></script>
+        <script type="text/javascript" src="{{ MEDIA_URL }}js/jwysiwyg.init.js"></script>
 {% endblock %}
 
 {% block title %}
