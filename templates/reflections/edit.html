@@ -1,5 +1,5 @@
 <h2>Reflection on '{{ obj.name }}'</h2>
-<div id=reflections_editor>
+<div id="reflections_editor">
   {% if action == "create" %}
     <form action="{% url ajax_create_reflection %}" id="reflection-form" method="POST">{% csrf_token %}
   {% endif %}
