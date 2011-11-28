@@ -1,4 +1,4 @@
-m{% extends "base.html" %}
+{% extends "base.html" %}
 {% load metadataform_tags %}
 
 {% block extra_styles %}
@@ -78,6 +78,7 @@ m{% extends "base.html" %}
        
         
         <div id="library" role="main" class="center">
+        {% block center_content %}
             
             <div id="collect">
     
@@ -154,6 +155,7 @@ m{% extends "base.html" %}
                 
             </div><!--/#library-items-->
                     
+           {% endblock %}
         </div><!--/#library-->
         
         <div id="right">

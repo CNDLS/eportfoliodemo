@@ -1,0 +1,14 @@
+{% extends "library/show.html" %}
+
+{% block nav_tabs %}
+    <li><a href="{{ request.META.SCRIPT_NAME }}/library/{{ request.user.id }}" class="">Library</a></li>
+    <li><a href="#" class="active">{{ project }}</a></li>
+{% endblock %}
+
+{% block center_content %}
+<div id="compose">
+    <header class="panelheader">
+        (Compose Content into Template)
+    </header>
+</div>
+{% endblock %}

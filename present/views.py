@@ -9,8 +9,12 @@ from django.contrib.auth.models import User
 from eportfoliodemo.libraryitems.views import get_librarytree_items_for
 from eportfoliodemo.collectionitems.views import get_collectiontree_items_for
 
+from eportfoliodemo.settings import MEDIA_ROOT, AJAX_PREFIX
+
 from django.core import serializers
 from django.utils import simplejson
+
+
 # Shows a list of the user's projects
 def show(request, user_id):
 	projects = Project.objects.filter(owner=user_id)
@@ -85,6 +89,28 @@ def create_project(request, user_id, project_slug = None):
 	return render_to_response('present/create_project.html',
 	 							{'form': form},
 	 							context_instance=RequestContext(request))
+	 							
+	 							
+def compose_project(request, user_id, project_slug=None):
+    project = Project.objects.get(slug=project_slug)
+    requested_user = User.objects.get(pk=user_id)
+    current_user = User.objects.get(pk=request.user.id)
+    
+    # get all the folders & assets.
+    items_in_library_tree = get_librarytree_items_for(requested_user)
+        
+    # get all the collections & asset aliases.
+    # it's a tree, but without hierarchy (gets us dragging, renaming, etc. parallel to lib).
+    items_in_collections_tree = get_collectiontree_items_for(requested_user)
+    
+    return render_to_response('present/compose_project.html', { 'project': project, 
+                                                                'requested_user': requested_user,
+                                                                  'current_user': current_user,
+                                                                  'folder_nodes': items_in_library_tree,
+                                                                  'collections_nodes': items_in_collections_tree,
+                                                                  'AJAX_PREFIX': AJAX_PREFIX },
+                                                                  context_instance=RequestContext(request))
+	 							
 
 def add_page(request, user_id, project_slug=None):
 	project = Project.objects.get(owner=user_id, slug=project_slug)

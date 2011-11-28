@@ -59,8 +59,10 @@
     
         <nav id="tabs">
             <ul>
-                <li><a href="#" class="active">Library</a></li>
                 <!-- <li><a class="new-project" href="#">+</a></li> -->
+                {% block nav_tabs %}
+                    <li><a href="#" class="active">Library</a></li>
+                {% endblock %}
             </ul>
         </nav>
                 

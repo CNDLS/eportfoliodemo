@@ -34,11 +34,11 @@
 <aside>
 <ul>
 {% for page in project.pages.all %}
-	<li> {{  page }} </li>
+	<li>{{  page }}</a></li>
 {% endfor %}
 <ul>
 </aside>
 {% endif %}
-    
+<a href="{{ request.META.SCRIPT_NAME }}/present/{{ request.user.id }}/{{ project.slug }}/compose">Compose</a>
 </body>
 </html>
