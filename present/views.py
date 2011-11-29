@@ -64,6 +64,8 @@ def create_project(request, user_id, project_slug = None):
 		# current_form = json_serializer.serialize([current_form])
 		# return HttpResponse(form, mimetype='text/plain')
 		# return HttpResponse(simplejson.dumps(current_form))
+		
+		
 		return render_to_response('present/editform.html', { 'form': form, 'project_slug':project_slug }, context_instance=RequestContext(request))
 
 	if request.method == 'POST':
@@ -103,7 +105,10 @@ def compose_project(request, user_id, project_slug=None):
     # it's a tree, but without hierarchy (gets us dragging, renaming, etc. parallel to lib).
     items_in_collections_tree = get_collectiontree_items_for(requested_user)
     
-    return render_to_response('present/compose_project.html', { 'project': project, 
+    project_stylesheet = project.template.template_url + '/style.css'
+    
+    return render_to_response('present/compose_project.html', { 'project': project,
+                                                                'project_stylesheet': project_stylesheet, 
                                                                 'requested_user': requested_user,
                                                                   'current_user': current_user,
                                                                   'folder_nodes': items_in_library_tree,

@@ -1,5 +1,12 @@
 {% extends "library/show.html" %}
 
+{% block extra_styles %}
+    <!-- stylesheets -->
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{{ project_stylesheet }}" />
+    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/composer.css" />
+{% endblock %}
+
 {% block nav_tabs %}
     <li><a href="{{ request.META.SCRIPT_NAME }}/library/{{ request.user.id }}" class="">Library</a></li>
     <li><a href="#" class="active">{{ project }}</a></li>
@@ -10,5 +17,47 @@
     <header class="panelheader">
         (Compose Content into Template)
     </header>
+    
+    <div id="wrap">
+    
+        <header id="mast" class="editable">
+            <div class="container">
+                <hgroup>
+                    <h1>{{ project.name }}</h1>            
+                    <h2>{{ project.description }}</h2>
+                </hgroup>
+            </div>
+        </header>
+        
+        <div class="container">
+        
+            <aside id="sidebar" class="editable">
+            </aside>
+            
+            <nav id="primary_nav" class="editable">  
+                <ul>
+                    {% if project.pages %}
+                        {% for page in project.pages.all %}
+                            <li><a href="#">{{ page }}</a></li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+            </nav>
+            
+            <section id="content" class="editable">      
+                <article>
+                    content and stuff here.
+                </article>
+            </section>
+            
+        </div><!--/container-->
+        
+        <footer id="footer" class="editable">
+        	<div class="container">
+            </div>
+        </footer>
+    
+    </div>
+    
 </div>
 {% endblock %}
