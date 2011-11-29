@@ -21,6 +21,15 @@
 	<link rel="shortcut icon" href="{{ MEDIA_URL }}favicon.ico">
 	<link rel="apple-touch-icon" href="{{ MEDIA_URL }}apple-touch-icon.png">
 
+    <script type="text/javascript">
+        var media_url = "{{ MEDIA_URL }}";
+        var app_url = "{{ request.META.SCRIPT_NAME }}";
+        var ajax_prefix = "{{ AJAX_PREFIX }}";
+        var username = "{{ request.user }}";
+        var userid = "{{ request.user.id }}"
+        //alert(ajax_prefix)
+    </script>
+
 	<!--[if lt IE 9]>
 	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->  
@@ -60,9 +69,11 @@
         <nav id="tabs">
             <ul>
                 <!-- <li><a class="new-project" href="#">+</a></li> -->
-                {% block nav_tabs %}
+                <!-- {% block nav_tabs %}
                     <li><a href="#" class="active">Library</a></li>
-                {% endblock %}
+                {% endblock %} -->
+                <li><a href="{{ request.META.SCRIPT_NAME }}/library/{{request.user.id}}" class="active">Library</a></li>
+                <li><a href="#" class="new-project">+</a></li>
             </ul>
         </nav>
                 
@@ -90,6 +101,9 @@
     <script src="{{ MEDIA_URL }}js/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
     <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}js/fancybox/jquery.fancybox-1.3.4.css" /> 
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-ui-1.8.16.custom.min.js"></script>
+
+    <!-- Tabs -->
+    <script src="{{ MEDIA_URL }}js/tabs.js"></script>
     {% block custom_scripts %}EPortfolio Tool{% endblock %}
     
 </body>

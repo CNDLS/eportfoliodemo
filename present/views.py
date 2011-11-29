@@ -88,9 +88,10 @@ def create_project(request, user_id, project_slug = None):
 		project.save()
 		return HttpResponseRedirect(request.META['SCRIPT_NAME']+'/present/'+str(request.user.id)+'/public/'+project.slug+'/')
 
-	return render_to_response('present/create_project.html',
-	 							{'form': form},
-	 							context_instance=RequestContext(request))
+	# return render_to_response('present/create_project.html',
+	#  							{'form': form},
+	#  							context_instance=RequestContext(request))
+	return render_to_response('present/editform.html', { 'form': form, 'project_slug':project_slug }, context_instance=RequestContext(request))
 	 							
 	 							
 def compose_project(request, user_id, project_slug=None):
@@ -106,7 +107,7 @@ def compose_project(request, user_id, project_slug=None):
     items_in_collections_tree = get_collectiontree_items_for(requested_user)
     
     project_stylesheet = project.template.template_url + '/style.css'
-    
+    # return render_to_response('present/editform.html', { 'form': form, 'project_slug':project_slug }, context_instance=RequestContext(request))
     return render_to_response('present/compose_project.html', { 'project': project,
                                                                 'project_stylesheet': project_stylesheet, 
                                                                 'requested_user': requested_user,
@@ -115,7 +116,10 @@ def compose_project(request, user_id, project_slug=None):
                                                                   'collections_nodes': items_in_collections_tree,
                                                                   'AJAX_PREFIX': AJAX_PREFIX },
                                                                   context_instance=RequestContext(request))
-	 							
+	# return render_to_response('present/create_project.html',
+	#  							{'form': form},
+	#  							context_instance=RequestContext(request))
+
 
 def add_page(request, user_id, project_slug=None):
 	project = Project.objects.get(owner=user_id, slug=project_slug)
