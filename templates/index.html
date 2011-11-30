@@ -16,12 +16,14 @@
 {% endif %}
 
 {% block content %}
+<div id="library">
 <ul>
   <li><a href="{{ request.META.SCRIPT_NAME }}/library">Collect</a></li>
   <li><a href="{{ request.META.SCRIPT_NAME }}/library">Organize</a></li>
   <li><a href="#">Present</a></li>
   <li><a href="#">Assess</a></li>
 </ul>
+</div> <!-- /#library -->
 
 <div id="projects">
 </div> <!-- /#projects -->
