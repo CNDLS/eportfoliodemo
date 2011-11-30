@@ -69,10 +69,10 @@
         <nav id="tabs">
             <ul>
                 <!-- <li><a class="new-project" href="#">+</a></li> -->
-                <!-- {% block nav_tabs %}
-                    <li><a href="#" class="active">Library</a></li>
-                {% endblock %} -->
                 <li><a href="{{ request.META.SCRIPT_NAME }}/library/{{request.user.id}}" class="active">Library</a></li>
+                {% block nav_tabs %}
+                    
+                {% endblock %}
                 <li><a href="#" class="new-project">+</a></li>
             </ul>
         </nav>

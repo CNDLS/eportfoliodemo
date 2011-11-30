@@ -1,11 +1,27 @@
 {% extends "base.html" %}
+{% block extra_styles %}
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/library.css" />
+	<!-- Stuff for the public page can go here -->
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/home.css" />
+{% endblock %}
+
+{% if projects %}
+{% block nav_tabs %}
+ 	
+ 	{% for project in projects %}
+ 		<li><a href="#" class="edit-project" data-project-name="{{project.name}}" data-project-slug="{{project.slug}}"> {{ project }} </a></li>
+ 	{% endfor %}
+
+{% endblock %}
+{% endif %}
 
 {% block content %}
-<ul>
 
+<ul>
   <li><a href="{{ request.META.SCRIPT_NAME }}/library">Collect</a></li>
   <li><a href="{{ request.META.SCRIPT_NAME }}/library">Organize</a></li>
   <li><a href="#">Present</a></li>
   <li><a href="#">Assess</a></li>
 </ul>
+
 {% endblock %}

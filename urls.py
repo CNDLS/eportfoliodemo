@@ -1,15 +1,25 @@
 from django.conf.urls.defaults import *
 from django.views.generic.simple import direct_to_template
 
+# from present.models import Project
 
 from django.contrib import admin
 admin.autodiscover()
+
+# projects_list_dict = {
+#     # Retrieve people (organized alphabetically)
+#     'queryset': Project.objects.filter(owner=1),
+#     'template_name': 'index.html',
+#     'template_object_name': 'project',
+# }
 
 urlpatterns = patterns('',
     # Example:
     # (r'^eportfoliodemo/', include('eportfoliodemo.foo.urls')),
 
-    (r'^$', direct_to_template, { 'template': 'index.html' }),
+    # (r'^$', 'django.views.generic.list_detail.object_list', projects_list_dict),
+    # (r'^$', direct_to_template, { 'template': 'index.html' }),
+    (r'^$', include('eportfoliodemo.home.urls')),
     (r'^assets/', include('eportfoliodemo.assets.urls')),
     (r'^assetaliases/', include('eportfoliodemo.assetaliases.urls')),
     (r'^profiles/', include('eportfoliodemo.profiles.urls')),

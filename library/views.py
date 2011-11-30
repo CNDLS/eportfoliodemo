@@ -21,7 +21,7 @@ from eportfoliodemo.collectionitems.views import get_collectiontree_items_for
 from eportfoliodemo.assets.models import Asset, FileType, AssetAlias
 
 from eportfoliodemo.settings import MEDIA_ROOT, AJAX_PREFIX
-
+from present.models import Project
 
 def show(request, user_id):
     requested_user = User.objects.get(pk=user_id)
@@ -42,6 +42,8 @@ def show(request, user_id):
     # think we'll be providing a default root folder for each library, just to keep this simple
     current_assets = Asset.objects.filter(owner=requested_user)
     
+    # List of projects on the tabs
+    projects = Project.objects.filter(owner=request.user)
     
     file_upload_form = FileUploadForm()
     if request.POST:
@@ -62,6 +64,7 @@ def show(request, user_id):
                       'folder_nodes': items_in_library_tree,
                       'collections_nodes': items_in_collections_tree,
                       'file_upload_form': file_upload_form,
-                      'AJAX_PREFIX': AJAX_PREFIX
+                      'AJAX_PREFIX': AJAX_PREFIX,
+                      'projects': projects
                     },
                     context_instance=RequestContext(request))
