@@ -27,21 +27,55 @@ from eportfoliodemo.libraryitems.views import get_librarytree_items_for
 from eportfoliodemo.libraryitems.models import LibraryItem
 
 
+from django.utils import simplejson
+from django.core import serializers
+from django.db.models.query import QuerySet
+from django.core.serializers.json import DjangoJSONEncoder
+
+class HandleQuerySets(DjangoJSONEncoder):
+     """ DjangoJSONEncoder extension: handle querysets """
+     def default(self, obj):
+         if isinstance(obj, QuerySet):
+             return serializers.serialize("python", obj, ensure_ascii=False)
+         return DjangoJSONEncoder.default(self, obj)
+
 def ajax_create_asset(request):
+    assets_list = []
     if request.method == "POST":
-        file_type = request.FILES['file'].content_type.split('/')[1]
-        asset = Asset()
-        asset.owner = request.user
-        asset.name = str.replace(str(request.FILES['file']), MEDIA_ROOT, '')
-        asset_type, created = FileType.objects.get_or_create(name=file_type)
-        asset.file = request.FILES['file']
-        asset.size = request.FILES['file'].size
-        asset.save()
-        asset.filetype.add(asset_type)
-        json_serializer = serializers.get_serializer("json")()
-        new_asset = json_serializer.serialize(Asset.objects.filter(id=asset.id))
-        # return HttpResponse (new_asset, mimetype='application/json')
-        return HttpResponse (new_asset, mimetype='text/plain')
+        for uploaded_file in request.FILES.getlist('uploads'):
+            file_type = uploaded_file.content_type.split('/')[1]
+            asset = Asset()
+            asset.owner = request.user
+            asset.name = str.replace(str(uploaded_file), MEDIA_ROOT, '')
+            asset_type, created = FileType.objects.get_or_create(name=file_type)
+            asset.file = uploaded_file
+            asset.size = uploaded_file.size
+            asset.save()
+            asset.filetype.add(asset_type)
+            new_asset = Asset.objects.filter(id=asset.id)
+            assets_list.append(new_asset)
+            # return HttpResponse (new_asset, mimetype='application/json')
+            # return HttpResponse (new_asset, mimetype='text/plain')
+        # json_serializer = serializers.get_serializer("json")()
+        # assets_list = json_serializer.serialize(assets_list)
+        final_list = simplejson.dumps( assets_list, cls=HandleQuerySets)
+        return HttpResponse ( final_list, mimetype='text/plain')
+        
+# def ajax_create_asset(request):
+#     if request.method == "POST":
+#         file_type = request.FILES['file'].content_type.split('/')[1]
+#         asset = Asset()
+#         asset.owner = request.user
+#         asset.name = str.replace(str(request.FILES['file']), MEDIA_ROOT, '')
+#         asset_type, created = FileType.objects.get_or_create(name=file_type)
+#         asset.file = request.FILES['file']
+#         asset.size = request.FILES['file'].size
+#         asset.save()
+#         asset.filetype.add(asset_type)
+#         json_serializer = serializers.get_serializer("json")()
+#         new_asset = json_serializer.serialize(Asset.objects.filter(id=asset.id))
+#         # return HttpResponse (new_asset, mimetype='application/json')
+#         return HttpResponse (new_asset, mimetype='text/plain')
 
 def ajax_get_asset(request):
     requested_asset = request.GET['asset']
@@ -66,8 +100,6 @@ def ajax_update_asset(request):
         json_serializer = serializers.get_serializer("json")()
         new_asset = json_serializer.serialize(Asset.objects.filter(id=asset.id))
         return HttpResponse (new_asset, mimetype='text/plain')
-
-
 
 def ajax_get_file_type(request):
     if request.is_ajax:

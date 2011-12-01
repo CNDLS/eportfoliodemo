@@ -139,10 +139,12 @@
 				
                 <iframe id="upload_target" name="upload_target" src="" style="width:0px;height:0px;"></iframe>
                 <div id="fileupload">
+
                     Add an item using the form below:
                     <form action="{% url ajax_create_asset %}" method="post" enctype="multipart/form-data" id="fileupload-form" target="upload_target">{% csrf_token %}
                     <p>
-                        {{ file_upload_form.file }}
+                        <!-- {{ file_upload_form.file }} -->
+                        <input name='uploads' type=file multiple>
                     </p>
                     <!-- This is the file input goes -->
                     <noscript>          
