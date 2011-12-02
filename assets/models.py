@@ -59,7 +59,7 @@ class AssetAlias(CollectionItem):
         return self.asset.name
             
     def __unicode__(self):
-        return self.name
+        return self.asset.name
 
     class MPTTMeta:
         level_attr = 'mptt_level'

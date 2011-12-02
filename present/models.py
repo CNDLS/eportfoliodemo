@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 import tagging
 from tagging.models import Tag
 from tagging.fields import TagField
+from assets.models import AssetAlias
 
 class Page(models.Model):
     name = models.CharField(max_length=255, blank=True)
@@ -14,6 +15,7 @@ class Page(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
     privacy = models.CharField(max_length=1, choices=PRIVACY, blank=False, default='1')
+    items = models.ManyToManyField(AssetAlias, blank=True, null=True)
     tags = TagField()
 
     def __unicode__(self):
