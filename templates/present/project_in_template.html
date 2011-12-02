@@ -1,41 +1,45 @@
-<div id="wrap">
+<section id="basic-template">
+    
+    <div id="basic-wrap">
+     
+         <header id="basic-mast" class="editable">
+             <div class="basic-container">
+                 <hgroup>
+                     <h1>{{ project.name }}</h1>            
+                     <h2>{{ project.description }}</h2>
+                 </hgroup>
+                 <a href="{{ request.META.SCRIPT_NAME }}/present/{{ request.user.id }}/{{ project.slug }}/compose">Compose</a>
+             </div>
+         </header>
+         
+         <div class="basic-container" data-project-slug="{{ project.slug }}" data-page-nbr="1">
+         
+             <aside id="basic-sidebar" class="editable">
+             </aside>
+             
+             <nav id="basic-primary_nav" class="editable">  
+                 <ul>
+                     {% if project.pages %}
+                         {% for page in project.pages.all %}
+                             <li><a href="#">{{ page }}</a></li>
+                         {% endfor %}
+                     {% endif %}
+                 </ul>
+             </nav>
+             
+             <section id="basic-page_content" class="editable">      
+                 <article>
+                     content and stuff here.
+                 </article>
+             </section>
+             
+         </div><!--/container-->
+         
+         <footer id="basic-page_footer" class="editable">
+            <div class="basic-container">
+             </div>
+         </footer>
+     
+     </div>
  
-     <header id="mast" class="editable">
-         <div class="container">
-             <hgroup>
-                 <h1>{{ project.name }}</h1>            
-                 <h2>{{ project.description }}</h2>
-             </hgroup>
-             <a href="{{ request.META.SCRIPT_NAME }}/present/{{ request.user.id }}/{{ project.slug }}/compose">Compose</a>
-         </div>
-     </header>
-     
-     <div class="container" data-project-slug="{{ project.slug }}" data-page-nbr="1">
-     
-         <aside id="sidebar" class="editable">
-         </aside>
-         
-         <nav id="primary_nav" class="editable">  
-             <ul>
-                 {% if project.pages %}
-                     {% for page in project.pages.all %}
-                         <li><a href="#">{{ page }}</a></li>
-                     {% endfor %}
-                 {% endif %}
-             </ul>
-         </nav>
-         
-         <section id="page_content" class="editable">      
-             <article>
-                 content and stuff here.
-             </article>
-         </section>
-         
-     </div><!--/container-->
-     
-     <footer id="page_footer" class="editable">
-     	<div class="container">
-         </div>
-     </footer>
- 
- </div>
+ </section>
