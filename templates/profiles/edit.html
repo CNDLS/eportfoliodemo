@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 
+{% block extra_styles %}
+    <!-- stylesheets -->
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/profiles.css" />
+{% endblock %}
+
 {% block title %}Edit User Profile{% endblock %}
 {% block content %}
 

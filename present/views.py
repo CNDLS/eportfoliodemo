@@ -9,6 +9,10 @@ from django.contrib.auth.models import User
 from eportfoliodemo.libraryitems.views import get_librarytree_items_for
 from eportfoliodemo.collectionitems.views import get_collectiontree_items_for
 
+from eportfoliodemo.reflections.models import Reflection
+from eportfoliodemo.reflections.views import get_content_type_and_object
+
+from eportfoliodemo.assets.models import AssetAlias
 from eportfoliodemo.settings import MEDIA_ROOT, AJAX_PREFIX
 
 from django.core import serializers
@@ -37,7 +41,7 @@ def show(request, user_id):
 def display_project(request, user_id, project_slug):
 	project = Project.objects.get(slug = project_slug)
 
-	project_stylesheet = project.template.template_url + '/style.css'
+	project_stylesheet = project.template.template_url + 'style.css'
 	return render_to_response('present/display_project.html',
                     { 'project': project,
                       'project_stylesheet': project_stylesheet
@@ -106,7 +110,7 @@ def compose_project(request, user_id, project_slug=None):
     # it's a tree, but without hierarchy (gets us dragging, renaming, etc. parallel to lib).
     items_in_collections_tree = get_collectiontree_items_for(requested_user)
     
-    project_stylesheet = project.template.template_url + '/style.css'
+    project_stylesheet = project.template.template_url + 'style.css'
     # return render_to_response('present/editform.html', { 'form': form, 'project_slug':project_slug }, context_instance=RequestContext(request))
     return render_to_response('present/compose_project.html', { 'project': project,
                                                                 'project_stylesheet': project_stylesheet, 
@@ -120,6 +124,16 @@ def compose_project(request, user_id, project_slug=None):
 	#  							{'form': form},
 	#  							context_instance=RequestContext(request))
 
+def project_in_template(request, user_id, project_slug=None):
+    project = Project.objects.get(slug=project_slug)
+    requested_user = User.objects.get(pk=user_id)
+    project_stylesheet = project.template.template_url + 'style.css'
+    
+    return render_to_response('present/compose_project.html', { 'project': project,
+                                                                'project_stylesheet': project_stylesheet, 
+                                                                'requested_user': requested_user,
+                                                                  'AJAX_PREFIX': AJAX_PREFIX },
+                                                                  context_instance=RequestContext(request))
 
 def add_page(request, user_id, project_slug=None):
 	project = Project.objects.get(owner=user_id, slug=project_slug)
@@ -141,3 +155,31 @@ def add_page(request, user_id, project_slug=None):
 	return render_to_response('present/create_page.html',
 	 							{'form': form},
 	 							context_instance=RequestContext(request))
+	 							
+	 							
+def add_content(request, user_id, content_type, object_id, project_slug, pg_nbr=1):
+    project = Project.objects.get(owner=user_id, slug=project_slug)
+    # page = Page.objects.get() # how does page get associated with a project or template? -- shouldn't page containers link to objects?
+    obj_array = get_content_type_and_object(content_type, object_id)
+    
+    obj = obj_array[1]
+    json_serializer = serializers.get_serializer("json")()
+    if (content_type == "assetalias"):
+        asset = obj.asset
+    else:
+        asset = obj
+        
+    reflections = Reflection.objects.filter(object_id=obj_array[1].pk)
+    obj_data = [asset]
+    for reflection in reflections:
+        obj_data.append(reflection)
+        
+    json_obj = json_serializer.serialize(obj_data)
+    return HttpResponse (json_obj, mimetype='application/json')
+     
+    # return render_to_response('present/content.html',
+    #                               { 'project':project, 
+    #                                 'obj':obj_array[1],
+    #                                   'AJAX_PREFIX': AJAX_PREFIX },
+    #                               context_instance=RequestContext(request))
+    

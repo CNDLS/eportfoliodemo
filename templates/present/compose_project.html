@@ -1,4 +1,7 @@
 {% extends "library/show.html" %}
+{% block title %}
+    {{ project.title }} Composition
+{% endblock %}
 
 {% block extra_styles %}
     <!-- stylesheets -->
@@ -6,6 +9,12 @@
     <link rel="stylesheet" type="text/css" href="{{ project_stylesheet }}" />
     <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/composer.css" />
 {% endblock %}
+
+{% block custom_scripts %}
+  {{ block.super }}
+  <script type="text/javascript" src="{{ MEDIA_URL }}js/composition.js"></script>
+{% endblock %}
+
 
 {% comment %}
 {% block nav_tabs %}
@@ -15,51 +24,13 @@
 {% endcomment %}
 
 {% block center_content %}
-<div id="compose">
-    <header class="panelheader">
-        (Compose Content into Template)
-    </header>
-    
-    <div id="wrap">
-    
-        <header id="mast" class="editable">
-            <div class="container">
-                <hgroup>
-                    <h1>{{ project.name }}</h1>            
-                    <h2>{{ project.description }}</h2>
-                </hgroup>
-            </div>
-        </header>
-        
-        <div class="container">
-        
-            <aside id="sidebar" class="editable">
-            </aside>
-            
-            <nav id="primary_nav" class="editable">  
-                <ul>
-                    {% if project.pages %}
-                        {% for page in project.pages.all %}
-                            <li><a href="#">{{ page }}</a></li>
-                        {% endfor %}
-                    {% endif %}
-                </ul>
-            </nav>
-            
-            <section id="content" class="editable">      
-                <article>
-                    content and stuff here.
-                </article>
-            </section>
-            
-        </div><!--/container-->
-        
-        <footer id="footer" class="editable">
-        	<div class="container">
-            </div>
-        </footer>
-    
-    </div>
-    
+
+<div id="library" role="main" class="composer center">
+  
+  <header class="panelheader">
+  </header>
+  {% include "present/project_in_template.html" %}
+  
+  <!-- <iframe src="{% url project_in_template request.user.id, project.slug %}" /> -->
 </div>
 {% endblock %}
