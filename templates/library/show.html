@@ -109,7 +109,7 @@
                     </ul>
                 </header>
             	
-				{% if current_assets %}
+				{% comment %} {% if current_assets %} {% endcomment %}
                     <div id="files" class="innerpane">
                         <header>
                             <abbr class="size">Size</abbr>
@@ -135,7 +135,7 @@
                         </ol>
                     </div>  
 
-				{% endif %}
+				{% comment %} {% endif %} {% endcomment %}
 				
                 <iframe id="upload_target" name="upload_target" src="" style="width:0px;height:0px;"></iframe>
                 <div id="fileupload">
