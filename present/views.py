@@ -112,13 +112,16 @@ def compose_project(request, user_id, project_slug=None):
     
     project_stylesheet = project.template.template_url + 'style.css'
     # return render_to_response('present/editform.html', { 'form': form, 'project_slug':project_slug }, context_instance=RequestContext(request))
+    projects = Project.objects.filter(owner=request.user)
+
     return render_to_response('present/compose_project.html', { 'project': project,
                                                                 'project_stylesheet': project_stylesheet, 
                                                                 'requested_user': requested_user,
                                                                   'current_user': current_user,
                                                                   'folder_nodes': items_in_library_tree,
                                                                   'collections_nodes': items_in_collections_tree,
-                                                                  'AJAX_PREFIX': AJAX_PREFIX },
+                                                                  'AJAX_PREFIX': AJAX_PREFIX,
+                                                                  'projects': projects },
                                                                   context_instance=RequestContext(request))
 	# return render_to_response('present/create_project.html',
 	#  							{'form': form},
