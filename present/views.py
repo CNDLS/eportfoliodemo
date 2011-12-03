@@ -156,7 +156,7 @@ def add_page(request, user_id, project_slug=None):
 		return HttpResponseRedirect(request.META['SCRIPT_NAME']+'/present/'+str(request.user.id)+'/public/'+project.slug+'/')
 
 	return render_to_response('present/create_page.html',
-	 							{'form': form},
+	 							{'form': form, 'project': project},
 	 							context_instance=RequestContext(request))
 	 							
 	 							

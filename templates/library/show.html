@@ -166,7 +166,9 @@
         
          {% endblock %}
          
+        
         <div id="right">
+            {%  block right_sidebar %}
             <header class="panelheader">
                     <h2>Meta</h2>
             </header>
@@ -193,8 +195,11 @@
                     <h3>Reflections</h3>
                     <p id="reflections"></p>
                 </div>
+
             </div>
+            {% endblock %}
         </div><!--/#right-->
+        
         
     </div><!--/#panels-->
         
