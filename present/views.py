@@ -12,7 +12,7 @@ from eportfoliodemo.collectionitems.views import get_collectiontree_items_for
 from eportfoliodemo.reflections.models import Reflection
 from eportfoliodemo.reflections.views import get_content_type_and_object
 
-from eportfoliodemo.assets.models import AssetAlias
+from eportfoliodemo.assets.models import Asset, AssetAlias
 from eportfoliodemo.settings import MEDIA_ROOT, AJAX_PREFIX
 
 from django.core import serializers
@@ -169,6 +169,30 @@ def get_page_content(request, user_id, page_id=None, project_id=None):
 		page = json_serializer.serialize([request_page])
 
 	return HttpResponse (page, mimetype='application/json')
+
+def update_page(request, user_id, page_id=None, project_id=None):
+	project = Project.objects.get(id=project_id)
+	pages = project.pages.all()
+
+	request_page = Page.objects.get(id=page_id)
+	json_serializer = serializers.get_serializer("json")()
+
+	items = request.GET.getlist('items[]')
+	
+	page_items = []
+	for item in items:
+		asset = Asset.objects.get(id=item)
+		asset_alias = AssetAlias.objects.get(asset=asset)
+		request_page.items.add(asset_alias)
+		request_page.save()
+		page_items.append(asset)
+
+	# if request_page in pages:
+	# 	
+	# 	page = json_serializer.serialize([request_page])
+	# return HttpResponse(simplejson.dumps(page_items))
+	page_items = json_serializer.serialize(page_items)
+	return HttpResponse (page_items, mimetype='application/json')
 	 							
 	 							
 def add_content(request, user_id, content_type, object_id, project_slug, pg_nbr=1):

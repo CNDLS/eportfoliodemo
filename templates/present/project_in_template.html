@@ -29,9 +29,26 @@
              </nav>
              
              <section id="basic-page_content" class="editable">      
-                 <article>
-                     content and stuff here.
+                 <article class="content">
+                     <ul class="attached-items">
+                     </ul>
                  </article>
+                 
+                 <form method="post" action="" id="update-page" name="update-page">{% csrf_token %}
+                 <article class="drop">
+                    <ul class="items">
+                    </ul>
+                    
+                    <p> Please select an item in a collection to add. </p>
+
+                    
+                    
+                 </article>
+                 <input type="hidden" name="page-id" id="hidden-page-id" value="" />
+                 <input type="hidden" name="project-id" id="hidden-project-id" value="{{ project.id }}" />
+                 <input type="submit" value="Update Page" />
+                 </form>
+
              </section>
              
          </div><!--/container-->
