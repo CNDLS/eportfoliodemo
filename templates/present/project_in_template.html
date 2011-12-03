@@ -18,11 +18,11 @@
              </aside>
              
              <nav id="basic-primary_nav" class="editable">  
-                 <ul>
+                 <ul id="project-pages">
                     <li> <a href="#" class="add-page" data-project-slug="{{ project.slug }}"> Add a page </a></li>
                      {% if project.pages %}
                          {% for page in project.pages.all %}
-                             <li><a href="#">{{ page }}</a></li>
+                             <li id="{{ page.id }}" attached-to-project="{{ project.id }}"><a href="#">{{ page }}</a></li>
                          {% endfor %}
                      {% endif %}
                  </ul>

@@ -158,6 +158,17 @@ def add_page(request, user_id, project_slug=None):
 	return render_to_response('present/create_page.html',
 	 							{'form': form, 'project': project},
 	 							context_instance=RequestContext(request))
+
+def get_page_content(request, user_id, page_id=None, project_id=None):
+	project = Project.objects.get(id=project_id)
+	pages = project.pages.all()
+
+	request_page = Page.objects.get(id=page_id)
+	if request_page in pages:
+		json_serializer = serializers.get_serializer("json")()
+		page = json_serializer.serialize([request_page])
+
+	return HttpResponse (page, mimetype='application/json')
 	 							
 	 							
 def add_content(request, user_id, content_type, object_id, project_slug, pg_nbr=1):
