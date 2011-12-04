@@ -26,8 +26,11 @@
 <div id="library" role="main" class="composer center">
   
   <header class="panelheader">
+  <h2>Preview</h2>
   </header>
-  {% include "present/project_in_template.html" %}
+  <div class="innerpane">
+  	{% include "present/project_in_template.html" %}
+  </div>
   
   <!-- <iframe src="{% url project_in_template request.user.id, project.slug %}" /> -->
 </div>
