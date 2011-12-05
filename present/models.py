@@ -6,25 +6,8 @@ import tagging
 from tagging.models import Tag
 from tagging.fields import TagField
 from assets.models import AssetAlias
-
-
-
-class Project(models.Model):
-    name = models.CharField(max_length=255, blank=True)
-    slug = models.SlugField()
-    description = models.TextField(blank=True)
-    created = models.DateTimeField(auto_now_add=True)
-    modified = models.DateTimeField(auto_now=True)
-    owner = models.ForeignKey(User, null=True, blank=True)
-    privacy = models.CharField(max_length=1, choices=PRIVACY, blank=False, default='1')
-    type = ProjectType(ProjectType)
-    template = models.ForeignKey(Template)
-    pages = models.ManyToManyField(Page, blank=True, null=True)
-    tags = TagField()
-
-    def __unicode__(self):
-        return self.name
-
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes import generic
 
 class ProjectType(models.Model):
     name = models.CharField(max_length=100, blank=True)
@@ -32,8 +15,13 @@ class ProjectType(models.Model):
 
     def __unicode__(self):
         return self.name
-                
-                
+
+class TemplateType(models.Model):
+    name = models.CharField(max_length=100, blank=True)
+    description = models.TextField(blank=True)
+
+    def __unicode__(self):
+        return self.name   
                 
 class Template(models.Model):
     name = models.CharField(max_length=100, blank=True)
@@ -52,22 +40,11 @@ class Template(models.Model):
     # owner is useful for when project templates get customized (copied to new records)
     owner = models.ForeignKey(User, null=True, blank=True)
     # need to be able to list default templates (plus those owned by user?) in template selection form.
-    is_default = models.BooleanField(default = false)
+    is_default = models.BooleanField(default = False)
 
     def __unicode__(self):
         return self.name
-  
 
-
-class TemplateType(models.Model):
-    name = models.CharField(max_length=100, blank=True)
-    description = models.TextField(blank=True)
-
-    def __unicode__(self):
-        return self.name              
-                 
-        
-        
 class Page(models.Model):
     name = models.CharField(max_length=100, blank=True)
     created = models.DateTimeField(auto_now_add=True)
@@ -78,8 +55,31 @@ class Page(models.Model):
 
     def __unicode__(self):
         return self.name
+  
+class Project(models.Model):
+    name = models.CharField(max_length=255, blank=True)
+    slug = models.SlugField()
+    description = models.TextField(blank=True)
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+    owner = models.ForeignKey(User, null=True, blank=True)
+    privacy = models.CharField(max_length=1, choices=PRIVACY, blank=False, default='1')
+    type = ProjectType(ProjectType)
+    template = models.ForeignKey(Template)
+    pages = models.ManyToManyField(Page, blank=True, null=True)
+    tags = TagField()
 
+    def __unicode__(self):
+        return self.name
 
+# A ContainerItem is a Generic type that points back to an AssetAlias or Reflection. (another way to do a Generic ManyToMany?) 
+class ContainerItem(models.Model):
+    content_type = models.ForeignKey(ContentType)
+    object_id = models.PositiveIntegerField()
+    content_object = generic.GenericForeignKey('content_type', 'object_id')
+
+    def __unicode__(self):
+        return str(self.object_id)
 
 class Container(models.Model):
     name = models.CharField(max_length=100, blank=True)
@@ -87,20 +87,11 @@ class Container(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
     # each Container needs a unique id that corresponds to the id of an HTML element in the Page Template.
-    html_tag_id = CharField(max_length=32, blank=True)
-    html_tagname = CharField(max_length=32, blank=True)
-    css_classnames = CharField(max_length=100, blank=True)
+    html_tag_id = models.CharField(max_length=32, blank=True)
+    html_tagname = models.CharField(max_length=32, blank=True)
+    css_classnames = models.CharField(max_length=100, blank=True)
     # items are AssetAliases, Reflections, (others?)
     items = models.ManyToManyField(ContainerItem, blank=True, null=True)
-    
 
-# A ContainerItem is a Generic type that points back to an AssetAlias or Reflection. (another way to do a Generic ManyToMany?) 
-class ContainerItem(models.Model):
-    content_type = models.ForeignKey(ContentType)
-    object_id = models.PositiveIntegerField()
-    content_object = generic.GenericForeignKey('content_type', 'object_id')
-    
-            
-
-
-
+    def __unicode__(self):
+        return self.name
