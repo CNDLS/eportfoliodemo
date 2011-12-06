@@ -16,62 +16,6 @@ class ProjectType(models.Model):
     def __unicode__(self):
         return self.name
 
-class TemplateType(models.Model):
-    name = models.CharField(max_length=100, blank=True)
-    description = models.TextField(blank=True)
-
-    def __unicode__(self):
-        return self.name   
-                
-class Template(models.Model):
-    name = models.CharField(max_length=100, blank=True)
-    description = models.TextField(blank=True)
-    created = models.DateTimeField(auto_now_add=True)
-    modified = models.DateTimeField(auto_now=True)
-    # current types are just Project and Page, but with other media formats, there may be others.
-    # Project Templates are html fragment files likely to contain HTML5 tags such as header/hgroup, nav, footer, section.sidebar.
-    # A section.content tag should be required.
-    # Page Templates are likely to contain HTML5 tags such as article, figure, image, and video, distributed in columns
-    # When a Page is instantiated from a Page Template, Containers should be created for the the relevant tags.
-    # The HTML tags corresponding to Containers should be drop targets for items.
-    type = TemplateType(TemplateType)
-    # build file path & url to the template files from "template_path"
-    template_path = models.CharField(max_length=255, blank=True, default = 'basic/')
-    # owner is useful for when project templates get customized (copied to new records)
-    owner = models.ForeignKey(User, null=True, blank=True)
-    # need to be able to list default templates (plus those owned by user?) in template selection form.
-    is_default = models.BooleanField(default = False)
-
-    def __unicode__(self):
-        return self.name
-
-class Page(models.Model):
-    name = models.CharField(max_length=100, blank=True)
-    created = models.DateTimeField(auto_now_add=True)
-    modified = models.DateTimeField(auto_now=True)
-    privacy = models.CharField(max_length=1, choices=PRIVACY, blank=False, default='1')
-    template = models.ForeignKey(Template)
-    tags = TagField()
-
-    def __unicode__(self):
-        return self.name
-  
-class Project(models.Model):
-    name = models.CharField(max_length=255, blank=True)
-    slug = models.SlugField()
-    description = models.TextField(blank=True)
-    created = models.DateTimeField(auto_now_add=True)
-    modified = models.DateTimeField(auto_now=True)
-    owner = models.ForeignKey(User, null=True, blank=True)
-    privacy = models.CharField(max_length=1, choices=PRIVACY, blank=False, default='1')
-    type = ProjectType(ProjectType)
-    template = models.ForeignKey(Template)
-    pages = models.ManyToManyField(Page, blank=True, null=True)
-    tags = TagField()
-
-    def __unicode__(self):
-        return self.name
-
 # A ContainerItem is a Generic type that points back to an AssetAlias or Reflection. (another way to do a Generic ManyToMany?) 
 class ContainerItem(models.Model):
     content_type = models.ForeignKey(ContentType)
@@ -92,6 +36,69 @@ class Container(models.Model):
     css_classnames = models.CharField(max_length=100, blank=True)
     # items are AssetAliases, Reflections, (others?)
     items = models.ManyToManyField(ContainerItem, blank=True, null=True)
+    tags = TagField()
 
     def __unicode__(self):
         return self.name
+
+class TemplateType(models.Model):
+    name = models.CharField(max_length=100, blank=True)
+    description = models.TextField(blank=True)
+
+    def __unicode__(self):
+        return self.name   
+                
+class Template(models.Model):
+    name = models.CharField(max_length=100, blank=True)
+    description = models.TextField(blank=True)
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+    # current types are just Project and Page, but with other media formats, there may be others.
+    # Project Templates are html fragment files likely to contain HTML5 tags such as header/hgroup, nav, footer, section.sidebar.
+    # A section.content tag should be required.
+    # Page Templates are likely to contain HTML5 tags such as article, figure, image, and video, distributed in columns
+    # When a Page is instantiated from a Page Template, Containers should be created for the the relevant tags.
+    # The HTML tags corresponding to Containers should be drop targets for items.
+    type = models.ForeignKey(TemplateType, blank=False)
+    # build file path & url to the template files from "template_path"
+    template_path = models.CharField(max_length=255, blank=True, default = 'basic/')
+    # owner is useful for when project templates get customized (copied to new records)
+    owner = models.ForeignKey(User, null=True, blank=True)
+    # need to be able to list default templates (plus those owned by user?) in template selection form.
+    is_default = models.BooleanField(default = False)
+    
+
+    def __unicode__(self):
+        return self.name
+
+class Page(models.Model):
+    name = models.CharField(max_length=100, blank=True)
+    slug = models.SlugField()
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+    privacy = models.CharField(max_length=1, choices=PRIVACY, blank=False, default='1')
+    template = models.ForeignKey(Template)
+    containers =  models.ManyToManyField(Container)
+    tags = TagField()
+
+    def __unicode__(self):
+        return self.name
+  
+class Project(models.Model):
+    name = models.CharField(max_length=255, blank=False)
+    slug = models.SlugField()
+    description = models.TextField(blank=True)
+    created = models.DateTimeField(auto_now_add=True)
+    modified = models.DateTimeField(auto_now=True)
+    owner = models.ForeignKey(User, null=True, blank=True)
+    privacy = models.CharField(max_length=1, choices=PRIVACY, blank=False, default='1')
+    type = models.ForeignKey(ProjectType, blank=False)
+    template = models.ForeignKey(Template)
+    pages = models.ManyToManyField(Page, blank=True, null=True)
+    tags = TagField()
+    containers =  models.ManyToManyField(Container, blank=False, null=False)
+
+    def __unicode__(self):
+        return self.name
+
+
