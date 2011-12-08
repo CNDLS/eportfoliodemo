@@ -1,28 +1,5 @@
 [
-  {
-    "model": "present.projecttype",
-    "pk": 1,
-    "fields": {
-      "name": "Website",
-      "description": "Create a website for the project"
-    }
-  },
-  {
-    "model": "present.projecttype",
-    "pk": 2,
-    "fields": {
-      "name": "Digital Story",
-      "description": "Create a digital story for the project"
-    }
-  },
-  {
-    "model": "present.projecttype",
-    "pk": 3,
-    "fields": {
-      "name": "Poster",
-      "description": "Create a poster for the project"
-    }
-  },
+  
   {
     "model": "present.templatetype",
     "pk": 1,
