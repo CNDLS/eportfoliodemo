@@ -8,6 +8,7 @@ from tagging.fields import TagField
 from assets.models import AssetAlias
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
+from eportfoliodemo.settings import UPLOAD_PATH
 
 class ProjectType(models.Model):
     name = models.CharField(max_length=100, blank=True)
@@ -66,6 +67,7 @@ class Template(models.Model):
     owner = models.ForeignKey(User, null=True, blank=True)
     # need to be able to list default templates (plus those owned by user?) in template selection form.
     is_default = models.BooleanField(default = False)
+    screenshot = models.FileField(blank=True, null=True, upload_to=UPLOAD_PATH+'templates/screenshots')
     
 
     def __unicode__(self):
