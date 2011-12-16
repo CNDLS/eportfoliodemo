@@ -9,6 +9,7 @@ from itertools import chain
 import operator
 
 from django.contrib.auth.models import User
+from eportfoliodemo.profiles.models import UserProfile
 from eportfoliodemo.library.models import LibraryState
 from eportfoliodemo.libraryitems.models import LibraryItem
 from eportfoliodemo.folders.models import Folder
@@ -26,6 +27,8 @@ from present.models import Project
 def show(request, user_id):
     requested_user = User.objects.get(pk=user_id)
     current_user = User.objects.get(pk=request.user.id)
+    
+    user_profile = UserProfile.objects.get(user=requested_user)
     
     # library_state allows us to return from presentation editing to the library as we left it.
     library_state, created = LibraryState.objects.get_or_create(owner=requested_user)

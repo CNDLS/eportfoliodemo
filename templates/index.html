@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% load present_tags %}
+
 {% block extra_styles %}
 	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/library.css" />
 	<!-- Stuff for the public page can go here -->
@@ -7,10 +9,26 @@
 
 {% if projects %}
 {% block nav_tabs %}
- 	
- 	{% for project in projects %}
- 		<li><a href="{{ request.META.SCRIPT_NAME }}/present/{{ request.user.id }}/{{ project.slug }}/compose" class="edit-project" data-project-name="{{project.name}}" data-project-slug="{{project.slug}}"> {{ project }} </a></li>
- 	{% endfor %}
+  
+  {% if request.path|is_composition %}
+    <!-- link to library. list projects; one project is active link. -->
+    <li><a href="{{ request.META.SCRIPT_NAME }}/library/{{request.user.id}}">Library</a></li>
+   	{% for proj in projects %}
+   	  {% if proj.id == project.id %}
+   		<li><a href="{{ request.META.SCRIPT_NAME }}/present/{{ request.user.id }}/{{ proj.slug }}/compose" class="edit-project active" data-project-name="{{proj.name}}" data-project-slug="{{proj.slug}}"> {{ proj }} </a></li>
+   		{% else %}
+   		<li><a href="{{ request.META.SCRIPT_NAME }}/present/{{ request.user.id }}/{{ proj.slug }}/compose" class="edit-project" data-project-name="{{proj.name}}" data-project-slug="{{proj.slug}}"> {{ proj }} </a></li>
+   		{% endif %}
+   	{% endfor %}
+   	
+  {% else %}
+    <!-- library is active link. list projects. -->
+    <li><a href="{{ request.META.SCRIPT_NAME }}/library/{{request.user.id}}" class="active">Library</a></li>
+   	{% for project in projects %}
+   		<li><a href="{{ request.META.SCRIPT_NAME }}/present/{{ request.user.id }}/{{ project.slug }}/compose" class="edit-project" data-project-name="{{project.name}}" data-project-slug="{{project.slug}}"> {{ project }} </a></li>
+   	{% endfor %}
+   	
+  {% endif %}
 
 {% endblock %}
 {% endif %}
@@ -18,8 +36,8 @@
 {% block content %}
 <div id="library">
 <ul>
-  <li><a href="{{ request.META.SCRIPT_NAME }}/library">Collect</a></li>
-  <li><a href="{{ request.META.SCRIPT_NAME }}/library">Organize</a></li>
+  <li><a href="{{ request.META.SCRIPT_NAME }}/library/{{ request.user.id }}">Collect</a></li>
+  <li><a href="{{ request.META.SCRIPT_NAME }}/library/{{ request.user.id }}">Organize</a></li>
   <li><a href="#">Present</a></li>
   <li><a href="#">Assess</a></li>
 </ul>

@@ -56,7 +56,6 @@
         <nav id="tabs">
             <ul>
                 <!-- <li><a class="new-project" href="#">+</a></li> -->
-                <li><a href="{{ request.META.SCRIPT_NAME }}/library/{{request.user.id}}" class="active">Library</a></li>
                 {% block nav_tabs %}
                     
                 {% endblock %}
@@ -68,7 +67,7 @@
             {% if not request.user or request.user.is_anonymous %}
             	<a href="{{ request.META.SCRIPT_NAME }}/accounts/login/?next={{ request.META.SCRIPT_NAME }}/">Login</a>
             {% else %}
-                <a href="{{ request.META.SCRIPT_NAME }}/profiles/{{ request.user.id }}"><img class="avatar" src="{{ MEDIA_URL }}/images/avatar.gif" /> {{ request.user.first_name }} {{ request.user.last_name }}</a>
+                <a href="{{ request.META.SCRIPT_NAME }}/profiles/{{ current_user.id }}"><img class="avatar" src="{{ MEDIA_URL }}/images/avatar.gif" /> {{ request.user  }} {{ request.user.last_name }}</a>
                 <a class="signout" href="{{ request.META.SCRIPT_NAME }}/accounts/logout/">Sign out</a>                   
             {% endif %}
         </nav>

@@ -3,7 +3,7 @@
     <form id="page-form" name="page-form" method="post" action="{{request.META.SCRIPT_NAME}}/present/{{request.user.id}}/project/{{ project.slug }}/pages/add/"> {% csrf_token %}
         <p> <label for="id_name">Name:</label> {{ form.name }} </p>
         <p> <label for="id_slug">Slug:</label> {{ form.slug }} </p>
-        <p> <label for="id_content">Content:</label> {{ form.content }} </p>
+        <p> <label for="id_template">Template:</label> {{ form.template }} </p>
         <p> <label for="id_privacy">Privacy:</label> {{ form.privacy }} </p>
         <input type="submit" value="Create" />
     </form>

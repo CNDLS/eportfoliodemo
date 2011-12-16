@@ -1,3 +1,5 @@
+{% load present_tags %}
+
 <section id="basic-template">
     
     <div id="basic-wrap">
@@ -8,11 +10,15 @@
                      <h1>{{ project.name }}</h1>            
                      <h2>{{ project.description }}</h2>
                  </hgroup>
-                 <a href="{{ request.META.SCRIPT_NAME }}/present/{{ request.user.id }}/{{ project.slug }}/compose">Compose</a>
+                 {% if request.path|is_composition %}
+                  <a href="{{ request.META.SCRIPT_NAME }}/present/{{ request.user.id }}/public/{{ project.slug }}">Display</a>
+                  {% else %}
+                   <a href="{{ request.META.SCRIPT_NAME }}/present/{{ request.user.id }}/{{ project.slug }}/compose">Compose</a>
+                 {% endif %}
              </div>
          </header>
          
-         <div class="basic-container" data-project-slug="{{ project.slug }}" data-page-nbr="1">
+         <div class="basic-container" data-project-slug="{{ project.slug }}">
          
              <aside id="basic-sidebar" class="editable">
              </aside>
@@ -28,7 +34,7 @@
                  </ul>
              </nav>
              
-             <section id="basic-page_content" class="editable">      
+             <section id="basic-page_content" class="editable" data-page-id="{{ page.id }}">      
                  <article class="content">
                      <ul class="attached-items">
                      </ul>
