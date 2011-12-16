@@ -28,7 +28,9 @@ def show(request, user_id):
     requested_user = User.objects.get(pk=user_id)
     current_user = User.objects.get(pk=request.user.id)
     
-    user_profile = UserProfile.objects.get(user=requested_user)
+    user_profile, created = UserProfile.objects.get_or_create(user=requested_user)
+    if (created):
+        user_profile.save
     
     # library_state allows us to return from presentation editing to the library as we left it.
     library_state, created = LibraryState.objects.get_or_create(owner=requested_user)
