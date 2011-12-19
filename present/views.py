@@ -163,6 +163,9 @@ def add_page(request, user_id, project_slug=None):
 		page.created = datetime.now()
 		page.modified = datetime.now()
 		page.owner = request.user
+		template = request.POST['template']
+		template_obj = Template.objects.get(id=template)
+		page.template = template_obj
 		page.save()
 		# Attach the page to the respective project
 		project.pages.add(page)
