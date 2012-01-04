@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 
 class UserProfile(models.Model):
-    title = models.TextField(blank=True)
+    title = models.CharField(max_length=20, blank=True)
     address = models.TextField(blank=True)
     work_phone = models.CharField(max_length=20, blank=True)
     cell_phone = models.CharField(max_length=20, blank=True)
@@ -21,9 +21,9 @@ class UserProfile(models.Model):
 class UserForm(ModelForm):
     class Meta:
         model = User
-        exclude = ('password',)
+        exclude = ('password','is_staff','is_active','is_superuser','last_login','date_joined','groups','user_permissions')
         
 class UserProfileForm(ModelForm):
     class Meta:
         model = UserProfile
-        exclude = ('user',)
+        exclude = ('user','work_phone','cell_phone','alternate_email')

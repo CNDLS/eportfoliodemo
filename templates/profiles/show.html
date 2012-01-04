@@ -12,12 +12,14 @@
 
 <ul>
     {% for field, value in user.items %}
-        {% if field != 'password' %}
+        {% if field in display_fields %}
             <li><b>{{ field }}:</b> {{ value }}</li>
          {% endif %}
     {% endfor %}
     {% for field, value in user_profile.items %}
-        <li><b>{{ field }}:</b> {{ value }}</li>
+        {% if field in display_fields %}
+            <li><b>{{ field }}:</b> {{ value }}</li>
+         {% endif %}
     {% endfor %}
 </ul>
 

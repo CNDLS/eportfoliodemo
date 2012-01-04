@@ -42,7 +42,7 @@ def show(request, user_id):
         else:
             user = model_to_dict(requested_user)
         user_profile = model_to_dict(user_profile)
-        return render_to_response('profiles/show.html', { 'user_profile': user_profile, 'user':user }, context_instance=RequestContext(request))
+        return render_to_response('profiles/show.html', { 'user_profile': user_profile, 'user':user, 'display_fields':('username','first_name','last_name','email','bio','date_joined','title') }, context_instance=RequestContext(request))
     
     
     
@@ -69,7 +69,7 @@ def update(request, user_id):
     user_profile = UserProfile.objects.get(user=user_id)
     for field_name in user_profile._meta.get_all_field_names():
         # don't need primary key, user, or many-to-many associations
-        if (field_name != 'id') and (field_name != 'user') and (field_name[0] != "_"):
+        if (field_name in request.POST):
             setattr(user_profile, field_name, request.POST[field_name])
     user_profile_form = UserProfileForm(instance=user_profile)
     
