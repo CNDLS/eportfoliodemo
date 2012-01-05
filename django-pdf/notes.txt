@@ -1,0 +1,36 @@
+Problem:
+
+Various device datasheets and app notes that need to be categorized and sorted.
+
+Should be able to include the following information about the documents:
+	- Project used
+	- Replacement
+	- Comments
+	- Recommendations
+	- Engineers who have used the device
+	- Manufacturer
+	- Date
+	- Web URL
+	- Category
+	
+Storage should be on a standard file server that is accessible from the LAN.  However, this file structure is READ-ONLY.
+All of the above meta-data and link-data is stored in the database (not accessible from the file structure).
+The file structure sorts the documents into the following structure:
+	
+	- Manufacturer
+		- Datasheets
+		- Application Notes
+		- Etc.
+		
+It would be useful to determine some form of criteria that makes the device "approved" or not.  Generally, most of these
+datasheets will be useful, but if the tools becomes good enough, there will be plenty of unuseful or unapproved devices.
+This could then be reflected in a new directory structure:
+
+	- Manufactuer
+		- Datasheets
+			- Good
+			- Unknown
+		- Application Notes
+			- Good
+			- Unknown
+		- Etc.

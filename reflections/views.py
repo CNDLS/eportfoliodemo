@@ -41,10 +41,12 @@ def ajax_create(request):
         # return all reflections, so we're always in sync with the whole list for an object
         return ajax_list(request, request.POST["content_type"], request.POST["object_id"])
 
+
 # list reflections for a selected object
 def ajax_list(request, content_type = None, object_id = None):
-    # obj = get_object_of_reflection(content_type, object_id)
-    reflections = Reflection.objects.filter(object_id=object_id)
+    obj_array = get_content_type_and_object(content_type, object_id)
+    content_type = obj_array[0]
+    reflections = Reflection.objects.filter(content_type=content_type, object_id=object_id)
     return render_to_response('reflections/list.html', { 'reflections': reflections }, context_instance=RequestContext(request))
     
 
