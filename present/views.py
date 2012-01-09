@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidde
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template import RequestContext
 
-from eportfoliodemo.present.models import Project, ProjectType, Template, Page
+from eportfoliodemo.present.models import Project, ProjectType, Template, Page, PageItem
 from eportfoliodemo.present.forms import ProjectForm, PageForm
 from datetime import datetime
 from django.contrib.auth.models import User
@@ -11,6 +11,8 @@ from eportfoliodemo.collectionitems.views import get_collectiontree_items_for
 
 from eportfoliodemo.reflections.models import Reflection
 from eportfoliodemo.reflections.views import get_content_type_and_object
+
+from django.contrib.contenttypes.models import ContentType
 
 from eportfoliodemo.assets.models import Asset, AssetAlias
 from eportfoliodemo.settings import MEDIA_ROOT, AJAX_PREFIX
@@ -172,9 +174,7 @@ def add_page(request, user_id, project_slug=None):
 		return HttpResponseRedirect(request.META['SCRIPT_NAME']+'/present/'+str(request.user.id)+'/public/'+project.slug+'/')
 
 	return render_to_response('present/create_page.html',
-	 							{'form': form, 'project': project},
-	 							context_instance=RequestContext(request))
-
+	 							{'form': form, 'project': project}, context_instance=RequestContext(request))
 
 
 def get_page_content(request, user_id, page_id=None, project_id=None):
@@ -182,11 +182,29 @@ def get_page_content(request, user_id, page_id=None, project_id=None):
 	pages = project.pages.all()
 
 	request_page = Page.objects.get(id=page_id)
+	json_serializer = serializers.get_serializer("json")()
+    
 	if request_page in pages:
-		json_serializer = serializers.get_serializer("json")()
-		page = json_serializer.serialize([request_page])
+		page_array = [json_serializer.serialize([request_page])] 
+		page_items = PageItem.objects.filter(page=page_id)
+		for page_item in page_items:
+		    content_type = ContentType.objects.get(pk=page_item.content_type_id)
+		    
+		    if content_type.model_class() == AssetAlias:
+		        page_item_content_object = Asset.objects.get(pk=page_item.object_id)
+		    else:
+		        page_item_content_object = content_type.get_object_for_this_type(pk=page_item.object_id)
+		    
+		    page_item_dict = {}
+		    page_item_dict["page_item"] = json_serializer.serialize([page_item])
+		    page_item_dict["content_object"] = json_serializer.serialize([page_item_content_object])
+            
+		    page_array.append( page_item_dict )
+		
+		page_data = simplejson.dumps( page_array )
+		    
 
-	return HttpResponse (page, mimetype='application/json')
+	return HttpResponse (page_data, mimetype='application/json')
 
 
 
@@ -241,4 +259,3 @@ def add_content(request, user_id, content_type, object_id, project_slug, pg_nbr=
     #                                 'obj':obj_array[1],
     #                                   'AJAX_PREFIX': AJAX_PREFIX },
     #                               context_instance=RequestContext(request))
-    

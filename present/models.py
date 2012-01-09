@@ -18,29 +18,30 @@ class ProjectType(models.Model):
         return self.name
 
 # A ContainerItem is a Generic type that points back to an AssetAlias or Reflection. (another way to do a Generic ManyToMany?) 
-class ContainerItem(models.Model):
-    content_type = models.ForeignKey(ContentType)
-    object_id = models.PositiveIntegerField()
-    content_object = generic.GenericForeignKey('content_type', 'object_id')
-
-    def __unicode__(self):
-        return str(self.object_id)
-
-class Container(models.Model):
-    name = models.CharField(max_length=100, blank=True)
-    description = models.TextField(blank=True)
-    created = models.DateTimeField(auto_now_add=True)
-    modified = models.DateTimeField(auto_now=True)
-    # each Container needs a unique id that corresponds to the id of an HTML element in the Page Template.
-    html_tag_id = models.CharField(max_length=32, blank=True)
-    html_tagname = models.CharField(max_length=32, blank=True)
-    css_classnames = models.CharField(max_length=100, blank=True)
-    # items are AssetAliases, Reflections, (others?)
-    items = models.ManyToManyField(ContainerItem, blank=True, null=True)
-    tags = TagField()
-
-    def __unicode__(self):
-        return self.name
+# class ContainerItem(models.Model):
+#     content_type = models.ForeignKey(ContentType)
+#     object_id = models.PositiveIntegerField()
+#     content_object = generic.GenericForeignKey('content_type', 'object_id')
+# 
+#     def __unicode__(self):
+#         return str(self.object_id)
+# 
+# class Container(models.Model):
+#     name = models.CharField(max_length=100, blank=True)
+#     description = models.TextField(blank=True)
+#     created = models.DateTimeField(auto_now_add=True)
+#     modified = models.DateTimeField(auto_now=True)
+#     # each Container needs a unique id that corresponds to the id of an HTML element in the Page Template.
+#     html_tag_id = models.CharField(max_length=32, blank=True)
+#     html_tagname = models.CharField(max_length=32, blank=True)
+#     css_classnames = models.CharField(max_length=100, blank=True)
+#     # items are AssetAliases, Reflections, (others?)
+#     items = models.ManyToManyField(ContainerItem, blank=True, null=True)
+#     tags = TagField()
+# 
+#     def __unicode__(self):
+#         return self.name
+    
 
 class TemplateType(models.Model):
     name = models.CharField(max_length=100, blank=True)
@@ -80,7 +81,6 @@ class Page(models.Model):
     modified = models.DateTimeField(auto_now=True)
     privacy = models.CharField(max_length=1, choices=PRIVACY, blank=False, default='1')
     template = models.ForeignKey(Template)
-    containers =  models.ManyToManyField(Container)
     tags = TagField()
 
     def __unicode__(self):
@@ -98,9 +98,17 @@ class Project(models.Model):
     template = models.ForeignKey(Template)
     pages = models.ManyToManyField(Page, blank=True, null=True)
     tags = TagField()
-    containers =  models.ManyToManyField(Container, blank=False, null=False)
 
     def __unicode__(self):
         return self.name
 
 
+# attaches items such as AssetAliases and Reflections to html containers in Project Pages.
+# NOTE: in Page Templates, html containers that can hold PageItems should be given an id that is unique on the page.
+class PageItem(models.Model):
+    content_type = models.ForeignKey(ContentType)
+    object_id = models.PositiveIntegerField()
+    content_object = generic.GenericForeignKey('content_type', 'object_id')
+    page = models.ForeignKey(Page, blank=False)
+    html_tag_id = models.CharField(max_length=32, blank=True)
+    ordinal = models.PositiveIntegerField() # for when multiple items occupy an html container.

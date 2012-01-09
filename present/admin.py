@@ -7,5 +7,6 @@ admin.site.register(ProjectType)
 admin.site.register(Project)
 
 admin.site.register(TemplateType)
-admin.site.register(Container)
-admin.site.register(ContainerItem)
+# admin.site.register(Container)
+# admin.site.register(ContainerItem)
+admin.site.register(PageItem)
