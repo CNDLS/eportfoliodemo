@@ -1,7 +1,10 @@
 {% load present_tags %}
 
 <section id="basic-template">
-    
+
+	<div class="editable" id="basic-outterwrap">         
+	</div>
+        
     <div id="basic-wrap">
      
          <header id="basic-mast" class="editable">
@@ -20,9 +23,6 @@
          
          <div class="basic-container" data-project-slug="{{ project.slug }}">
          
-             <aside id="basic-sidebar" class="editable">
-             </aside>
-             
              <nav id="basic-primary_nav" class="editable">  
                  <ul id="project-pages">
                     <li> <a href="#" class="add-page" data-project-slug="{{ project.slug }}"> Add a page </a></li>
@@ -33,6 +33,9 @@
                      {% endif %}
                  </ul>
              </nav>
+         
+             <aside id="basic-sidebar" class="editable">
+             </aside>
              
              <section id="basic-page_content" class="editable" data-page-id="{{ page.id }}">      
                  <article class="content">
@@ -64,6 +67,6 @@
              </div>
          </footer>
      
-     </div>
+    </div>
  
  </section>
