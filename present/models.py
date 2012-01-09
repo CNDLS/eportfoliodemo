@@ -110,5 +110,5 @@ class PageItem(models.Model):
     object_id = models.PositiveIntegerField()
     content_object = generic.GenericForeignKey('content_type', 'object_id')
     page = models.ForeignKey(Page, blank=False)
-    html_tag_id = models.CharField(max_length=32, blank=True)
+    html_tag_id = models.CharField(max_length=64, blank=True)
     ordinal = models.PositiveIntegerField() # for when multiple items occupy an html container.
