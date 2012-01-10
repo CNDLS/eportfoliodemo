@@ -112,3 +112,6 @@ class PageItem(models.Model):
     page = models.ForeignKey(Page, blank=False)
     html_tag_id = models.CharField(max_length=64, blank=True)
     ordinal = models.PositiveIntegerField() # for when multiple items occupy an html container.
+
+    def __unicode__(self):
+        return self.page.name

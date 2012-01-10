@@ -215,22 +215,29 @@ def update_page(request, user_id, page_id=None, project_id=None):
 	request_page = Page.objects.get(id=page_id)
 	json_serializer = serializers.get_serializer("json")()
 
-	items = request.GET.getlist('items[]')
-	
-	page_items = []
-	for item in items:
-		asset = Asset.objects.get(id=item)
-		asset_alias = AssetAlias.objects.get(asset=asset)
-		request_page.items.add(asset_alias)
-		request_page.save()
-		page_items.append(asset)
+	# items = request.GET.getlist('items[]')
+	item = request.GET['item']
+	class_type = request.GET['item_class_type']
 
-	# if request_page in pages:
-	# 	
-	# 	page = json_serializer.serialize([request_page])
-	# return HttpResponse(simplejson.dumps(page_items))
-	page_items = json_serializer.serialize(page_items)
-	return HttpResponse (page_items, mimetype='application/json')
+	#Item can be one of two things: assetalias, reflection
+
+	if class_type == 'assets.asset':
+		asset = Asset.objects.get(id=item)
+		item_obj = AssetAlias.objects.get(asset=asset)
+	
+	if class_type == 'reflections.reflection':
+		item_obj = Reflection.objects.get(id=item)
+	
+	page_item = PageItem()
+	page_item.content_object = item_obj
+	page_item.page = request_page
+	#TODO: Get the actual html tag information
+	page_item.html_tag_id = '#basic-page_content'
+	page_item.ordinal = 0
+	page_item.save()
+
+	page_item = json_serializer.serialize([page_item])
+	return HttpResponse (page_item, mimetype='application/json')
 	 							
 
 	 							
