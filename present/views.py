@@ -182,7 +182,7 @@ def get_page_content(request, user_id, page_id=None, project_id=None):
 	pages = project.pages.all()
 
 	request_page = Page.objects.get(id=page_id)
-	json_serializer = serializers.get_serializer("json")()
+	json_serializer = serializers.get_serializer("json")() 
     
 	if request_page in pages:
 		page_array = [json_serializer.serialize([request_page])] 
@@ -222,8 +222,8 @@ def update_page(request, user_id, page_id=None, project_id=None):
 	#Item can be one of two things: assetalias, reflection
 
 	if class_type == 'assets.asset':
-		#asset = Asset.objects.get(id=item)
-		item_obj = AssetAlias.objects.get(id=item)
+		asset = Asset.objects.get(id=item)
+		item_obj = AssetAlias.objects.get(asset=asset)
 	
 	if class_type == 'reflections.reflection':
 		item_obj = Reflection.objects.get(id=item)
@@ -253,10 +253,10 @@ def add_content(request, user_id, content_type, object_id, project_slug, pg_nbr=
     else:
         asset = obj
         
-    reflections = Reflection.objects.filter(object_id=obj_array[1].pk)
+    # reflections = Reflection.objects.filter(object_id=obj_array[1].pk)
     obj_data = [asset]
-    for reflection in reflections:
-        obj_data.append(reflection)
+    # for reflection in reflections:
+    #     obj_data.append(reflection)
         
     json_obj = json_serializer.serialize(obj_data)
     return HttpResponse (json_obj, mimetype='application/json')

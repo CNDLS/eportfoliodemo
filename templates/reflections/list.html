@@ -1,7 +1,7 @@
 {% if reflections %}
       <ol class="items"> 
 			{% for reflection in reflections %}
-                <li id="{{reflection.id}}" class="reflection">
+                <li id="{{reflection.id}}" class="reflection" data-node-class="Reflection">
                     {% if reflection.title != "" %}
                         <p class="title">{{ reflection.title }}</p>
                     {% else %}

@@ -18,6 +18,13 @@ class Reflection(models.Model):
         return self.title
     
     
+    def name(self):
+        if (self.title == ""):
+            return self.comment_abbr
+        else: 
+            return self.title
+    
+    
     def comment_abbr(self):
         if (len(self.comment) > 23):
             return self.comment[:20] + " ..."

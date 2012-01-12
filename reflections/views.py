@@ -87,6 +87,8 @@ def get_content_type_and_object(content_type = None, object_id = None):
         app_label = "assets"
     elif (content_type == "collection"):
         app_label = "usercollections"
+    elif (content_type == "reflection"):
+        app_label = "reflections"
     else:
         app_label = "unknown"
         
