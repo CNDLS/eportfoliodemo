@@ -222,8 +222,8 @@ def update_page(request, user_id, page_id=None, project_id=None):
 	#Item can be one of two things: assetalias, reflection
 
 	if class_type == 'assets.asset':
-		asset = Asset.objects.get(id=item)
-		item_obj = AssetAlias.objects.get(asset=asset)
+		#asset = Asset.objects.get(id=item)
+		item_obj = AssetAlias.objects.get(id=item)
 	
 	if class_type == 'reflections.reflection':
 		item_obj = Reflection.objects.get(id=item)
