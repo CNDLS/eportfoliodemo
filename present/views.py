@@ -206,63 +206,28 @@ def get_page_content(request, user_id, page_id=None, project_id=None):
 
 	return HttpResponse (page_data, mimetype='application/json')
 
-
-
-def update_page(request, user_id, page_id=None, project_id=None):
-	project = Project.objects.get(id=project_id)
-	pages = project.pages.all()
-
+def add_content(request, user_id, content_type, object_id, project_slug, page_id):
+	project = Project.objects.get(owner=user_id, slug=project_slug)
 	request_page = Page.objects.get(id=page_id)
+	obj_array = get_content_type_and_object(content_type, object_id)
+
+	obj = obj_array[1]
 	json_serializer = serializers.get_serializer("json")()
 
-	# items = request.GET.getlist('items[]')
-	item = request.GET['item']
-	class_type = request.GET['item_class_type']
-
-	#Item can be one of two things: assetalias, reflection
-
-	if class_type == 'assets.asset':
-		asset = Asset.objects.get(id=item)
-		item_obj = AssetAlias.objects.get(asset=asset)
-	
-	if class_type == 'reflections.reflection':
-		item_obj = Reflection.objects.get(id=item)
+	if content_type == 'assetalias':
+		asset = obj.asset
+	else:
+		asset = obj
 	
 	page_item = PageItem()
-	page_item.content_object = item_obj
+	page_item.content_object = asset
 	page_item.page = request_page
-	#TODO: Get the actual html tag information
+
+	#ATTENTION: Get the actual html tag id
 	page_item.html_tag_id = '#basic-page_content'
 	page_item.ordinal = 0
 	page_item.save()
 
-	page_item = json_serializer.serialize([page_item])
-	return HttpResponse (page_item, mimetype='application/json')
-	 							
-
-	 							
-def add_content(request, user_id, content_type, object_id, project_slug, pg_nbr=1):
-    project = Project.objects.get(owner=user_id, slug=project_slug)
-    # page = Page.objects.get() # how does page get associated with a project or template? -- shouldn't page containers link to objects?
-    obj_array = get_content_type_and_object(content_type, object_id)
-    
-    obj = obj_array[1]
-    json_serializer = serializers.get_serializer("json")()
-    if (content_type == "assetalias"):
-        asset = obj.asset
-    else:
-        asset = obj
-        
-    # reflections = Reflection.objects.filter(object_id=obj_array[1].pk)
-    obj_data = [asset]
-    # for reflection in reflections:
-    #     obj_data.append(reflection)
-        
-    json_obj = json_serializer.serialize(obj_data)
-    return HttpResponse (json_obj, mimetype='application/json')
-     
-    # return render_to_response('present/content.html',
-    #                               { 'project':project, 
-    #                                 'obj':obj_array[1],
-    #                                   'AJAX_PREFIX': AJAX_PREFIX },
-    #                               context_instance=RequestContext(request))
+	obj_data = [asset]
+	json_obj = json_serializer.serialize(obj_data)
+	return HttpResponse(json_obj, mimetype='application/json')
