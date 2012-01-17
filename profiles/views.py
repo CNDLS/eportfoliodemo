@@ -5,8 +5,8 @@ from django.forms.models import model_to_dict
 from django.http import HttpResponse, HttpResponseRedirect
 
 from django.contrib.auth.models import User
-from eportfoliodemo.profiles.models import UserForm, UserProfile, UserProfileForm
-
+from eportfoliodemo.profiles.models import UserProfile
+from eportfoliodemo.profiles.forms import UserForm, UserProfileForm
 
 import logging
 logger = logging.getLogger(__name__)
@@ -75,7 +75,7 @@ def update(request, user_id):
     
     # hoy, pronto! make user from post, too.
     user = User.objects.get(pk=user_id)
-    for field_name in ['username','first_name','last_name','email']:
+    for field_name in ['first_name','last_name']:
         setattr(user, field_name, request.POST[field_name])
     user_form = UserForm(instance=user)
     

@@ -9,11 +9,23 @@
 {% block title %}Edit User Profile{% endblock %}
 {% block content %}
 
+<h1> Basic </h1>
+
 <form action="{{ request.META.SCRIPT_NAME }}/profiles/{{ user.id }}/update/" method="POST">{% csrf_token %}
-    <table>
-        {{ user_form.as_table }}
-        {{ user_profile_form.as_table }}
-    </table>
+    <p> <label for="id_first_name">First Name: </label>{{ user_form.first_name }} </p>
+    <p> <label for="id_last_name">Last Name: </label>{{ user_form.last_name }} </p>
+    
+    <!-- Being: Profile information -->
+    <p> <label for="id_title">Title: </label>{{ user_profile_form.title }} </p>
+    <p> <label for="id_address">Address: </label>{{ user_profile_form.address }} </p>
+    <p> <label for="id_alternate_email_1">Alternate email: </label>{{ user_profile_form.alternate_email_1 }} </p>
+    <p> <label for="id_bio">Bio: </label>{{ user_profile_form.bio }} </p>
+    <p> <label for="id_web">Website: </label>{{ user_profile_form.web }} </p>
+    <p> <label for="id_avatar">Avatar: </label>{{ user_profile_form.avatar }} </p>
+    <p> <label for="id_avatar_email">Avatar Email: </label><input type="text" name="avatar_email" id="id_avatar_email" value="{{ request.user.email }}" /> </p>
+    <!-- End: Profile information -->
+
     <input type="submit" value="Submit" />
+
 </from>
 {% endblock %}
