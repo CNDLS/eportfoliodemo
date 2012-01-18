@@ -24,9 +24,23 @@
 	<!--[if lt IE 9]>
 	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->  
+	
+	<script type="text/javascript">
+        var media_url = "{{ MEDIA_URL }}";
+        var app_url = "{{ request.META.SCRIPT_NAME }}";
+        var ajax_prefix = "{{ AJAX_PREFIX }}";
+        var username = "{{ request.user }}";
+        var userid = "{{ request.user.id }}"
+        //alert(ajax_prefix)
+    </script>
+    
 </head>
 
 <body>
     {% include "present/project_in_template.html" %}
+    
+    <script src="{{ MEDIA_URL }}js/jquery.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/application.js"></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/projects.js"></script>
 </body>
 </html>

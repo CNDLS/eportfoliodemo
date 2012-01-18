@@ -1,3 +1,5 @@
+{% load gravatar %}
+
 <!doctype html>
 <!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
 <!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
@@ -67,7 +69,7 @@
             {% if not request.user or request.user.is_anonymous %}
             	<a href="{{ request.META.SCRIPT_NAME }}/accounts/login/?next={{ request.META.SCRIPT_NAME }}/">Login</a>
             {% else %}
-                <a href="{{ request.META.SCRIPT_NAME }}/profiles/{{ current_user.id }}"><img class="avatar" src="{{ MEDIA_URL }}/images/avatar.gif" /> {{ request.user.first_name  }} {{ request.user.last_name }}</a>
+                <a href="{{ request.META.SCRIPT_NAME }}/profiles/{{ current_user.id }}"><img src="{% gravatar_for_user request.user 30 %}"/> {{ request.user.first_name  }} {{ request.user.last_name }}</a>
                 <a class="signout" href="{{ request.META.SCRIPT_NAME }}/accounts/logout/">Sign out</a>                   
             {% endif %}
         </nav>

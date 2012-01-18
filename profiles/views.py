@@ -29,6 +29,7 @@ def index(request):
 # show user profile for a designated user (cf. permissions)
 def show(request, user_id):
     requested_user = User.objects.get(pk=user_id)
+    created = 0
 
     try:
         user_profile, created = UserProfile.objects.get_or_create(user=requested_user)

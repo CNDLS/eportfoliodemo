@@ -2,12 +2,12 @@
 
 <section id="basic-template">
 
-	<div class="editable" id="basic-outterwrap">         
+	<div class="{% editable_state request.path %}" id="basic-outterwrap">         
 	</div>
         
     <div id="basic-wrap">
      
-         <header id="basic-mast" class="editable">
+         <header id="basic-mast" class="{% editable_state request.path %}">
              <div class="basic-container">
                  <hgroup>
                      <h1>{{ project.name }}</h1>            
@@ -23,9 +23,11 @@
          
          <div class="basic-container" data-project-slug="{{ project.slug }}">
          
-             <nav id="basic-primary_nav" class="editable">  
+             <nav id="basic-primary_nav" class="{% editable_state request.path %}">  
                  <ul id="project-pages">
+                 {% if collections_nodes %}
                     <li> <a href="#" class="add-page" data-project-slug="{{ project.slug }}"> Add a page </a></li>
+                 {% endif %}
                      {% if project.pages %}
                          {% for page in project.pages.all %}
                              <li id="{{ page.id }}" attached-to-project="{{ project.id }}"><a href="#">{{ page }}</a></li>
@@ -34,10 +36,10 @@
                  </ul>
              </nav>
          
-             <aside id="basic-sidebar" class="editable">
+             <aside id="basic-sidebar" class="{% editable_state request.path %}">
              </aside>
              
-             <section id="basic-page_content" class="editable" data-page-id="{{ page.id }}">      
+             <section id="basic-page_content" class="{% editable_state request.path %}" data-page-id="{{ page.id }}">      
                  <article class="content">
                      <ul class="attached-items">
                      </ul>
@@ -48,7 +50,7 @@
              
          </div><!--/container-->
          
-         <footer id="basic-page_footer" class="editable">
+         <footer id="basic-page_footer" class="{% editable_state request.path %}">
             <div class="basic-container">
              </div>
          </footer>
