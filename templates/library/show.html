@@ -1,5 +1,6 @@
 {% extends "index.html" %}
 {% load metadataform_tags %}
+{% load present_tags %}
 
 {% block extra_styles %}
   <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/library.css" />
@@ -40,6 +41,10 @@
       <script type="text/javascript" src="{{ MEDIA_URL }}js/jwysiwyg/jquery.wysiwyg.js"></script>
         <script type="text/javascript" src="{{ MEDIA_URL }}js/jwysiwyg/controls/wysiwyg.link.js"></script>
         <script type="text/javascript" src="{{ MEDIA_URL }}js/jwysiwyg.init.js"></script>
+
+        {% if request.path|is_composition %}
+            <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.jeditable.js"></script>
+        {% endif %}
 {% endblock %}
 
 {% block title %}
