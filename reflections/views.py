@@ -68,8 +68,15 @@ def ajax_update(request, reflection_id):
         reflection.comment = request.POST['comment']
         reflection.modified = datetime.now()
         reflection.save()
-        # return all reflections, so we're always in sync with the whole list for an object
-        return ajax_list(request, request.POST["content_type"], request.POST["object_id"])
+        
+        # for editing inline in a project page, just return the reflection
+        if (request.POST["context"] == "inline"):
+            json_serializer = serializers.get_serializer("json")()
+            json_obj = json_serializer.serialize([reflection])
+            return HttpResponse(json_obj, mimetype='application/json')
+        else:
+            # for assets, return all reflections, so we're always in sync with the whole list for an object
+            return ajax_list(request, request.POST["content_type"], request.POST["object_id"])
 
 def ajax_delete(request, reflection_id):
     if request.is_ajax():

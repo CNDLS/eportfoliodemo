@@ -194,6 +194,14 @@ def get_page_content(request, user_id, page_id=None, project_id=None):
 		        page_item_content_object = Asset.objects.get(pk=page_item.object_id)
 		    else:
 		        page_item_content_object = content_type.get_object_for_this_type(pk=page_item.object_id)
+		        
+            # special processing.
+		    if (content_type.model_class() == Reflection):
+		        source_object = page_item_content_object.content_object
+		        if (type(source_object) == AssetAlias):
+		            source_object = Asset.objects.get(pk=source_object.asset_id)
+		        page_item_content_object.source_object = json_serializer.serialize([source_object])
+		        page_item_content_object.title = "on '" + source_object.name + "'"
 		    
 		    page_item_dict = {}
 		    page_item_dict["page_item"] = json_serializer.serialize([page_item])
