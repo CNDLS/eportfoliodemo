@@ -7,7 +7,7 @@
         
     <div id="basic-wrap">
      
-         <header id="basic-mast" class="{% editable_state request.path %}">
+         <header id="basic-mast" class="{% editable_state request.path %}" data-menu_edit="true" data-menu_privacy="true" data-menu_move="true">
              <div class="basic-container">
                  <hgroup>
                      <h1>{{ project.name }}</h1>            
@@ -36,10 +36,10 @@
                  </ul>
              </nav>
          
-             <aside id="basic-sidebar" class="{% editable_state request.path %}">
+             <aside id="basic-sidebar" class="{% editable_state request.path %}" data-menu_edit="true" data-menu_privacy="true">
              </aside>
              
-             <section id="basic-page_content" class="{% editable_state request.path %}" data-page-id="{{ page.id }}">      
+             <section id="basic-page_content" class="{% editable_state request.path %}" data-page-id="{{ page.id }}" data-menu_edit="true" data-menu_privacy="true">      
                  <article class="content">
                      <ul class="attached-items">
                      </ul>
@@ -50,7 +50,7 @@
              
          </div><!--/container-->
          
-         <footer id="basic-page_footer" class="{% editable_state request.path %}">
+         <footer id="basic-page_footer" class="{% editable_state request.path %}" data-menu_edit="true" data-menu_privacy="true">
             <div class="basic-container">
              </div>
          </footer>
