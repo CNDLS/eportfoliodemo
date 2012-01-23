@@ -41,10 +41,6 @@
       <script type="text/javascript" src="{{ MEDIA_URL }}js/jwysiwyg/jquery.wysiwyg.js"></script>
         <script type="text/javascript" src="{{ MEDIA_URL }}js/jwysiwyg/controls/wysiwyg.link.js"></script>
         <script type="text/javascript" src="{{ MEDIA_URL }}js/jwysiwyg.init.js"></script>
-
-        {% if request.path|is_composition %}
-            <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.jeditable.js"></script>
-        {% endif %}
 {% endblock %}
 
 {% block title %}
