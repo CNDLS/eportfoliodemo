@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load gravatar %}
 {% block extra_styles %}
     <!-- stylesheets -->
     {{ block.super }}
@@ -9,20 +9,29 @@
 {% block title %}My Profile{% endblock %}
 
 {% block content %}
+<div id="profile">
+    <header class="panelheader">
+        <h2>Your Profile</h2>
+    </header>
 
-<ul>
+    <div id="profile-show">
+
     {% for field, value in user.items %}
         {% if field in display_fields %}
-            <li><b>{{ field }}:</b> {{ value }}</li>
+            <p><b>{{ field }}:</b> {{ value }}</p>
          {% endif %}
     {% endfor %}
     {% for field, value in user_profile.items %}
         {% if field in display_fields %}
-            <li><b>{{ field }}:</b> {{ value }}</li>
-         {% endif %}
+            <p><b>{{ field }}:</b> {{ value }}</p>
+        {% endif %}
+        {% ifequal field 'avatar' %}
+            <p><b>{{ field }}:</b> <img src="{% gravatar_for_user request.user 30 %}"/></p>
+         {% endifequal %}
     {% endfor %}
-</ul>
 
-<a href="{{ request.META.SCRIPT_NAME }}/profiles/{{ user.id }}/edit">Edit This Profile</a>
 
+    <a href="{{ request.META.SCRIPT_NAME }}/profiles/{{ user.id }}/edit">Edit This Profile</a>
+    </div>
+</div>
 {% endblock %}

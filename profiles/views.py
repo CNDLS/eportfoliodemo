@@ -43,7 +43,7 @@ def show(request, user_id):
         else:
             user = model_to_dict(requested_user)
         user_profile = model_to_dict(user_profile)
-        return render_to_response('profiles/show.html', { 'user_profile': user_profile, 'user':user, 'display_fields':('username','first_name','last_name','email','bio','date_joined','title') }, context_instance=RequestContext(request))
+        return render_to_response('profiles/show.html', { 'user_profile': user_profile, 'user':user, 'display_fields':('username','first_name','last_name','email','bio','date_joined','title', 'avatar') }, context_instance=RequestContext(request))
     
     
     
