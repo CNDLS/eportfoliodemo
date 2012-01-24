@@ -59,8 +59,6 @@ class Template(models.Model):
     # Project Templates are html fragment files likely to contain HTML5 tags such as header/hgroup, nav, footer, section.sidebar.
     # A section.content tag should be required.
     # Page Templates are likely to contain HTML5 tags such as article, figure, image, and video, distributed in columns
-    # When a Page is instantiated from a Page Template, Containers should be created for the the relevant tags.
-    # The HTML tags corresponding to Containers should be drop targets for items.
     type = models.ForeignKey(TemplateType, blank=False)
     # build file path & url to the template files from "template_path"
     template_path = models.CharField(max_length=255, blank=True, default = 'basic/')
@@ -77,6 +75,8 @@ class Template(models.Model):
 class Page(models.Model):
     name = models.CharField(max_length=100, blank=True)
     slug = models.SlugField()
+    content = models.TextField(blank=True)
+    owner = models.ForeignKey(User, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
     privacy = models.CharField(max_length=1, choices=PRIVACY, blank=False, default='1')

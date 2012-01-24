@@ -171,7 +171,7 @@ def add_page(request, user_id, project_slug=None):
 		page.save()
 		# Attach the page to the respective project
 		project.pages.add(page)
-		return HttpResponseRedirect(request.META['SCRIPT_NAME']+'/present/'+str(request.user.id)+'/public/'+project.slug+'/')
+		return HttpResponseRedirect(request.META['SCRIPT_NAME']+'/present/'+str(request.user.id)+'/'+project.slug+'/compose/')
 
 	return render_to_response('present/create_page.html',
 	 							{'form': form, 'project': project}, context_instance=RequestContext(request))
@@ -195,7 +195,7 @@ def get_page_content(request, user_id, page_id=None, project_id=None):
 		    else:
 		        page_item_content_object = content_type.get_object_for_this_type(pk=page_item.object_id)
 		        
-            # special processing.
+            # special processing. doesn't seem to work as a method on the model obje
 		    if (content_type.model_class() == Reflection):
 		        source_object = page_item_content_object.content_object
 		        if (type(source_object) == AssetAlias):
@@ -231,8 +231,10 @@ def add_content(request, user_id, content_type, object_id, project_slug, page_id
 	page_item.content_object = asset
 	page_item.page = request_page
 
-	#ATTENTION: Get the actual html tag id
-	page_item.html_tag_id = '#basic-page_content'
+	# store the path spec into the node of the doc where the content was added.
+	if request.method == 'POST':
+		page_item.html_tag_id = request.POST['html_tag_id']  # '#basic-page_content'
+        
 	page_item.ordinal = 0
 	page_item.save()
 

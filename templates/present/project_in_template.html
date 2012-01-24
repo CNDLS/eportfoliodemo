@@ -1,5 +1,13 @@
 {% load present_tags %}
 
+{% block custom_scripts %}
+    {% block super %}
+    <script type="text/javascript">
+        var page_template_name = "basic";
+	</script>
+    {% endblock %}
+{% endblock %}
+
 <section id="basic-template">
 
 	<div class="{% editable_state request.path %}" id="basic-outterwrap">         
@@ -11,7 +19,7 @@
              <div class="basic-container">
                  <hgroup>
                      <h1>{{ project.name }}</h1>            
-                     <h2>{{ project.description }}</h2>
+                     <h2>{{ project.description|safe }}</h2>
                  </hgroup>
                  {% if request.path|is_composition %}
                   <a href="{{ request.META.SCRIPT_NAME }}/present/{{ request.user.id }}/public/{{ project.slug }}">Display</a>
