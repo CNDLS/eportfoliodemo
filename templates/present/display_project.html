@@ -1,3 +1,5 @@
+{% load present_tags %}
+
 <!doctype html>
 <!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
 <!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
@@ -37,7 +39,7 @@
 </head>
 
 <body>
-    {% include "present/project_in_template.html" %}
+    {% custom_include page_template_name project_template_path %}
     
     <script src="{{ MEDIA_URL }}js/jquery.js"></script>
     <script type="text/javascript" src="{{ MEDIA_URL }}js/application.js"></script>

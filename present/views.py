@@ -1,3 +1,5 @@
+import sys
+
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidden, Http404
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template import RequestContext
@@ -48,11 +50,16 @@ def display_project(request, user_id, project_slug):
 	project = Project.objects.get(slug = project_slug)
 
 	project_stylesheet = PROJECT_TEMPLATE_URL + project.template.template_path + 'style.css'
+	project_template_path = PROJECT_TEMPLATE_LOCATION + project.template.template_path
+	page_template_name = 'project_in_template.html' # temp.
+	
 	return render_to_response('present/display_project.html',
-                    { 'project': project,
-                      'project_stylesheet': project_stylesheet
-                    },
-                    context_instance=RequestContext(request))
+                                { 'project': project,
+                                  'project_stylesheet': project_stylesheet,
+                                  'project_template_path': project_template_path,
+                                  'page_template_name': page_template_name
+                                },
+                                context_instance=RequestContext(request))
                   
                   
                   
@@ -110,29 +117,35 @@ def create_project(request, user_id, project_slug = None):
 	 							
 	 							
 def compose_project(request, user_id, project_slug=None):
-    project = Project.objects.get(slug=project_slug)
-    requested_user = User.objects.get(pk=user_id)
-    current_user = User.objects.get(pk=request.user.id)
-    
-    # get all the folders & assets.
-    items_in_library_tree = get_librarytree_items_for(requested_user)
-        
-    # get all the collections & asset aliases.
-    # it's a tree, but without hierarchy (gets us dragging, renaming, etc. parallel to lib).
-    items_in_collections_tree = get_collectiontree_items_for(requested_user)
-    
-    project_stylesheet = PROJECT_TEMPLATE_URL + project.template.template_path + 'style.css'
-    # return render_to_response('present/editform.html', { 'form': form, 'project_slug':project_slug }, context_instance=RequestContext(request))
-    projects = Project.objects.filter(owner=request.user)
+	project = Project.objects.get(slug=project_slug)
+	requested_user = User.objects.get(pk=user_id)
+	current_user = User.objects.get(pk=request.user.id)
 
-    return render_to_response('present/compose_project.html', { 'project': project,
-                                                                'project_stylesheet': project_stylesheet, 
-                                                                'requested_user': requested_user,
-                                                                  'current_user': current_user,
-                                                                  'folder_nodes': items_in_library_tree,
-                                                                  'collections_nodes': items_in_collections_tree,
-                                                                  'AJAX_PREFIX': AJAX_PREFIX,
-                                                                  'projects': projects },
+	project_template_path = PROJECT_TEMPLATE_LOCATION + project.template.template_path
+	page_template_name = 'project_in_template.html' # temp.
+    
+	# get all the folders & assets.
+	items_in_library_tree = get_librarytree_items_for(requested_user)
+    
+	# get all the collections & asset aliases.
+	# it's a tree, but without hierarchy (gets us dragging, renaming, etc. parallel to lib).
+	items_in_collections_tree = get_collectiontree_items_for(requested_user)
+
+	project_stylesheet = PROJECT_TEMPLATE_URL + project.template.template_path + 'style.css'
+	# return render_to_response('present/editform.html', { 'form': form, 'project_slug':project_slug }, context_instance=RequestContext(request))
+	projects = Project.objects.filter(owner=request.user)
+
+	return render_to_response('present/compose_project.html', { 'project': project,
+																'project_stylesheet': project_stylesheet,
+																'project_template_path': project_template_path,
+																'page_template_name': page_template_name, 
+																'requested_user': requested_user,
+																'current_user': current_user,
+																'folder_nodes': items_in_library_tree,
+																'collections_nodes': items_in_collections_tree,
+																'AJAX_PREFIX': AJAX_PREFIX,
+																'projects': projects,
+ },
                                                                   context_instance=RequestContext(request))
 	# return render_to_response('present/create_project.html',
 	#  							{'form': form},

@@ -11,4 +11,4 @@ def index(request):
 		projects = Project.objects.filter(owner=request.user)
         user_profile = UserProfile.objects.filter(user=request.user)
         
-	return render_to_response('index.html', { 'projects':projects }, context_instance=RequestContext(request))
+	return render_to_response('index.html', { 'home':1, 'projects':projects }, context_instance=RequestContext(request))

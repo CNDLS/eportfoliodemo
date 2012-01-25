@@ -54,16 +54,18 @@
             </ul>
             {% endblock %}
         </nav>
-    
-        <nav id="tabs">
-            <ul>
-                <!-- <li><a class="new-project" href="#">+</a></li> -->
-                {% block nav_tabs %}
+          
+        {% if home != 1 %}
+          <nav id="tabs">
+              <ul>
+                  <!-- <li><a class="new-project" href="#">+</a></li> -->
+                  {% block nav_tabs %}
                     
-                {% endblock %}
-                <li><a href="#" class="new-project">+</a></li>
-            </ul>
-        </nav>
+                  {% endblock %}
+                  <li><a href="#" class="new-project">+</a></li>
+              </ul>
+          </nav>
+       {% endif %}
         
         <nav id="account">
             {% if not request.user or request.user.is_anonymous %}
