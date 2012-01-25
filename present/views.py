@@ -107,6 +107,25 @@ def create_project(request, user_id, project_slug = None):
 		project.template = template
 		project.owner = request.user
 		project.save()
+
+		# Create a default page for the project
+
+		# Assigning the basic page template
+		page_template = Template.objects.get(id=2)
+		# page = Page(3,'Home','home','',request.user.id,datetime.now(),datetime.now(),1,page_template.id,'')
+		page = Page()
+		page.name = 'Home'
+		page.slug = 'home'
+		page.owner = request.user
+		page.created = datetime.now()
+		page.modified = datetime.now()
+		page.privacy = 1
+		page.template = page_template
+
+		page.save()
+		project.pages.add(page)
+		project.save()
+
 		return HttpResponseRedirect(request.META['SCRIPT_NAME']+'/present/'+str(request.user.id)+'/public/'+project.slug+'/')
 
 	# return render_to_response('present/create_project.html',
