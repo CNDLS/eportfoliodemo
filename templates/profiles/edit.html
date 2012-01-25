@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load gravatar %}
 
 {% block extra_styles %}
     <!-- stylesheets -->
@@ -23,7 +24,15 @@
                 <p> <label for="id_alternate_email_1">Alternate email: </label>{{ user_profile_form.alternate_email_1 }} </p>
                 <p> <label for="id_bio">Bio: </label>{{ user_profile_form.bio }} </p>
                 <p> <label for="id_web">Website: </label>{{ user_profile_form.web }} </p>
-                <p> <label for="id_avatar">Avatar: </label>{{ user_profile_form.avatar }} </p>
+                <!-- <p> <label for="id_avatar">Avatar: </label>{{ user_profile_form.avatar }} </p> -->
+                <br /> 
+                <p>
+                    <label for="id_avatar">Avatar: </label>
+                        <input type="radio" name="avatar" value="A" {% ifequal user_profile_form.avatar.value "A" %} checked="checked"{% endifequal %} /> <img src="https://commons.georgetown.edu/avatars/fetch/user/{{ request.user.username }}" class="avatar" height="40" width="40" />
+                        <input type="radio" name="avatar" value="B" {% ifequal user_profile_form.avatar.value "B" %} checked="checked"{% endifequal %} /> <img src="{% gravatar_for_user request.user 40 %}" />
+                </p>
+                <br />
+
                 <p> <label for="id_avatar_email">Avatar Email: </label><input type="text" name="avatar_email" id="id_avatar_email" value="{{ request.user.email }}" /> </p>
                 <!-- End: Profile information -->        
                 <input type="submit" value="Submit" />        
