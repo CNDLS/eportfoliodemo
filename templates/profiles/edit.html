@@ -27,9 +27,9 @@
                 <!-- <p> <label for="id_avatar">Avatar: </label>{{ user_profile_form.avatar }} </p> -->
                 <br /> 
                 <p>
-                    <label for="id_avatar">Avatar: </label>
-                        <input type="radio" name="avatar" value="A" {% ifequal user_profile_form.avatar.value "A" %} checked="checked"{% endifequal %} /> <img src="https://commons.georgetown.edu/avatars/fetch/user/{{ request.user.username }}" class="avatar" height="40" width="40" />
-                        <input type="radio" name="avatar" value="B" {% ifequal user_profile_form.avatar.value "B" %} checked="checked"{% endifequal %} /> <img src="{% gravatar_for_user request.user 40 %}" />
+                    <label>Avatar: </label>
+                        <input type="radio" id="id_avatar_commons" name="avatar" value="A" {% ifequal user_profile_form.avatar.value "A" %} checked="checked"{% endifequal %} /> <img src="https://commons.georgetown.edu/avatars/fetch/user/{{ request.user.username }}" class="avatar" title="Georgetown Commons avatar" height="40" width="40" />
+                        <input type="radio" id="id_gravatar" name="avatar" value="B" {% ifequal user_profile_form.avatar.value "B" %} checked="checked"{% endifequal %} /> <img src="{% gravatar_for_user request.user 40 %}" class="avatar" title="gravatar" />
                 </p>
                 <br />
 
