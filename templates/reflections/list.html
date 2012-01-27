@@ -8,7 +8,9 @@
                         <p class="title">on '{{ reflection.content_object.name }}'</p>
                     {% endif %}
                     <p class="date">{{ reflection.modified }}</p>
-                    <a href="{{ AJAX_PREFIX }}/reflections/{{ reflection.id }}" class="fancybox">view</a>     
+                    <div class="reflection_controls">
+                        <a href="{{ AJAX_PREFIX }}/reflections/{{ reflection.id }}" class="fancybox">view</a>
+                    </div>    
                 </li>  
 			{% endfor %}                             
         </ol>
