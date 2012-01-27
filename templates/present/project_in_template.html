@@ -16,7 +16,7 @@
     <div id="basic-wrap">
      
          <header id="basic-mast" class="{% editable_state request.path %}" data-menu_edit="true" data-menu_privacy="true" data-menu_move="true">
-             <div class="basic-container">
+             <div id="project_heading" class="basic-container">
                  <hgroup>
                      <h1>{{ project.name }}</h1>            
                      <h2>{{ project.description|safe }}</h2>
@@ -44,16 +44,19 @@
                  </ul>
              </nav>
          
-             <aside id="basic-sidebar" class="{% editable_state request.path %}" data-menu_edit="true" data-menu_privacy="true">
+             <aside id="basic-sidebar" class="{% editable_state request.path %} droppable" data-menu_edit="true" data-menu_privacy="true">
              </aside>
              
-             <section id="basic-page_content" class="{% editable_state request.path %}" data-page-id="{{ page.id }}" data-menu_edit="true" data-menu_privacy="true">      
+             <section id="basic-page_content" class="{% editable_state request.path %} droppable" data-page-id="{{ page.id }}" data-menu_edit="true" data-menu_privacy="true"> 
                  <article class="content">
+                     <div id="basic-page_content_field" class="{% editable_state request.path %}">
+                         <!-- this is where page content (from wysiwyg editor) will go. -->
+                     </div>
                      <ul class="attached-items">
                      </ul>
                  </article>
                  <input type="hidden" name="page-id" id="hidden-page-id" value="" />
-                 <input type="hidden" name="page-id" id="hidden-project-id" value="{{ project.id }}" />
+                 <input type="hidden" name="project-id" id="hidden-project-id" value="{{ project.id }}" />
              </section>
              
          </div><!--/container-->

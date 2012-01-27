@@ -1,0 +1,4 @@
+<form id="page-form" name="page-form" method="post" action="{{request.META.SCRIPT_NAME}}/present/{{request.user.id}}/project/{{ project.id }}/pages/edit/{{ page.id }}/"> {% csrf_token %}
+        <p> <label for="id_content">Page Content:</label> {{ form.content }} </p>
+        <input type="submit" value="Submit" />
+    </form>

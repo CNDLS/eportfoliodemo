@@ -10,7 +10,7 @@ urlpatterns = patterns('',
     url(r'^(?P<user_id>\d+)/(?P<project_slug>[-\w]+)/compose/$', 'present.views.compose_project'),
     url(r'^(?P<user_id>\d+)/project/(?P<project_slug>[-\w]+)/pages/add/$', 'present.views.add_page'),
     url(r'^(?P<user_id>\d+)/project/(?P<project_id>[-\w]+)/pages/get/(?P<page_id>\d+)/$', 'present.views.get_page_content', name='get_page_content'),
-    url(r'^(?P<user_id>\d+)/add/(?P<content_type>[-\w]+)/(?P<object_id>\d+)/to/(?P<project_slug>[-\w]+)/pg/(?P<page_id>\d+)$', 'present.views.add_content'),
+    url(r'^(?P<user_id>\d+)/project/(?P<project_id>[-\w]+)/pages/edit/(?P<page_id>\d+)/$', 'present.views.edit_page_content', name='edit_page'), url(r'^(?P<user_id>\d+)/add/(?P<content_type>[-\w]+)/(?P<object_id>\d+)/to/(?P<project_slug>[-\w]+)/pg/(?P<page_id>\d+)$', 'present.views.add_content'),
 )
 
 

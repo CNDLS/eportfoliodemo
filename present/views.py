@@ -192,7 +192,7 @@ def add_page(request, user_id, project_slug=None):
 	page = Page()
 
 	if request.method == 'POST':
-		for field_name in ['name','slug','privacy']:
+		for field_name in ['name','slug','privacy','content']:
 			if (field_name != 'id') and (field_name[0] != "_"):
 				setattr(page, field_name, request.POST[field_name])
 		page.created = datetime.now()
@@ -209,6 +209,21 @@ def add_page(request, user_id, project_slug=None):
 	return render_to_response('present/create_page.html',
 	 							{'form': form, 'project': project}, context_instance=RequestContext(request))
 
+def edit_page_content(request, user_id, page_id=None, project_id=None):
+    page = Page.objects.get(pk=page_id)
+    project = Project.objects.get(pk=project_id)
+    
+    if request.method == 'POST':
+        page.content = request.POST["content"]
+        page.save()
+        
+        json_serializer = serializers.get_serializer("json")()
+        page_array = [json_serializer.serialize([page])] 
+        return HttpResponse (page_array, mimetype='application/json')
+    else:
+        form = PageForm(instance=page)
+        return render_to_response('present/edit_page_content.html', { 'form': form, 'action': 'edit', 'project': project, 'page': page }, context_instance=RequestContext(request))
+    
 
 def get_page_content(request, user_id, page_id=None, project_id=None):
 	project = Project.objects.get(id=project_id)
