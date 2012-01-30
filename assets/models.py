@@ -45,6 +45,9 @@ class Asset(LibraryItem):
     
     def __unicode__(self):
         return self.name
+        
+    def url(self):
+        return MEDIA_URL+"uploads/assets/"+self.name
 
     class MPTTMeta:
         level_attr = 'mptt_level'

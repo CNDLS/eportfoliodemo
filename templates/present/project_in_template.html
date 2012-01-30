@@ -44,10 +44,12 @@
                  </ul>
              </nav>
          
-             <aside id="basic-sidebar" class="{% editable_state request.path %} droppable" data-menu_edit="true" data-menu_privacy="true">
-             </aside>
+             <section id="basic-sidebar" class="{% editable_state request.path %} droppable" data-menu_edit="true" data-menu_privacy="true">
+                 <ul class="attached-items">
+                 </ul>
+             </section>
              
-             <section id="basic-page_content" class="{% editable_state request.path %} droppable" data-page-id="{{ page.id }}" data-menu_edit="true" data-menu_privacy="true"> 
+             <section id="basic-page_content" class="{% editable_state request.path %} droppable" data-menu_edit="true" data-menu_privacy="true"> 
                  <article class="content">
                      <div id="basic-page_content_field" class="{% editable_state request.path %}">
                          <!-- this is where page content (from wysiwyg editor) will go. -->

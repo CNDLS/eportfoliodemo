@@ -240,6 +240,7 @@ def get_page_content(request, user_id, page_id=None, project_id=None):
 		    
 		    if content_type.model_class() == AssetAlias:
 		        page_item_content_object = Asset.objects.get(pk=page_item.object_id)
+		        page_item_content_object['url'] = page_item_content_object.url
 		    else:
 		        page_item_content_object = content_type.get_object_for_this_type(pk=page_item.object_id)
 		        
