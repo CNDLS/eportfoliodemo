@@ -43,19 +43,28 @@ class RequireLoginMiddleware(object):
     def __init__(self):
        #self.require_login_path = getattr(settings, 'REQUIRE_LOGIN_PATH', '/accounts/login/') 
         self.require_login_path = '/accounts/login/'
-        self.feed_path = '/feeds/latest/'
-        self.inquiry_feed_path = '/feeds/inquiries/'
+        # self.feed_path = '/public/'
+        # self.inquiry_feed_path = '/feeds/inquiries/'
+        # self.inquiry_feed_path = '/feeds/inquiries/'
 
     def process_request(self, request):
         s = request.path
         
-        m = re.search('/\//', s)
+        # m = re.search('/\//', s)
+        home = re.search('/', s)
+        m = re.search('/public/', s)
+        
         if m is None:
             public_pages = False
         else:
-            public_pages = True            
+            public_pages = True
+        
+        if home is None:
+            home_page = False
+        else:
+            home_page = True         
                 
-        if request.path != self.require_login_path and request.path != self.feed_path and request.path != self.inquiry_feed_path and public_pages != True and request.user.is_anonymous():
+        if request.path != self.require_login_path and public_pages != True and home_page != True and request.user.is_anonymous():
             if request.POST:
                 return login(request)
             else:

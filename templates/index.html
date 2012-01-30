@@ -35,12 +35,22 @@
 
 {% block content %}
 <div id="library">
-<ul>
-  <li><a href="{{ request.META.SCRIPT_NAME }}/library/{{ request.user.id }}">Collect</a></li>
-  <li><a href="{{ request.META.SCRIPT_NAME }}/library/{{ request.user.id }}">Organize</a></li>
-  <li><a href="#">Present</a></li>
-  <li><a href="#">Assess</a></li>
-</ul>
+{% if request.user.is_anonymous %}
+    <ul>
+      <li><a href="{{ request.META.SCRIPT_NAME }}/public/collect/">Collect</a></li>
+      <li><a href="{{ request.META.SCRIPT_NAME }}/public/organize/">Organize</a></li>
+      <li><a href="{{ request.META.SCRIPT_NAME }}/public/present/">Present</a></li>
+      <li><a href="{{ request.META.SCRIPT_NAME }}/public/assess/">Assess</a></li>
+    </ul>
+{% else %}
+    <ul>
+      <li><a href="{{ request.META.SCRIPT_NAME }}/library/{{ request.user.id }}">Collect</a></li>
+      <li><a href="{{ request.META.SCRIPT_NAME }}/library/{{ request.user.id }}">Organize</a></li>
+      <li><a href="#">Present</a></li>
+      <li><a href="#">Assess</a></li>
+    </ul>
+{% endif %}
+
 </div> <!-- /#library -->
 
 <div id="projects">

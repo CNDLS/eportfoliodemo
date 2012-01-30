@@ -7,8 +7,9 @@ from present.models import Project
 
 def index(request):
 	
-	if request.user.is_authenticated():
-		projects = Project.objects.filter(owner=request.user)
-        user_profile = UserProfile.objects.filter(user=request.user)
+	# if request.user.is_authenticated():
+	# 	projects = Project.objects.filter(owner=request.user)
+ #        user_profile = UserProfile.objects.filter(user=request.user)
         
-	return render_to_response('index.html', { 'home':1, 'projects':projects }, context_instance=RequestContext(request))
+	# return render_to_response('index.html', { 'home':1, 'projects':projects }, context_instance=RequestContext(request))
+	return render_to_response('index.html', context_instance=RequestContext(request))
