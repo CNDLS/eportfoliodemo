@@ -16,31 +16,6 @@ class ProjectType(models.Model):
 
     def __unicode__(self):
         return self.name
-
-# A ContainerItem is a Generic type that points back to an AssetAlias or Reflection. (another way to do a Generic ManyToMany?) 
-# class ContainerItem(models.Model):
-#     content_type = models.ForeignKey(ContentType)
-#     object_id = models.PositiveIntegerField()
-#     content_object = generic.GenericForeignKey('content_type', 'object_id')
-# 
-#     def __unicode__(self):
-#         return str(self.object_id)
-# 
-# class Container(models.Model):
-#     name = models.CharField(max_length=100, blank=True)
-#     description = models.TextField(blank=True)
-#     created = models.DateTimeField(auto_now_add=True)
-#     modified = models.DateTimeField(auto_now=True)
-#     # each Container needs a unique id that corresponds to the id of an HTML element in the Page Template.
-#     html_tag_id = models.CharField(max_length=32, blank=True)
-#     html_tagname = models.CharField(max_length=32, blank=True)
-#     css_classnames = models.CharField(max_length=100, blank=True)
-#     # items are AssetAliases, Reflections, (others?)
-#     items = models.ManyToManyField(ContainerItem, blank=True, null=True)
-#     tags = TagField()
-# 
-#     def __unicode__(self):
-#         return self.name
     
 
 class TemplateType(models.Model):
@@ -110,8 +85,8 @@ class PageItem(models.Model):
     object_id = models.PositiveIntegerField()
     content_object = generic.GenericForeignKey('content_type', 'object_id')
     page = models.ForeignKey(Page, blank=False)
-    html_tag_id = models.CharField(max_length=64, blank=True)
+    page_section_tag_selector = models.CharField(max_length=64, blank=True)
     ordinal = models.PositiveIntegerField() # for when multiple items occupy an html container.
 
     def __unicode__(self):
-        return self.page.name
+        return str(self.content_type.model_class()) + ' for ' + self.page_section_tag_selector + ' on ' + self.page.name

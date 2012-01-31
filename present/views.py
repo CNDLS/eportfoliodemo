@@ -50,14 +50,12 @@ def display_project(request, user_id, project_slug):
 	project = Project.objects.get(slug = project_slug)
 
 	project_stylesheet = PROJECT_TEMPLATE_URL + project.template.template_path + 'style.css'
-	project_template_path = PROJECT_TEMPLATE_LOCATION + project.template.template_path
-	page_template_name = 'project_in_template.html' # temp.
+	project_template_name = 'basic' # temp.
 	
 	return render_to_response('present/display_project.html',
                                 { 'project': project,
-                                  'project_stylesheet': project_stylesheet,
-                                  'project_template_path': project_template_path,
-                                  'page_template_name': page_template_name
+    							  'project_template_name': project_template_name,
+                                  'project_stylesheet': project_stylesheet
                                 },
                                 context_instance=RequestContext(request))
                   
@@ -141,8 +139,7 @@ def compose_project(request, user_id, project_slug=None):
 	requested_user = User.objects.get(pk=user_id)
 	current_user = User.objects.get(pk=request.user.id)
 
-	project_template_path = PROJECT_TEMPLATE_LOCATION + project.template.template_path
-	page_template_name = 'project_in_template.html' # temp.
+	project_template_name = 'basic' # temp.
     
 	# get all the folders & assets.
 	items_in_library_tree = get_librarytree_items_for(requested_user)
@@ -157,15 +154,13 @@ def compose_project(request, user_id, project_slug=None):
 
 	return render_to_response('present/compose_project.html', { 'project': project,
 																'project_stylesheet': project_stylesheet,
-																'project_template_path': project_template_path,
-																'page_template_name': page_template_name, 
+																'project_template_name': project_template_name,
 																'requested_user': requested_user,
 																'current_user': current_user,
 																'folder_nodes': items_in_library_tree,
 																'collections_nodes': items_in_collections_tree,
 																'AJAX_PREFIX': AJAX_PREFIX,
-																'projects': projects,
- },
+																'projects': projects },
                                                                   context_instance=RequestContext(request))
 	# return render_to_response('present/create_project.html',
 	#  							{'form': form},
@@ -236,35 +231,36 @@ def get_page_content(request, user_id, page_id=None, project_id=None):
 		asset = False
 		page_array = [json_serializer.serialize([request_page])] 
 		page_items = PageItem.objects.filter(page=page_id)
+
 		for page_item in page_items:
-		    content_type = ContentType.objects.get(pk=page_item.content_type_id)
+			content_type = ContentType.objects.get(pk=page_item.content_type_id)
 		    
-		    if content_type.model_class() == AssetAlias:
-		        asset = Asset.objects.get(pk=page_item.object_id)
-		        page_item_content_object = asset
-		    else:
-		        page_item_content_object = content_type.get_object_for_this_type(pk=page_item.object_id)
+			if content_type.model_class() == AssetAlias:
+				asset = Asset.objects.get(pk=page_item.object_id)
+				page_item_content_object = asset
+			else:
+				page_item_content_object = content_type.get_object_for_this_type(pk=page_item.object_id)
 		        
             # special processing. doesn't seem to work as a method on the model object
-		    if (content_type.model_class() == Reflection):
-		        source_object = page_item_content_object.content_object
-		        if (type(source_object) == AssetAlias):
-		            source_object = Asset.objects.get(pk=source_object.asset_id)
-		        page_item_content_object.source_object = json_serializer.serialize([source_object])
+		 	if (content_type.model_class() == Reflection):
+		 		source_object = page_item_content_object.content_object
+		 		if (type(source_object) == AssetAlias):
+		 			source_object = Asset.objects.get(pk=source_object.asset_id)
+		 		page_item_content_object.source_object = json_serializer.serialize([source_object])
 		        
-		        page_item_content_object.title = "on '" + source_object.name + "'"
+				page_item_content_object.title = "on '" + source_object.name + "'"
 		    
 			page_item_dict = {}
 			page_item_dict["page_item"] = json_serializer.serialize([page_item])
 			page_item_dict["content_object"] = json_serializer.serialize([page_item_content_object])
-				
+
 			page_array.append( page_item_dict )
 		
 		page_data = simplejson.dumps( page_array )
-		    
 
 	return HttpResponse (page_data, mimetype='application/json')
-
+	
+	
 def add_content(request, user_id, content_type, object_id, project_slug, page_id):
 	project = Project.objects.get(owner=user_id, slug=project_slug)
 	request_page = Page.objects.get(id=page_id)
@@ -284,7 +280,7 @@ def add_content(request, user_id, content_type, object_id, project_slug, page_id
 
 	# store the path spec into the node of the doc where the content was added.
 	if request.method == 'POST':
-		page_item.html_tag_id = request.POST['html_tag_id']  # '#basic-page_content'
+		page_item.page_section_tag_selector = request.POST['page_section_tag_selector']  # '#basic-page_content'
         
 	page_item.ordinal = 0
 	page_item.save()
