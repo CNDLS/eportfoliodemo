@@ -233,30 +233,32 @@ def get_page_content(request, user_id, page_id=None, project_id=None):
 	json_serializer = serializers.get_serializer("json")() 
     
 	if request_page in pages:
+		asset = False
 		page_array = [json_serializer.serialize([request_page])] 
 		page_items = PageItem.objects.filter(page=page_id)
 		for page_item in page_items:
 		    content_type = ContentType.objects.get(pk=page_item.content_type_id)
 		    
 		    if content_type.model_class() == AssetAlias:
-		        page_item_content_object = Asset.objects.get(pk=page_item.object_id)
-		        page_item_content_object['url'] = page_item_content_object.url
+		        asset = Asset.objects.get(pk=page_item.object_id)
+		        page_item_content_object = asset
 		    else:
 		        page_item_content_object = content_type.get_object_for_this_type(pk=page_item.object_id)
 		        
-            # special processing. doesn't seem to work as a method on the model obje
+            # special processing. doesn't seem to work as a method on the model object
 		    if (content_type.model_class() == Reflection):
 		        source_object = page_item_content_object.content_object
 		        if (type(source_object) == AssetAlias):
 		            source_object = Asset.objects.get(pk=source_object.asset_id)
 		        page_item_content_object.source_object = json_serializer.serialize([source_object])
+		        
 		        page_item_content_object.title = "on '" + source_object.name + "'"
 		    
-		    page_item_dict = {}
-		    page_item_dict["page_item"] = json_serializer.serialize([page_item])
-		    page_item_dict["content_object"] = json_serializer.serialize([page_item_content_object])
-            
-		    page_array.append( page_item_dict )
+			page_item_dict = {}
+			page_item_dict["page_item"] = json_serializer.serialize([page_item])
+			page_item_dict["content_object"] = json_serializer.serialize([page_item_content_object])
+				
+			page_array.append( page_item_dict )
 		
 		page_data = simplejson.dumps( page_array )
 		    
