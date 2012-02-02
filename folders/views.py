@@ -24,7 +24,7 @@ def new(request):
     
     
 def new_under_parent(request, folder_id):
-    folder_parent = Folder.tree.get(pk=folder_id)
+   	folder_parent = Folder.tree.get(pk=folder_id)
    	if (request.user.is_authenticated()):
 		current_user = User.objects.get(pk=request.user.id)
     folder_form = FolderForm(instance=Folder(owner=current_user, parent=folder_parent))

@@ -25,7 +25,7 @@ from eportfoliodemo.settings import MEDIA_ROOT, AJAX_PREFIX
 from present.models import Project
 
 def show(request, user_id):
-    requested_user = User.objects.get(pk=user_id)
+   	requested_user = User.objects.get(pk=user_id)
    	if (request.user.is_authenticated()):
 		current_user = User.objects.get(pk=request.user.id)
     
