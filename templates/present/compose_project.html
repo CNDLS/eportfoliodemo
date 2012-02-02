@@ -15,6 +15,19 @@
 {% block custom_scripts %}
   {{ block.super }}
   <script type="text/javascript" src="{{ MEDIA_URL }}js/projects.js"></script>
+  <script type="text/javascript">
+	// Toggle the skin
+    $("a.button#skin_view").click(function () {
+		$('a.button').toggleClass('active');
+        $('head').append('<link rel="stylesheet" href="{{ MEDIA_URL }}/skins/narwhal/style.css" type="text/css" title="appendedStyle" />');
+    	});
+    $("a.button#wireframe_view").click(function () {
+		$('a.button').toggleClass('active');
+		$('link[title=appendedStyle]').prop('disabled',true);
+    	});
+	</script>
+    <script type="text/javascript" src="http://use.typekit.com/eyg2elj.js"></script>
+	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 {% endblock %}
 
 
@@ -28,6 +41,10 @@
   
   <header class="panelheader">
   <h2>Preview</h2>
+  <ul id="compose-view" class="view">
+  	<li><a href="#" id="wireframe_view" class="button active">Wireframe</a></li>
+  	<li><a href="#" id="skin_view" class="button">Skin</a></li>
+  </ul>
   </header>
   <div class="innerpane">
   	{% include "present/project_in_template.html" %}
@@ -39,3 +56,5 @@
 <div id="projects">
 </div> <!-- /#projects -->
 {% endblock %} <!-- End: center_content -->
+
+
