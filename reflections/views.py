@@ -24,7 +24,7 @@ def ajax_new(request, content_type = None, object_id = None):
     })
     
     obj_array = get_content_type_and_object(content_type, object_id)
-    return render_to_response('reflections/edit.html', { 'form': form, 'action': 'create', 'obj':obj_array[1] }, context_instance=RequestContext(request))
+    return render_to_response('reflections/edit.html', { 'form': form, 'action': 'create', 'obj':obj_array[1], 'AJAX_PREFIX': AJAX_PREFIX }, context_instance=RequestContext(request))
 
 
 def ajax_create(request):
@@ -49,18 +49,18 @@ def ajax_list(request, content_type = None, object_id = None):
     obj_array = get_content_type_and_object(content_type, object_id)
     content_type = obj_array[0]
     reflections = Reflection.objects.filter(content_type=content_type, object_id=object_id)
-    return render_to_response('reflections/list.html', { 'reflections': reflections }, context_instance=RequestContext(request))
+    return render_to_response('reflections/list.html', { 'reflections': reflections, 'AJAX_PREFIX': AJAX_PREFIX }, context_instance=RequestContext(request))
     
 
 def ajax_show(request, reflection_id):
     reflection = Reflection.objects.get(pk=reflection_id)
-    return render_to_response('reflections/show.html', { 'reflection': reflection }, context_instance=RequestContext(request))
+    return render_to_response('reflections/show.html', { 'reflection': reflection, 'AJAX_PREFIX': AJAX_PREFIX }, context_instance=RequestContext(request))
 
 
 def ajax_edit(request, reflection_id):
     reflection = Reflection.objects.get(pk=reflection_id)
     form = ReflectionForm(instance=reflection)
-    return render_to_response('reflections/edit.html', { 'form': form, 'action': 'edit', 'reflection': reflection, 'obj': reflection.content_object }, context_instance=RequestContext(request))
+    return render_to_response('reflections/edit.html', { 'form': form, 'action': 'edit', 'reflection': reflection, 'obj': reflection.content_object, 'AJAX_PREFIX': AJAX_PREFIX }, context_instance=RequestContext(request))
 
 
 def ajax_update(request, reflection_id):
