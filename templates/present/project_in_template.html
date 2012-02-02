@@ -20,7 +20,6 @@
              <div id="project_heading" class="{{ project_template_name }}-container">
                  <hgroup>
                      <h1>{{ project.name }}</h1>            
-                     <h2>{{ project.description|safe }}</h2>
                  </hgroup>
                  {% if request.path|is_composition %}
                   <a href="{{ request.META.SCRIPT_NAME }}/present/{{ request.user.id }}/public/{{ project.slug }}">Display</a>
@@ -51,6 +50,7 @@
              </section>
              
              <section id="{{ project_template_name }}-page_content" class="{% editable_state request.path %} droppable" data-menu_edit="true" data-menu_privacy="true"> 
+				 <h2>{{ project.description|safe }}</h2>
                  <article class="content">
                      <div id="{{ project_template_name }}-page_content_field" class="{% editable_state request.path %}">
                          <!-- this is where page content (from wysiwyg editor) will go. -->
