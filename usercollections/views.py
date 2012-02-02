@@ -14,7 +14,8 @@ from eportfoliodemo.snippets.template import render_block_to_string
 
 
 def new(request):
-    current_user = request.user
+   	if (request.user.is_authenticated()):
+		current_user = User.objects.get(pk=request.user.id)
     collection_form = CollectionForm(instance=Collection(owner=current_user))
 
     return render_to_response('usercollections/new.html', { 'collection_form': collection_form }, context_instance=RequestContext(request))
