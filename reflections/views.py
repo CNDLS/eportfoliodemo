@@ -7,6 +7,8 @@ from eportfoliodemo.reflections.forms import ReflectionForm
 
 from datetime import datetime
 
+from eportfoliodemo.settings import MEDIA_ROOT, AJAX_PREFIX
+
 from django.contrib.contenttypes.models import ContentType
 from django.core import serializers
 
