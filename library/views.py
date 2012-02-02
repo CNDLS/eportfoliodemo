@@ -26,7 +26,7 @@ from present.models import Project
 
 def show(request, user_id):
     requested_user = User.objects.get(pk=user_id)
-    current_user = User.objects.get(pk=request.user.id)
+    current_user = request.user
     
     user_profile, created = UserProfile.objects.get_or_create(user=requested_user)
     if (created):

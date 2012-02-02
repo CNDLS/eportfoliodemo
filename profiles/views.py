@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 # index = list user profiles available to current user.
 # for students, this should redirect to display of their own.
 def index(request):
-    current_user = User.objects.get(pk=request.user.id)
+    current_user = request.user
     current_user_profile, created = UserProfile.objects.get_or_create(user=request.user)
     if (created):
         return redirect(str(request.user.id) + '/edit')

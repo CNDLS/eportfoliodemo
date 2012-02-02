@@ -16,7 +16,7 @@ from eportfoliodemo.libraryitems.models import LibraryItem
 from eportfoliodemo.assets.models import Asset
 
 def new(request):
-    current_user = User.objects.get(pk=request.user.id)
+    current_user = request.user
     folder_form = FolderForm(instance=Folder(owner=current_user))
 
     return render_to_response('folders/new.html', { 'folder_form': folder_form }, context_instance=RequestContext(request))
@@ -24,7 +24,7 @@ def new(request):
     
 def new_under_parent(request, folder_id):
     folder_parent = Folder.tree.get(pk=folder_id)
-    current_user = User.objects.get(pk=request.user.id)
+    current_user = request.user
     folder_form = FolderForm(instance=Folder(owner=current_user, parent=folder_parent))
 
     return render_to_response('folders/new.html', { 'folder_form': folder_form }, context_instance=RequestContext(request))

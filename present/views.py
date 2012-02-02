@@ -137,7 +137,7 @@ def create_project(request, user_id, project_slug = None):
 def compose_project(request, user_id, project_slug=None):
 	project = Project.objects.get(slug=project_slug)
 	requested_user = User.objects.get(pk=user_id)
-	current_user = User.objects.get(pk=request.user.id)
+	current_user = request.user
 
 	project_template_name = 'basic' # temp.
     
