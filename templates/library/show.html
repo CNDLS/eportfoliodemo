@@ -40,7 +40,7 @@
     <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-ui-1.8.16.custom.min.js"></script>
       <script type="text/javascript" src="{{ MEDIA_URL }}js/jwysiwyg/jquery.wysiwyg.js"></script>
         <script type="text/javascript" src="{{ MEDIA_URL }}js/jwysiwyg/controls/wysiwyg.link.js"></script>
-        <script type="text/javascript" src="{{ MEDIA_URL }}js/jwysiwyg.init.js"></script>
+        <script type="text/javascript" src="{{ MEDIA_URL }}js/jwysiwyg.init.js"></script>jquery.resize.min.js
 {% endblock %}
 
 {% block title %}
@@ -52,11 +52,11 @@
         
     <div id="panels">
 
-        <div id="left">
+        <div id="left" class="panel">
             <header class="panelheader">
                 <h2>Folders</h2>
             </header>
-            <div class="handle"></div>
+            <div class="handle"><a href="#" class="expand">Expand</a></div>
             
             <div id="folders">
                 <div id="folder_tree">
@@ -169,12 +169,12 @@
          {% endblock %}
          
         
-        <div id="right">
+        <div id="right" class="panel">
             {%  block right_sidebar %}
             <header class="panelheader">
                     <h2>Meta</h2>
             </header>
-            <div class="handle"></div>
+            <div class="handle"><a href="#" class="expand">Expand</a></div>
             <!--<div class="meta default">
                 <div class="data">
                     <div class="preview empty">
