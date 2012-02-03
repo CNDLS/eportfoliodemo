@@ -9,10 +9,13 @@
 	{% endblock %}
 {% endblock %}
 
-<section id="{{ project_template_name }}-template">
 
+<section id="{{ project_template_name }}-template">
+	
+    {% comment %}
 	<div class="{% editable_state request.path %}" id="{{ project_template_name }}-outterwrap">		 
 	</div>
+    {% endcomment %}
 		
 	<div id="{{ project_template_name }}-wrap">
 	 
