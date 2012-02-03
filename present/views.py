@@ -275,9 +275,9 @@ def add_content(request, user_id, content_type, object_id, project_slug, page_id
 	else:
 		asset = obj
 		
-	print "asset.contents() " + asset.contents()
-	asset.html_content = asset.contents()
-	asset.save()
+	asset.html_content = asset.contents()	
+	print "asset.html_content " + asset.html_content
+	# asset.save()
 		
 	page_item = PageItem()
 	page_item.content_object = asset

@@ -53,6 +53,8 @@ class Asset(LibraryItem):
 		
 	def contents(self):
 		try:
+			if (self.file.name.find(".doc") == -1):
+				raise Exception("Only provide dummy content for Word files.")
 			fname = os.path.basename(self.file.name)
 			fname = MEDIA_ROOT+"uploads/assets/"+fname.replace(".doc", "_bogus.html")
 			print fname
