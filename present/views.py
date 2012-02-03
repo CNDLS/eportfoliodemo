@@ -242,14 +242,17 @@ def get_page_content(request, user_id, page_id=None, project_id=None):
 			else:
 				page_item_content_object = content_type.get_object_for_this_type(pk=page_item.object_id)
 				
+			
 			# special processing. doesn't seem to work as a method on the model object
 		 	if (content_type.model_class() == Reflection):
 		 		source_object = page_item_content_object.content_object
 		 		if (type(source_object) == AssetAlias):
 		 			source_object = Asset.objects.get(pk=source_object.asset_id)
 		 		page_item_content_object.source_object = json_serializer.serialize([source_object])
-				
 				page_item_content_object.title = "on '" + source_object.name + "'"
+			elif content_type.model_class() == Asset:
+				page_item_content_object.html_content = page_item_content_object.contents()
+				# print "page_item_content_object.html_content " + page_item_content_object.html_content
 			
 			page_item_dict = {}
 			page_item_dict["page_item"] = json_serializer.serialize([page_item])
@@ -276,7 +279,7 @@ def add_content(request, user_id, content_type, object_id, project_slug, page_id
 		asset = obj
 		
 	asset.html_content = asset.contents()	
-	print "asset.html_content " + asset.html_content
+	# print "asset.html_content " + asset.html_content
 	# asset.save()
 		
 	page_item = PageItem()
