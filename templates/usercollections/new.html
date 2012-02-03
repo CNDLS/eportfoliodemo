@@ -3,9 +3,9 @@
 {% block content %}
 
 <form action="{% url create_collection %}" method="POST">{% csrf_token %}
-    <table>
-        {{ collection_form.as_table }}
-    </table>
-    <input type="submit" value="Submit" />
+	<table>
+		{{ collection_form.as_table }}
+	</table>
+	<input type="submit" value="Submit" />
 </from>
 {% endblock %}

@@ -4,12 +4,12 @@ r"""
 >>> from mptt.tests.models import Genre, Insert, MultiOrder, Node, OrderedInsertion, Tree
 
 >>> def print_tree_details(nodes):
-...     opts = nodes[0]._meta
-...     print '\n'.join(['%s %s %s %s %s %s' % \
-...                      (n.pk, getattr(n, '%s_id' % opts.parent_attr) or '-',
-...                       getattr(n, opts.tree_id_attr), getattr(n, opts.level_attr),
-...                       getattr(n, opts.left_attr), getattr(n, opts.right_attr)) \
-...                      for n in nodes])
+...	 opts = nodes[0]._meta
+...	 print '\n'.join(['%s %s %s %s %s %s' % \
+...					  (n.pk, getattr(n, '%s_id' % opts.parent_attr) or '-',
+...					   getattr(n, opts.tree_id_attr), getattr(n, opts.level_attr),
+...					   getattr(n, opts.left_attr), getattr(n, opts.right_attr)) \
+...					  for n in nodes])
 
 
 # Creation ####################################################################
@@ -38,7 +38,7 @@ r"""
 >>> from mptt.utils import previous_current_next, tree_item_iterator, drilldown_tree_for_node
 
 >>> for p,c,n in previous_current_next(Genre.tree.all()):
-...     print (p,c,n)
+...	 print (p,c,n)
 (None, <Genre: Action>, <Genre: Platformer>)
 (<Genre: Action>, <Genre: Platformer>, <Genre: 2D Platformer>)
 (<Genre: Platformer>, <Genre: 2D Platformer>, <Genre: 3D Platformer>)
@@ -49,7 +49,7 @@ r"""
 (<Genre: Action RPG>, <Genre: Tactical RPG>, None)
 
 >>> for i,s in tree_item_iterator(Genre.tree.all()):
-...     print (i, s['new_level'], s['closed_levels'])
+...	 print (i, s['new_level'], s['closed_levels'])
 (<Genre: Action>, True, [])
 (<Genre: Platformer>, True, [])
 (<Genre: 2D Platformer>, True, [])
@@ -60,7 +60,7 @@ r"""
 (<Genre: Tactical RPG>, False, [1, 0])
 
 >>> for i,s in tree_item_iterator(Genre.tree.all(), ancestors=True):
-...     print (i, s['new_level'], s['ancestors'], s['closed_levels'])
+...	 print (i, s['new_level'], s['ancestors'], s['closed_levels'])
 (<Genre: Action>, True, [], [])
 (<Genre: Platformer>, True, [u'Action'], [])
 (<Genre: 2D Platformer>, True, [u'Action', u'Platformer'], [])
@@ -197,7 +197,7 @@ r"""
 <Genre: Role-playing Game>
 >>> Genre.tree.root_node(3)
 Traceback (most recent call last):
-    ...
+	...
 DoesNotExist: Genre matching query does not exist.
 
 >>> [g.name for g in Genre.tree.root_nodes()]
@@ -335,26 +335,26 @@ True
 >>> root = Node.objects.get(pk=root.pk)
 >>> Node.tree.move_node(root, root, position='first-child')
 Traceback (most recent call last):
-    ...
+	...
 InvalidMove: A node may not be made a child of itself.
 >>> c_1 = Node.objects.get(pk=c_1.pk)
 >>> c_1_1 = Node.objects.get(pk=c_1_1.pk)
 >>> Node.tree.move_node(c_1, c_1_1, position='last-child')
 Traceback (most recent call last):
-    ...
+	...
 InvalidMove: A node may not be made a child of any of its descendants.
 >>> Node.tree.move_node(root, root, position='right')
 Traceback (most recent call last):
-    ...
+	...
 InvalidMove: A node may not be made a sibling of itself.
 >>> c_2 = Node.objects.get(pk=c_2.pk)
 >>> Node.tree.move_node(c_1, c_1_1, position='left')
 Traceback (most recent call last):
-    ...
+	...
 InvalidMove: A node may not be made a sibling of any of its descendants.
 >>> Node.tree.move_node(c_1, c_2, position='cheese')
 Traceback (most recent call last):
-    ...
+	...
 ValueError: An invalid position was given: cheese.
 
 # Move up the tree using first-child
@@ -415,12 +415,12 @@ ValueError: An invalid position was given: cheese.
 6 5 1 2 9 10
 7 5 1 2 11 12
 
-COVERAGE    | U1 | U> | D1 | D>
+COVERAGE	| U1 | U> | D1 | D>
 ------------+----+----+----+----
-first-child | Y  | Y  |    |
-last-child  |    |    |    |
-left        |    |    |    |
-right       |    |    | Y  | Y
+first-child | Y  | Y  |	|
+last-child  |	|	|	|
+left		|	|	|	|
+right	   |	|	| Y  | Y
 
 # Move down the tree using first-child
 >>> c_1_2 = Node.objects.get(pk=c_1_2.pk)
@@ -480,12 +480,12 @@ right       |    |    | Y  | Y
 6 5 1 2 9 10
 7 5 1 2 11 12
 
-COVERAGE    | U1 | U> | D1 | D>
+COVERAGE	| U1 | U> | D1 | D>
 ------------+----+----+----+----
 first-child | Y  | Y  | Y  | Y
-last-child  | Y  |    |    |
-left        |    | Y  |    |
-right       |    |    | Y  | Y
+last-child  | Y  |	|	|
+left		|	| Y  |	|
+right	   |	|	| Y  | Y
 
 # Move up the tree using right
 >>> c_2_2 = Node.objects.get(pk=c_2_2.pk)
@@ -545,12 +545,12 @@ right       |    |    | Y  | Y
 6 5 1 2 9 10
 7 5 1 2 11 12
 
-COVERAGE    | U1 | U> | D1 | D>
+COVERAGE	| U1 | U> | D1 | D>
 ------------+----+----+----+----
 first-child | Y  | Y  | Y  | Y
-last-child  | Y  |    | Y  | Y
-left        |    | Y  |    |
-right       | Y  | Y  | Y  | Y
+last-child  | Y  |	| Y  | Y
+left		|	| Y  |	|
+right	   | Y  | Y  | Y  | Y
 
 # Move down the tree with descendants using left
 >>> c_1 = Node.objects.get(pk=c_1.pk)
@@ -610,12 +610,12 @@ right       | Y  | Y  | Y  | Y
 6 5 1 2 9 10
 7 5 1 2 11 12
 
-COVERAGE    | U1 | U> | D1 | D>
+COVERAGE	| U1 | U> | D1 | D>
 ------------+----+----+----+----
 first-child | Y  | Y  | Y  | Y
 last-child  | Y  | Y  | Y  | Y
-left        | Y  | Y  | Y  | Y
-right       | Y  | Y  | Y  | Y
+left		| Y  | Y  | Y  | Y
+right	   | Y  | Y  | Y  | Y
 
 I guess we're covered :)
 
@@ -719,11 +719,11 @@ I guess we're covered :)
 # Validate exceptions are raised appropriately
 >>> Node.tree.move_node(root, c_1, position='first-child')
 Traceback (most recent call last):
-    ...
+	...
 InvalidMove: A node may not be made a child of any of its descendants.
 >>> Node.tree.move_node(new_root, c_1, position='cheese')
 Traceback (most recent call last):
-    ...
+	...
 ValueError: An invalid position was given: cheese.
 
 >>> new_root = Node.objects.get(pk=new_root.pk)
@@ -798,11 +798,11 @@ ValueError: An invalid position was given: cheese.
 >>> root = Node.objects.get(pk=root.pk)
 >>> Node.tree.move_node(root, root, position='left')
 Traceback (most recent call last):
-    ...
+	...
 InvalidMove: A node may not be made a sibling of itself.
 >>> Node.tree.move_node(root, root, position='right')
 Traceback (most recent call last):
-    ...
+	...
 InvalidMove: A node may not be made a sibling of itself.
 
 >>> r1 = Tree.objects.create()
@@ -978,7 +978,7 @@ InvalidMove: A node may not be made a sibling of itself.
 
 >>> c1.insert_at(r2)
 Traceback (most recent call last):
-    ...
+	...
 ValueError: Cannot insert a node which has already been saved.
 
 # First child

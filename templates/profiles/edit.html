@@ -2,42 +2,42 @@
 {% load gravatar %}
 
 {% block extra_styles %}
-    <!-- stylesheets -->
-    {{ block.super }}
-    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/profiles.css" />
+	<!-- stylesheets -->
+	{{ block.super }}
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/profiles.css" />
 {% endblock %}
 
 {% block title %}Edit User Profile{% endblock %}
 {% block content %}
-        
-    <div id="profile">
-        <header class="panelheader">
-            <h2>Edit your Profile</h2>
-        </header>
-    	<div id="profile-edit">
-            <form action="{{ request.META.SCRIPT_NAME }}/profiles/{{ user.id }}/update/" method="POST">{% csrf_token %}
-                <p> <label for="id_first_name">First Name: </label>{{ user_form.first_name }} </p>
-                <p> <label for="id_last_name">Last Name: </label>{{ user_form.last_name }} </p>            
-                <!-- Being: Profile information -->
-                <p> <label for="id_title">Title: </label>{{ user_profile_form.title }} </p>
-                <p> <label for="id_address">Address: </label>{{ user_profile_form.address }} </p>
-                <p> <label for="id_alternate_email_1">Alternate email: </label>{{ user_profile_form.alternate_email_1 }} </p>
-                <p> <label for="id_bio">Bio: </label>{{ user_profile_form.bio }} </p>
-                <p> <label for="id_web">Website: </label>{{ user_profile_form.web }} </p>
-                <!-- <p> <label for="id_avatar">Avatar: </label>{{ user_profile_form.avatar }} </p> -->
-                <br /> 
-                <p>
-                    <label>Avatar: </label>
-                        <input type="radio" id="id_avatar_commons" name="avatar" value="A" {% ifequal user_profile_form.avatar.value "A" %} checked="checked"{% endifequal %} /> <img src="https://commons.georgetown.edu/avatars/fetch/user/{{ request.user.username }}" class="avatar" title="Georgetown Commons avatar" height="40" width="40" />
-                        <input type="radio" id="id_gravatar" name="avatar" value="B" {% ifequal user_profile_form.avatar.value "B" %} checked="checked"{% endifequal %} /> <img src="{% gravatar_for_user request.user 40 %}" class="avatar" title="gravatar" />
-                </p>
-                <br />
+		
+	<div id="profile">
+		<header class="panelheader">
+			<h2>Edit your Profile</h2>
+		</header>
+		<div id="profile-edit">
+			<form action="{{ request.META.SCRIPT_NAME }}/profiles/{{ user.id }}/update/" method="POST">{% csrf_token %}
+				<p> <label for="id_first_name">First Name: </label>{{ user_form.first_name }} </p>
+				<p> <label for="id_last_name">Last Name: </label>{{ user_form.last_name }} </p>			
+				<!-- Being: Profile information -->
+				<p> <label for="id_title">Title: </label>{{ user_profile_form.title }} </p>
+				<p> <label for="id_address">Address: </label>{{ user_profile_form.address }} </p>
+				<p> <label for="id_alternate_email_1">Alternate email: </label>{{ user_profile_form.alternate_email_1 }} </p>
+				<p> <label for="id_bio">Bio: </label>{{ user_profile_form.bio }} </p>
+				<p> <label for="id_web">Website: </label>{{ user_profile_form.web }} </p>
+				<!-- <p> <label for="id_avatar">Avatar: </label>{{ user_profile_form.avatar }} </p> -->
+				<br /> 
+				<p>
+					<label>Avatar: </label>
+						<input type="radio" id="id_avatar_commons" name="avatar" value="A" {% ifequal user_profile_form.avatar.value "A" %} checked="checked"{% endifequal %} /> <img src="https://commons.georgetown.edu/avatars/fetch/user/{{ request.user.username }}" class="avatar" title="Georgetown Commons avatar" height="40" width="40" />
+						<input type="radio" id="id_gravatar" name="avatar" value="B" {% ifequal user_profile_form.avatar.value "B" %} checked="checked"{% endifequal %} /> <img src="{% gravatar_for_user request.user 40 %}" class="avatar" title="gravatar" />
+				</p>
+				<br />
 
-                <p> <label for="id_avatar_email">Avatar Email: </label><input type="text" name="avatar_email" id="id_avatar_email" value="{{ request.user.email }}" /> </p>
-                <!-- End: Profile information -->        
-                <input type="submit" value="Submit" />        
-            </form>
-    	</div>
-    </div>
-    
+				<p> <label for="id_avatar_email">Avatar Email: </label><input type="text" name="avatar_email" id="id_avatar_email" value="{{ request.user.email }}" /> </p>
+				<!-- End: Profile information -->		
+				<input type="submit" value="Submit" />		
+			</form>
+		</div>
+	</div>
+	
 {% endblock %}

@@ -3,9 +3,9 @@
 {% block content %}
 
 <form action="{{ request.META.SCRIPT_NAME }}/folders/update/" method="POST">{% csrf_token %}
-    <table>
-        {{ folder_form.as_table }}
-    </table>
-    <input type="submit" value="Submit" />
+	<table>
+		{{ folder_form.as_table }}
+	</table>
+	<input type="submit" value="Submit" />
 </from>
 {% endblock %}

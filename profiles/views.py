@@ -17,73 +17,73 @@ logger = logging.getLogger(__name__)
 def index(request):
    	if (request.user.is_authenticated()):
 		current_user = User.objects.get(pk=request.user.id)
-    current_user_profile, created = UserProfile.objects.get_or_create(user=request.user)
-    if (created):
-        return redirect(str(request.user.id) + '/edit')
-    elif (current_user.is_superuser):
-        user_profiles = UserProfile.objects.all()
-        return render_to_response('profiles/index.html', { 'user_profiles': user_profiles, 'current_user': current_user }, context_instance=RequestContext(request))
-    else:
-        return HttpResponseRedirect(request.META['SCRIPT_NAME'] + '/profiles/' + str(request.user.id))
+	current_user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+	if (created):
+		return redirect(str(request.user.id) + '/edit')
+	elif (current_user.is_superuser):
+		user_profiles = UserProfile.objects.all()
+		return render_to_response('profiles/index.html', { 'user_profiles': user_profiles, 'current_user': current_user }, context_instance=RequestContext(request))
+	else:
+		return HttpResponseRedirect(request.META['SCRIPT_NAME'] + '/profiles/' + str(request.user.id))
 
 
 # show user profile for a designated user (cf. permissions)
 def show(request, user_id):
-    requested_user = User.objects.get(pk=user_id)
-    created = 0
+	requested_user = User.objects.get(pk=user_id)
+	created = 0
 
-    try:
-        user_profile, created = UserProfile.objects.get_or_create(user=requested_user)
-    except:
-        user_profile = UserProfile(user=requested_user)
-        user_profile.save()
-        
-    finally:
-        if (created):
-            user = model_to_dict(user_profile.user)
-        else:
-            user = model_to_dict(requested_user)
-        user_profile = model_to_dict(user_profile)
-        return render_to_response('profiles/show.html', { 'user_profile': user_profile, 'user':user, 'display_fields':('username','first_name','last_name','email','bio','date_joined','title', 'avatar') }, context_instance=RequestContext(request))
-    
-    
-    
+	try:
+		user_profile, created = UserProfile.objects.get_or_create(user=requested_user)
+	except:
+		user_profile = UserProfile(user=requested_user)
+		user_profile.save()
+		
+	finally:
+		if (created):
+			user = model_to_dict(user_profile.user)
+		else:
+			user = model_to_dict(requested_user)
+		user_profile = model_to_dict(user_profile)
+		return render_to_response('profiles/show.html', { 'user_profile': user_profile, 'user':user, 'display_fields':('username','first_name','last_name','email','bio','date_joined','title', 'avatar') }, context_instance=RequestContext(request))
+	
+	
+	
 def edit(request, user_id):
-    requested_user = User.objects.get(pk=user_id)
-    
-    try:
-        user_profile, created = UserProfile.objects.get_or_create(user=requested_user)
-    except:
-        user_profile = UserProfile(user=requested_user)
-        user_profile.save()
-        
-    finally:
-        user_form = UserForm(instance=requested_user)
-        user_profile_form = UserProfileForm(instance=user_profile)
-    
-        return render_to_response('profiles/edit.html', { 'user_profile_form': user_profile_form, 'user_form': user_form }, context_instance=RequestContext(request))
-        
+	requested_user = User.objects.get(pk=user_id)
+	
+	try:
+		user_profile, created = UserProfile.objects.get_or_create(user=requested_user)
+	except:
+		user_profile = UserProfile(user=requested_user)
+		user_profile.save()
+		
+	finally:
+		user_form = UserForm(instance=requested_user)
+		user_profile_form = UserProfileForm(instance=user_profile)
+	
+		return render_to_response('profiles/edit.html', { 'user_profile_form': user_profile_form, 'user_form': user_form }, context_instance=RequestContext(request))
+		
 
 
 # requires request.method == "POST"
 def update(request, user_id):
-    # make user_profile from post
-    user_profile = UserProfile.objects.get(user=user_id)
-    for field_name in user_profile._meta.get_all_field_names():
-        # don't need primary key, user, or many-to-many associations
-        if (field_name in request.POST):
-            setattr(user_profile, field_name, request.POST[field_name])
-    user_profile_form = UserProfileForm(instance=user_profile)
-    
-    # hoy, pronto! make user from post, too.
-    user = User.objects.get(pk=user_id)
-    for field_name in ['first_name','last_name']:
-        setattr(user, field_name, request.POST[field_name])
-    user_form = UserForm(instance=user)
-    
-    # if user_profile_form.is_valid() and user_form.is_valid():
-    user_profile.save()
-    user.save()
-        
-    return HttpResponseRedirect(request.META['SCRIPT_NAME'] + '/profiles/' + str(user_profile.user_id))
-    
+	# make user_profile from post
+	user_profile = UserProfile.objects.get(user=user_id)
+	for field_name in user_profile._meta.get_all_field_names():
+		# don't need primary key, user, or many-to-many associations
+		if (field_name in request.POST):
+			setattr(user_profile, field_name, request.POST[field_name])
+	user_profile_form = UserProfileForm(instance=user_profile)
+	
+	# hoy, pronto! make user from post, too.
+	user = User.objects.get(pk=user_id)
+	for field_name in ['first_name','last_name']:
+		setattr(user, field_name, request.POST[field_name])
+	user_form = UserForm(instance=user)
+	
+	# if user_profile_form.is_valid() and user_form.is_valid():
+	user_profile.save()
+	user.save()
+		
+	return HttpResponseRedirect(request.META['SCRIPT_NAME'] + '/profiles/' + str(user_profile.user_id))
+	

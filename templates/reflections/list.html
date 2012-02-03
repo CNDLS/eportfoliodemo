@@ -1,17 +1,17 @@
 {% if reflections %}
-      <ol class="items"> 
+	  <ol class="items"> 
 			{% for reflection in reflections %}
-                <li id="{{reflection.id}}" class="reflection" data-node-class="Reflection">
-                    {% if reflection.title != "" %}
-                        <p class="title">{{ reflection.title }}</p>
-                    {% else %}
-                        <p class="title">on '{{ reflection.content_object.name }}'</p>
-                    {% endif %}
-                    <p class="date">{{ reflection.modified }}</p>
-                    <div class="reflection_controls">
-                        <a href="{{ AJAX_PREFIX }}/reflections/{{ reflection.id }}" class="fancybox">view</a>
-                    </div>    
-                </li>  
-			{% endfor %}                             
-        </ol>
+				<li id="{{reflection.id}}" class="reflection" data-node-class="Reflection">
+					{% if reflection.title != "" %}
+						<p class="title">{{ reflection.title }}</p>
+					{% else %}
+						<p class="title">on '{{ reflection.content_object.name }}'</p>
+					{% endif %}
+					<p class="date">{{ reflection.modified }}</p>
+					<div class="reflection_controls">
+						<a href="{{ AJAX_PREFIX }}/reflections/{{ reflection.id }}" class="fancybox">view</a>
+					</div>	
+				</li>  
+			{% endfor %}							 
+		</ol>
 {% endif %}

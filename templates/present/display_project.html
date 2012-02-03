@@ -2,9 +2,9 @@
 
 <!doctype html>
 <!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
-<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
-<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
-<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if IE 7 ]>	<html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>	<html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>	<html lang="en" class="no-js ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <head>
 	<meta charset="UTF-8">
@@ -12,15 +12,15 @@
 	<meta name="description" content="">
 	<meta name="author" content="">	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">  
-       
-    <title>{% block title %}EPortfolio Tool{% endblock %}</title>    
-    
-    <!-- stylesheets -->
-    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/reset.css" />
-    <link rel="stylesheet" type="text/css" href="{{ project_stylesheet }}" /> 
-    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/skins/narwhal/style.css" /> 
-    
-    <!-- icons -->
+	   
+	<title>{% block title %}EPortfolio Tool{% endblock %}</title>	
+	
+	<!-- stylesheets -->
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/reset.css" />
+	<link rel="stylesheet" type="text/css" href="{{ project_stylesheet }}" /> 
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/skins/narwhal/style.css" /> 
+	
+	<!-- icons -->
 	<link rel="shortcut icon" href="{{ MEDIA_URL }}favicon.ico">
 	<link rel="apple-touch-icon" href="{{ MEDIA_URL }}apple-touch-icon.png">
 
@@ -29,23 +29,23 @@
 	<![endif]-->  
 	
 	<script type="text/javascript">
-        var media_url = "{{ MEDIA_URL }}";
-        var app_url = "{{ request.META.SCRIPT_NAME }}";
-        var ajax_prefix = "{{ AJAX_PREFIX }}";
-        var username = "{{ request.user }}";
-        var userid = "{{ request.user.id }}"
-        //alert(ajax_prefix)
-    </script>
-    <script type="text/javascript" src="http://use.typekit.com/eyg2elj.js"></script>
+		var media_url = "{{ MEDIA_URL }}";
+		var app_url = "{{ request.META.SCRIPT_NAME }}";
+		var ajax_prefix = "{{ AJAX_PREFIX }}";
+		var username = "{{ request.user }}";
+		var userid = "{{ request.user.id }}"
+		//alert(ajax_prefix)
+	</script>
+	<script type="text/javascript" src="http://use.typekit.com/eyg2elj.js"></script>
 	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-    
+	
 </head>
 
 <body>
-    {% include "present/project_in_template.html" %}
-    
-    <script src="{{ MEDIA_URL }}js/jquery.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}js/application.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}js/projects.js"></script>
+	{% include "present/project_in_template.html" %}
+	
+	<script src="{{ MEDIA_URL }}js/jquery.js"></script>
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/application.js"></script>
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/projects.js"></script>
 </body>
 </html>

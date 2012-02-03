@@ -15,14 +15,14 @@
 	<div id="login">
 	<form action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}
   	<p>
-    	<label for="id_username">Username</label> <input type="text" name="username" id="id_username" />
+		<label for="id_username">Username</label> <input type="text" name="username" id="id_username" />
   	</p>
   	<p>
-    	<label for="id_password">Password</label> <input type="password" name="password" id="id_password" />
-    	<input type="hidden" name="this_is_the_login_form" value="1" />
+		<label for="id_password">Password</label> <input type="password" name="password" id="id_password" />
+		<input type="hidden" name="this_is_the_login_form" value="1" />
   	</p>
   	<p>
-    	<label>&nbsp;</label><input type="submit" value="Log in" />
+		<label>&nbsp;</label><input type="submit" value="Log in" />
   	</p>
 	</form>
 	</div>

@@ -1,19 +1,19 @@
 [
   
   {
-    "model": "present.templatetype",
-    "pk": 1,
-    "fields": {
-      "name": "Page Template",
-      "description": "A simple page template"
-    }
+	"model": "present.templatetype",
+	"pk": 1,
+	"fields": {
+	  "name": "Page Template",
+	  "description": "A simple page template"
+	}
   },
   {
-    "model": "present.templatetype",
-    "pk": 2,
-    "fields": {
-      "name": "Project Template",
-      "description": "A simple project template"
-    }
+	"model": "present.templatetype",
+	"pk": 2,
+	"fields": {
+	  "name": "Project Template",
+	  "description": "A simple project template"
+	}
   }
 ]

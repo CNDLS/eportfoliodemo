@@ -11,8 +11,8 @@
 {% block nav_tabs %}
   
   {% if request.path|is_composition %}
-    <!-- link to library. list projects; one project is active link. -->
-    <li><a href="{{ request.META.SCRIPT_NAME }}/library/{{request.user.id}}">Library</a></li>
+	<!-- link to library. list projects; one project is active link. -->
+	<li><a href="{{ request.META.SCRIPT_NAME }}/library/{{request.user.id}}">Library</a></li>
    	{% for proj in projects %}
    	  {% if proj.id == project.id %}
    		<li><a href="{{ request.META.SCRIPT_NAME }}/present/{{ request.user.id }}/{{ proj.slug }}/compose" class="edit-project active" data-project-name="{{proj.name}}" data-project-slug="{{proj.slug}}"> {{ proj }} </a></li>
@@ -22,8 +22,8 @@
    	{% endfor %}
    	
   {% else %}
-    <!-- library is active link. list projects. -->
-    <li><a href="{{ request.META.SCRIPT_NAME }}/library/{{request.user.id}}" class="active">Library</a></li>
+	<!-- library is active link. list projects. -->
+	<li><a href="{{ request.META.SCRIPT_NAME }}/library/{{request.user.id}}" class="active">Library</a></li>
    	{% for project in projects %}
    		<li><a href="{{ request.META.SCRIPT_NAME }}/present/{{ request.user.id }}/{{ project.slug }}/compose" class="edit-project" data-project-name="{{project.name}}" data-project-slug="{{project.slug}}"> {{ project }} </a></li>
    	{% endfor %}
@@ -36,19 +36,19 @@
 {% block content %}
 <div id="library">
 {% if request.user.is_anonymous %}
-    <ul>
-      <li><a href="{{ request.META.SCRIPT_NAME }}/public/collect/">Collect</a></li>
-      <li><a href="{{ request.META.SCRIPT_NAME }}/public/organize/">Organize</a></li>
-      <li><a href="{{ request.META.SCRIPT_NAME }}/public/present/">Present</a></li>
-      <li><a href="{{ request.META.SCRIPT_NAME }}/public/assess/">Assess</a></li>
-    </ul>
+	<ul>
+	  <li><a href="{{ request.META.SCRIPT_NAME }}/public/collect/">Collect</a></li>
+	  <li><a href="{{ request.META.SCRIPT_NAME }}/public/organize/">Organize</a></li>
+	  <li><a href="{{ request.META.SCRIPT_NAME }}/public/present/">Present</a></li>
+	  <li><a href="{{ request.META.SCRIPT_NAME }}/public/assess/">Assess</a></li>
+	</ul>
 {% else %}
-    <ul>
-      <li><a href="{{ request.META.SCRIPT_NAME }}/library/{{ request.user.id }}">Collect</a></li>
-      <li><a href="{{ request.META.SCRIPT_NAME }}/library/{{ request.user.id }}">Organize</a></li>
-      <li><a href="#">Present</a></li>
-      <li><a href="#">Assess</a></li>
-    </ul>
+	<ul>
+	  <li><a href="{{ request.META.SCRIPT_NAME }}/library/{{ request.user.id }}">Collect</a></li>
+	  <li><a href="{{ request.META.SCRIPT_NAME }}/library/{{ request.user.id }}">Organize</a></li>
+	  <li><a href="#">Present</a></li>
+	  <li><a href="#">Assess</a></li>
+	</ul>
 {% endif %}
 
 </div> <!-- /#library -->

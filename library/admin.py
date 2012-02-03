@@ -6,10 +6,10 @@ from eportfoliodemo.library.models import LibraryState
 from eportfoliodemo.profiles.models import UserProfile
 
 class UserProfileInline(admin.StackedInline):
-    model = UserProfile
+	model = UserProfile
 
 class UserAdmin(RealUserAdmin):
-    inlines = [ UserProfileInline ]
+	inlines = [ UserProfileInline ]
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)

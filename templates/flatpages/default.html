@@ -2,9 +2,9 @@
 
 <!doctype html>
 <!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
-<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
-<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
-<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if IE 7 ]>	<html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>	<html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>	<html lang="en" class="no-js ie9"> <![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
 <head>
 	<meta charset="UTF-8">
@@ -12,26 +12,26 @@
 	<meta name="description" content="">
 	<meta name="author" content="">	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">  
-       
-    <title>{% block title %}EPortfolio Tool{% endblock %}</title>    
-    
-    <!-- stylesheets -->
-    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/reset.css" /> 
-    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/base.css" /> 
-    {% block extra_styles %} {% endblock %}
-    
-    <!-- icons -->
+	   
+	<title>{% block title %}EPortfolio Tool{% endblock %}</title>	
+	
+	<!-- stylesheets -->
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/reset.css" /> 
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/base.css" /> 
+	{% block extra_styles %} {% endblock %}
+	
+	<!-- icons -->
 	<link rel="shortcut icon" href="{{ MEDIA_URL }}favicon.ico">
 	<link rel="apple-touch-icon" href="{{ MEDIA_URL }}apple-touch-icon.png">
 
-    <script type="text/javascript">
-        var media_url = "{{ MEDIA_URL }}";
-        var app_url = "{{ request.META.SCRIPT_NAME }}";
-        var ajax_prefix = "{{ AJAX_PREFIX }}";
-        var username = "{{ request.user }}";
-        var userid = "{{ request.user.id }}"
-        //alert(ajax_prefix)
-    </script>
+	<script type="text/javascript">
+		var media_url = "{{ MEDIA_URL }}";
+		var app_url = "{{ request.META.SCRIPT_NAME }}";
+		var ajax_prefix = "{{ AJAX_PREFIX }}";
+		var username = "{{ request.user }}";
+		var userid = "{{ request.user.id }}"
+		//alert(ajax_prefix)
+	</script>
 
 	<!--[if lt IE 9]>
 	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -40,74 +40,74 @@
 
 <body>
 
-    <header id="header">
-        <h1><a href="{{ request.META.SCRIPT_NAME }}/">Pegasus</a></h1>
-        <!--<p id="breadcrumb">breadcrumbs</p>-->
-    
-        <nav id="navbar">
-            {% block navbar %}
-            <ul>
-              <li><a id="nav-collect" href="{{ request.META.SCRIPT_NAME }}/library/{{ request.user.id }}">Collect</a></li>
-              <li><a id="nav-organize" class="active" href="{{ request.META.SCRIPT_NAME }}/library/{{ request.user.id }}">My Library</a></li>
-              <li><a id="nav-present" href="{{ request.META.SCRIPT_NAME }}/present/{{ request.user.id }}">Present</a></li>
-              <li><a id="nav-assess" href="{{ request.META.SCRIPT_NAME }}/library/{{ request.user.id }}">Assess</a></li>              
-            </ul>
-            {% endblock %}
-        </nav>
-          
-        {% if home != 1 %}
-          <nav id="tabs">
-              <ul>
-                  <!-- <li><a class="new-project" href="#">+</a></li> -->
-                  {% block nav_tabs %}
-                    
-                  {% endblock %}
-                  <li><a href="#" class="new-project">+</a></li>
-              </ul>
-          </nav>
-       {% endif %}
-        
-        <nav id="account">
-            {% if not request.user or request.user.is_anonymous %}
-            	<a href="{{ request.META.SCRIPT_NAME }}/accounts/login/?next={{ request.META.SCRIPT_NAME }}/">Login</a>
-            {% else %}
-                <a href="{{ request.META.SCRIPT_NAME }}/profiles/{{ request.user.id }}"><img src="{% gravatar_for_user request.user 30 %}"/> {{ request.user.first_name  }} {{ request.user.last_name }}</a>
-                <a class="signout" href="{{ request.META.SCRIPT_NAME }}/accounts/logout/">Sign out</a>                   
-            {% endif %}
-        </nav>
-                
-    </header>
-        
-    <section id="content">
-        {% block content %}
-          <h1> {{ flatpage.title }} </h1>
+	<header id="header">
+		<h1><a href="{{ request.META.SCRIPT_NAME }}/">Pegasus</a></h1>
+		<!--<p id="breadcrumb">breadcrumbs</p>-->
+	
+		<nav id="navbar">
+			{% block navbar %}
+			<ul>
+			  <li><a id="nav-collect" href="{{ request.META.SCRIPT_NAME }}/library/{{ request.user.id }}">Collect</a></li>
+			  <li><a id="nav-organize" class="active" href="{{ request.META.SCRIPT_NAME }}/library/{{ request.user.id }}">My Library</a></li>
+			  <li><a id="nav-present" href="{{ request.META.SCRIPT_NAME }}/present/{{ request.user.id }}">Present</a></li>
+			  <li><a id="nav-assess" href="{{ request.META.SCRIPT_NAME }}/library/{{ request.user.id }}">Assess</a></li>			  
+			</ul>
+			{% endblock %}
+		</nav>
+		  
+		{% if home != 1 %}
+		  <nav id="tabs">
+			  <ul>
+				  <!-- <li><a class="new-project" href="#">+</a></li> -->
+				  {% block nav_tabs %}
+					
+				  {% endblock %}
+				  <li><a href="#" class="new-project">+</a></li>
+			  </ul>
+		  </nav>
+	   {% endif %}
+		
+		<nav id="account">
+			{% if not request.user or request.user.is_anonymous %}
+				<a href="{{ request.META.SCRIPT_NAME }}/accounts/login/?next={{ request.META.SCRIPT_NAME }}/">Login</a>
+			{% else %}
+				<a href="{{ request.META.SCRIPT_NAME }}/profiles/{{ request.user.id }}"><img src="{% gravatar_for_user request.user 30 %}"/> {{ request.user.first_name  }} {{ request.user.last_name }}</a>
+				<a class="signout" href="{{ request.META.SCRIPT_NAME }}/accounts/logout/">Sign out</a>				   
+			{% endif %}
+		</nav>
+				
+	</header>
+		
+	<section id="content">
+		{% block content %}
+		  <h1> {{ flatpage.title }} </h1>
 
-          {{ flatpage.content }}
-        {% endblock %}
-    </section>
-    <!-- /middle-->
-    
+		  {{ flatpage.content }}
+		{% endblock %}
+	</section>
+	<!-- /middle-->
+	
 
-    <footer id="footer">  
-        {% block footer %}{% endblock %}      
-    </footer>
-    
-    
-    <!-- scripts and extras -->
-    <script src="{{ MEDIA_URL }}js/jquery.js"></script>
+	<footer id="footer">  
+		{% block footer %}{% endblock %}	  
+	</footer>
+	
+	
+	<!-- scripts and extras -->
+	<script src="{{ MEDIA_URL }}js/jquery.js"></script>
 	<script src="{{ MEDIA_URL }}js/plugins.js"></script>
 	<script src="{{ MEDIA_URL }}js/resize.js"></script>
-    
-    <!-- modal windows -->
-    <script src="{{ MEDIA_URL }}js/fancybox/jquery.easing-1.3.pack.js"></script>
-    <script src="{{ MEDIA_URL }}js/fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
-    <script src="{{ MEDIA_URL }}js/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
-    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}js/fancybox/jquery.fancybox-1.3.4.css" /> 
-    <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-ui-1.8.16.custom.min.js"></script>
+	
+	<!-- modal windows -->
+	<script src="{{ MEDIA_URL }}js/fancybox/jquery.easing-1.3.pack.js"></script>
+	<script src="{{ MEDIA_URL }}js/fancybox/jquery.mousewheel-3.0.4.pack.js"></script>
+	<script src="{{ MEDIA_URL }}js/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}js/fancybox/jquery.fancybox-1.3.4.css" /> 
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-ui-1.8.16.custom.min.js"></script>
 
-    <!-- Tabs -->
-    <script src="{{ MEDIA_URL }}js/tabs.js"></script>
-    {% block custom_scripts %}EPortfolio Tool{% endblock %}
-    
+	<!-- Tabs -->
+	<script src="{{ MEDIA_URL }}js/tabs.js"></script>
+	{% block custom_scripts %}EPortfolio Tool{% endblock %}
+	
 </body>
 </html>

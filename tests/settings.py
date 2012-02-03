@@ -21,6 +21,6 @@ DATABASE_ENGINE = 'sqlite3'
 #DATABASE_PORT = '5432'
 
 INSTALLED_APPS = (
-    'mptt',
-    'myapp',
+	'mptt',
+	'myapp',
 )

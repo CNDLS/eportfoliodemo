@@ -1,9 +1,9 @@
 <header class="panelheader">
-    <h2>Types of Projects</h2>
+	<h2>Types of Projects</h2>
 </header>
 <form id="project-type-form" name="project-type-form" method="post" action="{{request.META.SCRIPT_NAME}}/present/{{request.user.id}}/project-type/select/"> {% csrf_token %}
-    {% for type in project_types %}
-    	<p> <input type="radio" name="project-type" id="{{ type.name }}" value="{{ type.id }}" /> <label for="{{ type.name }}"> {{ type.name }} </label> </p>
-    {% endfor %}
-    <input type="submit" value="Create" />
+	{% for type in project_types %}
+		<p> <input type="radio" name="project-type" id="{{ type.name }}" value="{{ type.id }}" /> <label for="{{ type.name }}"> {{ type.name }} </label> </p>
+	{% endfor %}
+	<input type="submit" value="Create" />
 </form>

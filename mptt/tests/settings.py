@@ -22,6 +22,6 @@ DATABASE_NAME = os.path.join(DIRNAME, 'mptt.db')
 #DATABASE_PORT = '5432'
 
 INSTALLED_APPS = (
-    'mptt',
-    'mptt.tests',
+	'mptt',
+	'mptt.tests',
 )

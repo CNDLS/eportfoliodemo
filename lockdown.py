@@ -5,14 +5,14 @@
 # Redistribution and use in source and binary forms, with or without 
 # modification, are permitted provided that the following conditions are met:
 # 
-#     * Redistributions of source code must retain the above copyright notice, 
-#       this list of conditions and the following disclaimer.
-#     * Redistributions in binary form must reproduce the above copyright 
-#       notice, this list of conditions and the following disclaimer in the 
-#       documentation and/or other materials provided with the distribution.
-#     * Neither the name of the SuperJared.com nor the names of its 
-#       contributors may be used to endorse or promote products derived from 
-#       this software without specific prior written permission.
+#	 * Redistributions of source code must retain the above copyright notice, 
+#	   this list of conditions and the following disclaimer.
+#	 * Redistributions in binary form must reproduce the above copyright 
+#	   notice, this list of conditions and the following disclaimer in the 
+#	   documentation and/or other materials provided with the distribution.
+#	 * Neither the name of the SuperJared.com nor the names of its 
+#	   contributors may be used to endorse or promote products derived from 
+#	   this software without specific prior written permission.
 # 
 # THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" 
 # AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE 
@@ -33,40 +33,40 @@ from django.http import HttpResponseRedirect
 import re
 
 class RequireLoginMiddleware(object):
-    """
-    Require Login middleware. If enabled, each Django-powered page will
-    require authentication.
-    
-    If an anonymous user requests a page, he/she is redirected to the login
-    page set by REQUIRE_LOGIN_PATH or /accounts/login/ by default.
-    """
-    def __init__(self):
-       #self.require_login_path = getattr(settings, 'REQUIRE_LOGIN_PATH', '/accounts/login/') 
-        self.require_login_path = '/accounts/login/'
-        # self.feed_path = '/public/'
-        # self.inquiry_feed_path = '/feeds/inquiries/'
-        # self.inquiry_feed_path = '/feeds/inquiries/'
+	"""
+	Require Login middleware. If enabled, each Django-powered page will
+	require authentication.
+	
+	If an anonymous user requests a page, he/she is redirected to the login
+	page set by REQUIRE_LOGIN_PATH or /accounts/login/ by default.
+	"""
+	def __init__(self):
+	   #self.require_login_path = getattr(settings, 'REQUIRE_LOGIN_PATH', '/accounts/login/') 
+		self.require_login_path = '/accounts/login/'
+		# self.feed_path = '/public/'
+		# self.inquiry_feed_path = '/feeds/inquiries/'
+		# self.inquiry_feed_path = '/feeds/inquiries/'
 
-    def process_request(self, request):
-        s = request.path
-        
-        # m = re.search('/\//', s)
-        home = re.search('/', s)
-        m = re.search('/public/', s)
-        
-        if m is None:
-            public_pages = False
-        else:
-            public_pages = True
-        
-        if home is None:
-            home_page = False
-        else:
-            home_page = True         
-                
-        if request.path != self.require_login_path and public_pages != True and home_page != True and request.user.is_anonymous():
-            if request.POST:
-                return login(request)
-            else:
-                return HttpResponseRedirect('%s?next=%s' % (self.require_login_path, request.path))
-                
+	def process_request(self, request):
+		s = request.path
+		
+		# m = re.search('/\//', s)
+		home = re.search('/', s)
+		m = re.search('/public/', s)
+		
+		if m is None:
+			public_pages = False
+		else:
+			public_pages = True
+		
+		if home is None:
+			home_page = False
+		else:
+			home_page = True		 
+				
+		if request.path != self.require_login_path and public_pages != True and home_page != True and request.user.is_anonymous():
+			if request.POST:
+				return login(request)
+			else:
+				return HttpResponseRedirect('%s?next=%s' % (self.require_login_path, request.path))
+				

@@ -1,10 +1,10 @@
 <h4 class="date">{{ reflection.modified }}</h4>
 {% if reflection.title != "" %}
-        <h4 class="title">{{ reflection.title }}</h4>
-    {% else %}
-        <h4 class="title">on '{{ reflection.content_object.name }}'</h4>
-    {% endif %}
-<div class="comment">{{ reflection.comment|safe }}</div>    
+		<h4 class="title">{{ reflection.title }}</h4>
+	{% else %}
+		<h4 class="title">on '{{ reflection.content_object.name }}'</h4>
+	{% endif %}
+<div class="comment">{{ reflection.comment|safe }}</div>	
 <div class="reflection_controls">
   <a href="{{ AJAX_PREFIX }}/reflections/{{ reflection.id }}/edit" id="edit_btn">Edit</a>
   &nbsp;&middot;&nbsp;

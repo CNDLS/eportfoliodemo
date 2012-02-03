@@ -31,18 +31,18 @@ def show(request, user_id):
 	requested_user = User.objects.get(pk=user_id)
 	# get all the folders & assets.
 	items_in_library_tree = get_librarytree_items_for(requested_user)
-        
+		
 	# get all the collections & asset aliases.
 	# it's a tree, but without hierarchy (gets us dragging, renaming, etc. parallel to lib).
 	items_in_collections_tree = get_collectiontree_items_for(requested_user)
 	form = ProjectForm()
 	return render_to_response('present/show.html',
-                    { 'projects': projects,
-                      'folder_nodes': items_in_library_tree,
-                      'collections_nodes': items_in_collections_tree,
-                      'form': form
-                    },
-                    context_instance=RequestContext(request))
+					{ 'projects': projects,
+					  'folder_nodes': items_in_library_tree,
+					  'collections_nodes': items_in_collections_tree,
+					  'form': form
+					},
+					context_instance=RequestContext(request))
  
  
  
@@ -53,14 +53,14 @@ def display_project(request, user_id, project_slug):
 	project_template_name = 'basic' # temp.
 	
 	return render_to_response('present/display_project.html',
-                                { 'project': project,
-    							  'project_template_name': project_template_name,
-                                  'project_stylesheet': project_stylesheet
-                                },
-                                context_instance=RequestContext(request))
-                  
-                  
-                  
+								{ 'project': project,
+								  'project_template_name': project_template_name,
+								  'project_stylesheet': project_stylesheet
+								},
+								context_instance=RequestContext(request))
+				  
+				  
+				  
 def create_project(request, user_id, project_slug = None):
 	form = ProjectForm()
 	
@@ -141,10 +141,10 @@ def compose_project(request, user_id, project_slug=None):
 		current_user = User.objects.get(pk=request.user.id)
 
 	project_template_name = 'basic' # temp.
-    
+	
 	# get all the folders & assets.
 	items_in_library_tree = get_librarytree_items_for(requested_user)
-    
+	
 	# get all the collections & asset aliases.
 	# it's a tree, but without hierarchy (gets us dragging, renaming, etc. parallel to lib).
 	items_in_collections_tree = get_collectiontree_items_for(requested_user)
@@ -162,7 +162,7 @@ def compose_project(request, user_id, project_slug=None):
 																'collections_nodes': items_in_collections_tree,
 																'AJAX_PREFIX': AJAX_PREFIX,
 																'projects': projects },
-                                                                  context_instance=RequestContext(request))
+																  context_instance=RequestContext(request))
 	# return render_to_response('present/create_project.html',
 	#  							{'form': form},
 	#  							context_instance=RequestContext(request))
@@ -170,15 +170,15 @@ def compose_project(request, user_id, project_slug=None):
 
 
 def project_in_template(request, user_id, project_slug=None):
-    project = Project.objects.get(slug=project_slug)
-    requested_user = User.objects.get(pk=user_id)
-    project_stylesheet = PROJECT_TEMPLATE_URL + project.template.template_path + 'style.css'
-    
-    return render_to_response('present/compose_project.html', { 'project': project,
-                                                                'project_stylesheet': project_stylesheet, 
-                                                                'requested_user': requested_user,
-                                                                  'AJAX_PREFIX': AJAX_PREFIX },
-                                                                  context_instance=RequestContext(request))
+	project = Project.objects.get(slug=project_slug)
+	requested_user = User.objects.get(pk=user_id)
+	project_stylesheet = PROJECT_TEMPLATE_URL + project.template.template_path + 'style.css'
+	
+	return render_to_response('present/compose_project.html', { 'project': project,
+																'project_stylesheet': project_stylesheet, 
+																'requested_user': requested_user,
+																  'AJAX_PREFIX': AJAX_PREFIX },
+																  context_instance=RequestContext(request))
 
 
 
@@ -206,20 +206,20 @@ def add_page(request, user_id, project_slug=None):
 	 							{'form': form, 'project': project}, context_instance=RequestContext(request))
 
 def edit_page_content(request, user_id, page_id=None, project_id=None):
-    page = Page.objects.get(pk=page_id)
-    project = Project.objects.get(pk=project_id)
-    
-    if request.method == 'POST':
-        page.content = request.POST["content"]
-        page.save()
-        
-        json_serializer = serializers.get_serializer("json")()
-        page_array = [json_serializer.serialize([page])] 
-        return HttpResponse (page_array, mimetype='application/json')
-    else:
-        form = PageForm(instance=page)
-        return render_to_response('present/edit_page_content.html', { 'form': form, 'action': 'edit', 'project': project, 'page': page }, context_instance=RequestContext(request))
-    
+	page = Page.objects.get(pk=page_id)
+	project = Project.objects.get(pk=project_id)
+	
+	if request.method == 'POST':
+		page.content = request.POST["content"]
+		page.save()
+		
+		json_serializer = serializers.get_serializer("json")()
+		page_array = [json_serializer.serialize([page])] 
+		return HttpResponse (page_array, mimetype='application/json')
+	else:
+		form = PageForm(instance=page)
+		return render_to_response('present/edit_page_content.html', { 'form': form, 'action': 'edit', 'project': project, 'page': page }, context_instance=RequestContext(request))
+	
 
 def get_page_content(request, user_id, page_id=None, project_id=None):
 	project = Project.objects.get(id=project_id)
@@ -227,7 +227,7 @@ def get_page_content(request, user_id, page_id=None, project_id=None):
 
 	request_page = Page.objects.get(id=page_id)
 	json_serializer = serializers.get_serializer("json")() 
-    
+	
 	if request_page in pages:
 		asset = False
 		page_array = [json_serializer.serialize([request_page])] 
@@ -235,22 +235,22 @@ def get_page_content(request, user_id, page_id=None, project_id=None):
 
 		for page_item in page_items:
 			content_type = ContentType.objects.get(pk=page_item.content_type_id)
-		    
+			
 			if content_type.model_class() == AssetAlias:
 				asset = Asset.objects.get(pk=page_item.object_id)
 				page_item_content_object = asset
 			else:
 				page_item_content_object = content_type.get_object_for_this_type(pk=page_item.object_id)
-		        
-            # special processing. doesn't seem to work as a method on the model object
+				
+			# special processing. doesn't seem to work as a method on the model object
 		 	if (content_type.model_class() == Reflection):
 		 		source_object = page_item_content_object.content_object
 		 		if (type(source_object) == AssetAlias):
 		 			source_object = Asset.objects.get(pk=source_object.asset_id)
 		 		page_item_content_object.source_object = json_serializer.serialize([source_object])
-		        
+				
 				page_item_content_object.title = "on '" + source_object.name + "'"
-		    
+			
 			page_item_dict = {}
 			page_item_dict["page_item"] = json_serializer.serialize([page_item])
 			page_item_dict["content_object"] = json_serializer.serialize([page_item_content_object])
@@ -274,7 +274,11 @@ def add_content(request, user_id, content_type, object_id, project_slug, page_id
 		asset = obj.asset
 	else:
 		asset = obj
-	
+		
+	print "asset.contents() " + asset.contents()
+	asset.html_content = asset.contents()
+	asset.save()
+		
 	page_item = PageItem()
 	page_item.content_object = asset
 	page_item.page = request_page
@@ -282,7 +286,7 @@ def add_content(request, user_id, content_type, object_id, project_slug, page_id
 	# store the path spec into the node of the doc where the content was added.
 	if request.method == 'POST':
 		page_item.page_section_tag_selector = request.POST['page_section_tag_selector']  # '#basic-page_content'
-        
+		
 	page_item.ordinal = 0
 	page_item.save()
 

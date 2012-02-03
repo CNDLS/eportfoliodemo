@@ -12,8 +12,8 @@ register = template.Library()
 
 @stringfilter
 def is_composition(path):
-    return path.find('compose') > 0
-    
+	return path.find('compose') > 0
+	
 @register.simple_tag
 def editable_state(path):
 	if is_composition(path):

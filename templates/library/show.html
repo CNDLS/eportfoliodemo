@@ -9,218 +9,218 @@
 {% endblock %}
 
 {% block custom_scripts %}
-    <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.core.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.contextmenu.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.themes.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.html.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.ui.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.dnd.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/vakata.js"></script>
-    
-    
-    <script type="text/javascript">
-        var media_url = "{{ MEDIA_URL }}";
-        var app_url = "{{ request.META.SCRIPT_NAME }}";
-        var ajax_prefix = "{{ AJAX_PREFIX }}";
-        //alert(ajax_prefix)
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.core.js"></script>
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.contextmenu.js"></script>
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.themes.js"></script>
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.html.js"></script>
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.ui.js"></script>
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/jstree.dnd.js"></script>
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/jstree/vakata.js"></script>
+	
+	
+	<script type="text/javascript">
+		var media_url = "{{ MEDIA_URL }}";
+		var app_url = "{{ request.META.SCRIPT_NAME }}";
+		var ajax_prefix = "{{ AJAX_PREFIX }}";
+		//alert(ajax_prefix)
 	</script>
-    
-    <script type="text/javascript" src="{{ MEDIA_URL }}js/inflection.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}js/application.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}js/metadata.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}js/libraryinteractions.js"></script> <!-- Mine -->
-    <script type="text/javascript" src="{{ MEDIA_URL }}js/libraryitems.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}js/library_contextual_buttons.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}js/reflections.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}js/collectionitems.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.timeago.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.slug.js"></script>
+	
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/inflection.js"></script>
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/application.js"></script>
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/metadata.js"></script>
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/libraryinteractions.js"></script> <!-- Mine -->
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/libraryitems.js"></script>
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/library_contextual_buttons.js"></script>
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/reflections.js"></script>
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/collectionitems.js"></script>
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.timeago.js"></script>
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.slug.js"></script>
 	<script type="text/javascript" src="{{ MEDIA_URL }}js/windowflip.js"></script>
 	<script type="text/javascript" src="{{ MEDIA_URL }}js/librarydisplay.js"></script>
-    <script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-ui-1.8.16.custom.min.js"></script>
-      <script type="text/javascript" src="{{ MEDIA_URL }}js/jwysiwyg/jquery.wysiwyg.js"></script>
-        <script type="text/javascript" src="{{ MEDIA_URL }}js/jwysiwyg/controls/wysiwyg.link.js"></script>
-        <script type="text/javascript" src="{{ MEDIA_URL }}js/jwysiwyg.init.js"></script>jquery.resize.min.js
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-ui-1.8.16.custom.min.js"></script>
+	  <script type="text/javascript" src="{{ MEDIA_URL }}js/jwysiwyg/jquery.wysiwyg.js"></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}js/jwysiwyg/controls/wysiwyg.link.js"></script>
+		<script type="text/javascript" src="{{ MEDIA_URL }}js/jwysiwyg.init.js"></script>jquery.resize.min.js
 {% endblock %}
 
 {% block title %}
-    {{ requested_user.first_name }} {{ requested_user.last_name }}'s Library
+	{{ requested_user.first_name }} {{ requested_user.last_name }}'s Library
 {% endblock %}
 
 
 {% block content %}
-        
-    <div id="panels">
+		
+	<div id="panels">
 
-        <div id="left" class="panel">
-            <header class="panelheader">
-                <h2>Folders</h2>
-            </header>
-            <div class="handle"><a href="#" class="expand">Expand</a></div>
-            
-            <div id="folders">
-                <div id="folder_tree">
-                    {% include "libraryitems/index.html" %}   
-                </div>  
-                {% if requested_user == current_user %}
-                    <a id="new_folder" class="button modal remote" href="{{ request.META.SCRIPT_NAME }}/folders/new">new&nbsp;folder</a>
-                {% endif %}          
-            </div>  
-            
-            <div id="collections">
-                <h2>Your Collections</h2>                
-                <div id="collection_tree">
-                    {% include "collectionitems/index.html" %}
-                </div>
-                {% if requested_user == current_user %}
-                    <a id="new_collection" class="button modal remote" href="{{ request.META.SCRIPT_NAME }}/collections/new">new&nbsp;collection</a>
-                {% endif %}
-                
-            </div>
-       </div><!--/#left-->
-       
-        
-        {% block center_content %}
-        <div id="library" role="main" class="center">
-            
-            <div id="collect">
-    
-                <header class="panelheader">
-                </header>
-                
-                <div id="collection_options">
-                	<h1>Collect stuff to add to your Library!</h1>
-                    <h2>How should you collect? Here are your options.</h2>
-                    <ul>
-                    	<li><a href="#" id="upload"><h3>Simple File Upload</h3> Upload documents one at-a-time (or as a batch)!</a></li>
-                    	<li><a href="#" id="dropbox"><h3>Sync with DropBox</h3> Install a plug-in to manage your files easily from your DropBox folder.</a></li>
-                    	<li><a href="#" id="citations"><h3>Import citations</h3> Connect your Zotero, Diigo, or Endnote account.</a></li>
-                    	<li><a href="#" id="email"><h3>E-mail attachments</h3> Add items to your library by attaching them to an e-mail!</a></li>
-                    </ul>
-                </div>
-                
-            </div>
-        
-            <div id="library-items">
-        
-                <header class="panelheader">
-                    <h2>Your items</h2>
-                    <ul class="view">
-                        <li><a class="button active" href="#" id="list_view">List</a></li>
-                        <li><a class="button" href="#" id="icon_view">Icon</a></li>
-                    </ul>
-                </header>
-            	
+		<div id="left" class="panel">
+			<header class="panelheader">
+				<h2>Folders</h2>
+			</header>
+			<div class="handle"><a href="#" class="expand">Expand</a></div>
+			
+			<div id="folders">
+				<div id="folder_tree">
+					{% include "libraryitems/index.html" %}   
+				</div>  
+				{% if requested_user == current_user %}
+					<a id="new_folder" class="button modal remote" href="{{ request.META.SCRIPT_NAME }}/folders/new">new&nbsp;folder</a>
+				{% endif %}		  
+			</div>  
+			
+			<div id="collections">
+				<h2>Your Collections</h2>				
+				<div id="collection_tree">
+					{% include "collectionitems/index.html" %}
+				</div>
+				{% if requested_user == current_user %}
+					<a id="new_collection" class="button modal remote" href="{{ request.META.SCRIPT_NAME }}/collections/new">new&nbsp;collection</a>
+				{% endif %}
+				
+			</div>
+	   </div><!--/#left-->
+	   
+		
+		{% block center_content %}
+		<div id="library" role="main" class="center">
+			
+			<div id="collect">
+	
+				<header class="panelheader">
+				</header>
+				
+				<div id="collection_options">
+					<h1>Collect stuff to add to your Library!</h1>
+					<h2>How should you collect? Here are your options.</h2>
+					<ul>
+						<li><a href="#" id="upload"><h3>Simple File Upload</h3> Upload documents one at-a-time (or as a batch)!</a></li>
+						<li><a href="#" id="dropbox"><h3>Sync with DropBox</h3> Install a plug-in to manage your files easily from your DropBox folder.</a></li>
+						<li><a href="#" id="citations"><h3>Import citations</h3> Connect your Zotero, Diigo, or Endnote account.</a></li>
+						<li><a href="#" id="email"><h3>E-mail attachments</h3> Add items to your library by attaching them to an e-mail!</a></li>
+					</ul>
+				</div>
+				
+			</div>
+		
+			<div id="library-items">
+		
+				<header class="panelheader">
+					<h2>Your items</h2>
+					<ul class="view">
+						<li><a class="button active" href="#" id="list_view">List</a></li>
+						<li><a class="button" href="#" id="icon_view">Icon</a></li>
+					</ul>
+				</header>
+				
 				{% comment %} {% if current_assets %} {% endcomment %}
-                    <div id="files" class="innerpane">
-                        <header>
-                            <abbr class="size">Size</abbr>
-                            <abbr class="modified">Last Modified</abbr>
-                            <abbr class="filetype">Type</abbr>
-                            <h3>Item</h3>
-                        </header>
-                        <ol class="items"> 
+					<div id="files" class="innerpane">
+						<header>
+							<abbr class="size">Size</abbr>
+							<abbr class="modified">Last Modified</abbr>
+							<abbr class="filetype">Type</abbr>
+							<h3>Item</h3>
+						</header>
+						<ol class="items"> 
 							{% for asset in current_assets %}
-                                <li id="{{asset.id}}" data-asset-id="{{asset.id}}">
-                                    <a href="#">
-                                        <abbr class="size">{{ asset.file.size|filesizeformat }}</abbr>
-                                        <abbr class="modified">{{ asset.modified|timesince }} ago</abbr>
-                                        <abbr class="filetype">
-                                            {% for type in asset.filetype.all %}
-                                                {{ type.name }}
-                                            {% endfor %}
-                                        </abbr>
-                                        <h3>{{ asset.name }}</h3>                                        
-                                    </a>
-                                </li>  
-							{% endfor %}                             
-                        </ol>
-                    </div>  
+								<li id="{{asset.id}}" data-asset-id="{{asset.id}}">
+									<a href="#">
+										<abbr class="size">{{ asset.file.size|filesizeformat }}</abbr>
+										<abbr class="modified">{{ asset.modified|timesince }} ago</abbr>
+										<abbr class="filetype">
+											{% for type in asset.filetype.all %}
+												{{ type.name }}
+											{% endfor %}
+										</abbr>
+										<h3>{{ asset.name }}</h3>										
+									</a>
+								</li>  
+							{% endfor %}							 
+						</ol>
+					</div>  
 
 				{% comment %} {% endif %} {% endcomment %}
 				
-                <iframe id="upload_target" name="upload_target" src="" style="width:0px;height:0px;"></iframe>
-                <div id="fileupload">
+				<iframe id="upload_target" name="upload_target" src="" style="width:0px;height:0px;"></iframe>
+				<div id="fileupload">
 
-                    Add an item(s) using the form below:
-                    <form action="{% url ajax_create_asset %}" method="post" enctype="multipart/form-data" id="fileupload-form" target="upload_target">{% csrf_token %}
-                    <p>
-                        <!-- {{ file_upload_form.file }} -->
-                        <input name='uploads' type=file multiple>
-                    </p>
-                    <!-- This is the file input goes -->
-                    <noscript>          
-                    	<p>Please enable JavaScript to use file uploader.</p>
-                        <!-- or put a simple form for upload here -->
-                    </noscript> 
-                    <input type="submit" value="Upload File" />
-                    
-                    </form>
-                </div>	 
-                
-            </div><!--/#library-items-->
-                    
-          </div><!--/#library-->
+					Add an item(s) using the form below:
+					<form action="{% url ajax_create_asset %}" method="post" enctype="multipart/form-data" id="fileupload-form" target="upload_target">{% csrf_token %}
+					<p>
+						<!-- {{ file_upload_form.file }} -->
+						<input name='uploads' type=file multiple>
+					</p>
+					<!-- This is the file input goes -->
+					<noscript>		  
+						<p>Please enable JavaScript to use file uploader.</p>
+						<!-- or put a simple form for upload here -->
+					</noscript> 
+					<input type="submit" value="Upload File" />
+					
+					</form>
+				</div>	 
+				
+			</div><!--/#library-items-->
+					
+		  </div><!--/#library-->
 
-        <div id="projects" role="main" class="center">
-            
-        </div> <!-- /#projects -->
-        
-         {% endblock %}
-         
-        
-        <div id="right" class="panel">
-            {%  block right_sidebar %}
-            <header class="panelheader">
-                    <h2>Meta</h2>
-            </header>
-            <div class="handle"><a href="#" class="expand">Expand</a></div>
-            <!--<div class="meta default">
-                <div class="data">
-                    <div class="preview empty">
-                        No item Selected!
-                    </div>
-                </div>
-            </div>-->
-            <div class="meta">
-                <div class="data">
-                    <ul id="metadata-details"></ul>
-                    <br class="clear" />
-                    <h3>Add new metadata</h3>
-                    {% display_metadata_form request %}
+		<div id="projects" role="main" class="center">
+			
+		</div> <!-- /#projects -->
+		
+		 {% endblock %}
+		 
+		
+		<div id="right" class="panel">
+			{%  block right_sidebar %}
+			<header class="panelheader">
+					<h2>Meta</h2>
+			</header>
+			<div class="handle"><a href="#" class="expand">Expand</a></div>
+			<!--<div class="meta default">
+				<div class="data">
+					<div class="preview empty">
+						No item Selected!
+					</div>
+				</div>
+			</div>-->
+			<div class="meta">
+				<div class="data">
+					<ul id="metadata-details"></ul>
+					<br class="clear" />
+					<h3>Add new metadata</h3>
+					{% display_metadata_form request %}
 
-                    <h3>Tags <span class="tags-edit"><a href="#">Add Tags</a></span></h3>
-                    <p id="tag-details"></p>
-                    <!-- <h3> Add tags </h3> -->
-                    {% display_tag_form request %}
-                    
-                    <h3>Reflections</h3>
-                    <p id="reflections"></p>
-                </div>
+					<h3>Tags <span class="tags-edit"><a href="#">Add Tags</a></span></h3>
+					<p id="tag-details"></p>
+					<!-- <h3> Add tags </h3> -->
+					{% display_tag_form request %}
+					
+					<h3>Reflections</h3>
+					<p id="reflections"></p>
+				</div>
 
-            </div>
-            {% endblock %}
-        </div><!--/#right-->
-        
-        
-    </div><!--/#panels-->
-        
+			</div>
+			{% endblock %}
+		</div><!--/#right-->
+		
+		
+	</div><!--/#panels-->
+		
 {% endblock %}
 
 {% block footer %}	
-        
-    <div id="upload-button">
-        <p>Upload +</p>
-    </div>
-        
-    <nav id="actions">
-        <ul>
-            <li><a href="#" class="disabled" id="edit_btn">Edit</a></li>
-            <li><a href="{{ request.META.SCRIPT_NAME }}/reflect/on" class="disabled" id="reflect_btn">Reflect</a></li>
-            <li><a href="#" id="publish_btn">Publish</a></li>
-            <li><a href="#" class="disabled" id="share_btn">Share</a></li>
-            <li><a href="#" class="disabled" id="submit_btn">Submit</a></li>
-        </ul>
-    </nav>
+		
+	<div id="upload-button">
+		<p>Upload +</p>
+	</div>
+		
+	<nav id="actions">
+		<ul>
+			<li><a href="#" class="disabled" id="edit_btn">Edit</a></li>
+			<li><a href="{{ request.META.SCRIPT_NAME }}/reflect/on" class="disabled" id="reflect_btn">Reflect</a></li>
+			<li><a href="#" id="publish_btn">Publish</a></li>
+			<li><a href="#" class="disabled" id="share_btn">Share</a></li>
+			<li><a href="#" class="disabled" id="submit_btn">Submit</a></li>
+		</ul>
+	</nav>
 
 {% endblock %}

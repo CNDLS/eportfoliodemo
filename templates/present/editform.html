@@ -1,13 +1,13 @@
 <header class="panelheader">
-    <h2>Project Details</h2>
+	<h2>Project Details</h2>
 </header>
 <form id="project-form" name="project-form" method="post" action="{{request.META.SCRIPT_NAME}}/present/{{request.user.id}}/project/create/"> {% csrf_token %}
-                    <p> <label for="id_name">Name:</label> {{ form.name }} </p>
-                    <p> <label for="id_slug">Slug:</label> {{ form.slug }} </p>
-                    <p> <label for="id_type">Type:</label> {{ form.type }} </p>
-                    <p> <label for="id_description">Description:</label> {{ form.description }} </p>
-                    <p> <label for="id_template">Template:</label> {{ form.template }} </p>
-                    <p> <label for="id_privacy">Privacy:</label> {{ form.privacy }} </p>
-                    <input type="submit" value="Create" />
-                    <input type="hidden" value="{{ project_slug }}" name="project_slug" />
-                </form>
+					<p> <label for="id_name">Name:</label> {{ form.name }} </p>
+					<p> <label for="id_slug">Slug:</label> {{ form.slug }} </p>
+					<p> <label for="id_type">Type:</label> {{ form.type }} </p>
+					<p> <label for="id_description">Description:</label> {{ form.description }} </p>
+					<p> <label for="id_template">Template:</label> {{ form.template }} </p>
+					<p> <label for="id_privacy">Privacy:</label> {{ form.privacy }} </p>
+					<input type="submit" value="Create" />
+					<input type="hidden" value="{{ project_slug }}" name="project_slug" />
+				</form>

@@ -1,37 +1,37 @@
 {% extends "base.html" %}
 {% load gravatar %}
 {% block extra_styles %}
-    <!-- stylesheets -->
-    {{ block.super }}
-    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/profiles.css" />
+	<!-- stylesheets -->
+	{{ block.super }}
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/profiles.css" />
 {% endblock %}
 
 {% block title %}My Profile{% endblock %}
 
 {% block content %}
 <div id="profile">
-    <header class="panelheader">
-        <h2>Your Profile</h2>
-    </header>
+	<header class="panelheader">
+		<h2>Your Profile</h2>
+	</header>
 
-    <div id="profile-show">
+	<div id="profile-show">
 
-    {% for field, value in user.items %}
-        {% if field in display_fields %}
-            <p><b>{{ field }}:</b> {{ value }}</p>
-         {% endif %}
-    {% endfor %}
-    {% for field, value in user_profile.items %}
-        {% if field in display_fields %}
-            <p><b>{{ field }}:</b> {{ value }}</p>
-        {% endif %}
-        {% ifequal field 'avatar' %}
-            <p><b>{{ field }}:</b> <img src="{% gravatar_for_user request.user 30 %}"/></p>
-         {% endifequal %}
-    {% endfor %}
+	{% for field, value in user.items %}
+		{% if field in display_fields %}
+			<p><b>{{ field }}:</b> {{ value }}</p>
+		 {% endif %}
+	{% endfor %}
+	{% for field, value in user_profile.items %}
+		{% if field in display_fields %}
+			<p><b>{{ field }}:</b> {{ value }}</p>
+		{% endif %}
+		{% ifequal field 'avatar' %}
+			<p><b>{{ field }}:</b> <img src="{% gravatar_for_user request.user 30 %}"/></p>
+		 {% endifequal %}
+	{% endfor %}
 
 
-    <a href="{{ request.META.SCRIPT_NAME }}/profiles/{{ user.id }}/edit">Edit This Profile</a>
-    </div>
+	<a href="{{ request.META.SCRIPT_NAME }}/profiles/{{ user.id }}/edit">Edit This Profile</a>
+	</div>
 </div>
 {% endblock %}

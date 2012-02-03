@@ -1,16 +1,16 @@
 {% extends "base.html" %}
 
 {% block extra_styles %}
-    <!-- stylesheets -->
-    {{ block.super }}
-    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/profiles.css" />
+	<!-- stylesheets -->
+	{{ block.super }}
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/profiles.css" />
 {% endblock %}
 
 {% block content %}
 
 <ul>
-    {% for user_profile in user_profiles %}
-        <li><a href="{{ request.META.SCRIPT_NAME }}/profiles/{{ user_profile.id }}">{{ user_profile }}</a></li>
-    {% endfor %}
+	{% for user_profile in user_profiles %}
+		<li><a href="{{ request.META.SCRIPT_NAME }}/profiles/{{ user_profile.id }}">{{ user_profile }}</a></li>
+	{% endfor %}
 </ul>
 {% endblock %}

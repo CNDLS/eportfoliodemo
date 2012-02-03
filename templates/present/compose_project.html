@@ -2,14 +2,14 @@
 {% load present_tags %}
 
 {% block title %}
-    {{ project.title }} Composition
+	{{ project.title }} Composition
 {% endblock %}
 
 {% block extra_styles %}
-    <!-- stylesheets -->
-    {{ block.super }}
-    <link rel="stylesheet" type="text/css" href="{{ project_stylesheet }}" />
-    <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/composer.css" />
+	<!-- stylesheets -->
+	{{ block.super }}
+	<link rel="stylesheet" type="text/css" href="{{ project_stylesheet }}" />
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/composer.css" />
 {% endblock %}
 
 {% block custom_scripts %}
@@ -17,16 +17,16 @@
   <script type="text/javascript" src="{{ MEDIA_URL }}js/projects.js"></script>
   <script type="text/javascript">
 	// Toggle the skin
-    $("a.button#skin_view").click(function () {
+	$("a.button#skin_view").click(function () {
 		$('a.button').toggleClass('active');
-        $('head').append('<link rel="stylesheet" href="{{ MEDIA_URL }}/skins/narwhal/style.css" type="text/css" title="appendedStyle" />');
-    	});
-    $("a.button#wireframe_view").click(function () {
+		$('head').append('<link rel="stylesheet" href="{{ MEDIA_URL }}/skins/narwhal/style.css" type="text/css" title="appendedStyle" />');
+		});
+	$("a.button#wireframe_view").click(function () {
 		$('a.button').toggleClass('active');
 		$('link[title=appendedStyle]').prop('disabled',true);
-    	});
+		});
 	</script>
-    <script type="text/javascript" src="http://use.typekit.com/eyg2elj.js"></script>
+	<script type="text/javascript" src="http://use.typekit.com/eyg2elj.js"></script>
 	<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 {% endblock %}
 

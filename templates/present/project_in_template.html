@@ -1,74 +1,74 @@
 {% load present_tags %}
 
 {% block custom_scripts %}
-    {% block super %}
-    <script type="text/javascript">
-        var project_template_name = "basic";
-        var media_base_url = "{{ MEDIA_URL }}/basic";
+	{% block super %}
+	<script type="text/javascript">
+		var project_template_name = "basic";
+		var media_base_url = "{{ MEDIA_URL }}/basic";
 	</script>
-    {% endblock %}
+	{% endblock %}
 {% endblock %}
 
 <section id="{{ project_template_name }}-template">
 
-	<div class="{% editable_state request.path %}" id="{{ project_template_name }}-outterwrap">         
+	<div class="{% editable_state request.path %}" id="{{ project_template_name }}-outterwrap">		 
 	</div>
-        
-    <div id="{{ project_template_name }}-wrap">
-     
-         <header id="{{ project_template_name }}-mast" class="{% editable_state request.path %}" data-menu_edit="true" data-menu_privacy="true" data-menu_move="true">
-             <div id="project_heading" class="{{ project_template_name }}-container">
-                 <hgroup>
-                     <h1>{{ project.name }}</h1>            
-                 </hgroup>
-                 {% if request.path|is_composition %}
-                  <a href="{{ request.META.SCRIPT_NAME }}/present/{{ request.user.id }}/public/{{ project.slug }}">Display</a>
-                  {% else %}
-                   <a href="{{ request.META.SCRIPT_NAME }}/present/{{ request.user.id }}/{{ project.slug }}/compose">Compose</a>
-                 {% endif %}
-             </div>
-         </header>
-         
-         <div class="{{ project_template_name }}-container" data-project-slug="{{ project.slug }}">
-         
-             <nav id="{{ project_template_name }}-primary_nav" class="{% editable_state request.path %}">  
-                 <ul id="project-pages">
-                 {% if collections_nodes %}
-                    <li> <a href="#" class="add-page" data-project-slug="{{ project.slug }}"> Add a page </a></li>
-                 {% endif %}
-                     {% if project.pages %}
-                         {% for page in project.pages.all %}
-                             <li id="{{ page.id }}" attached-to-project="{{ project.id }}"><a href="#">{{ page }}</a></li>
-                         {% endfor %}
-                     {% endif %}
-                 </ul>
-             </nav>
-         
-             <section id="{{ project_template_name }}-sidebar" class="{% editable_state request.path %} droppable" data-menu_edit="true" data-menu_privacy="true">
-                 <ul class="attached-items">
-                 </ul>
-             </section>
-             
-             <section id="{{ project_template_name }}-page_content" class="{% editable_state request.path %} droppable" data-menu_edit="true" data-menu_privacy="true"> 
+		
+	<div id="{{ project_template_name }}-wrap">
+	 
+		 <header id="{{ project_template_name }}-mast" class="{% editable_state request.path %}" data-menu_edit="true" data-menu_privacy="true" data-menu_move="true">
+			 <div id="project_heading" class="{{ project_template_name }}-container">
+				 <hgroup>
+					 <h1>{{ project.name }}</h1>			
+				 </hgroup>
+				 {% if request.path|is_composition %}
+				  <a href="{{ request.META.SCRIPT_NAME }}/present/{{ request.user.id }}/public/{{ project.slug }}">Display</a>
+				  {% else %}
+				   <a href="{{ request.META.SCRIPT_NAME }}/present/{{ request.user.id }}/{{ project.slug }}/compose">Compose</a>
+				 {% endif %}
+			 </div>
+		 </header>
+		 
+		 <div class="{{ project_template_name }}-container" data-project-slug="{{ project.slug }}">
+		 
+			 <nav id="{{ project_template_name }}-primary_nav" class="{% editable_state request.path %}">  
+				 <ul id="project-pages">
+				 {% if collections_nodes %}
+					<li> <a href="#" class="add-page" data-project-slug="{{ project.slug }}"> Add a page </a></li>
+				 {% endif %}
+					 {% if project.pages %}
+						 {% for page in project.pages.all %}
+							 <li id="{{ page.id }}" attached-to-project="{{ project.id }}"><a href="#">{{ page }}</a></li>
+						 {% endfor %}
+					 {% endif %}
+				 </ul>
+			 </nav>
+		 
+			 <section id="{{ project_template_name }}-sidebar" class="{% editable_state request.path %} droppable" data-menu_edit="true" data-menu_privacy="true">
+				 <ul class="attached-items">
+				 </ul>
+			 </section>
+			 
+			 <section id="{{ project_template_name }}-page_content" class="{% editable_state request.path %} droppable" data-menu_edit="true" data-menu_privacy="true"> 
 				 <h2>{{ project.description|safe }}</h2>
-                 <article class="content">
-                     <div id="{{ project_template_name }}-page_content_field" class="{% editable_state request.path %}">
-                         <!-- this is where page content (from wysiwyg editor) will go. -->
-                     </div>
-                     <ul class="attached-items">
-                     </ul>
-                 </article>
-                 <input type="hidden" name="page-id" id="hidden-page-id" value="" />
-                 <input type="hidden" name="project-id" id="hidden-project-id" value="{{ project.id }}" />
-             </section>
-             
-         </div><!--/container-->
-         
-         <footer id="{{ project_template_name }}-page_footer" class="{% editable_state request.path %}" data-menu_edit="true" data-menu_privacy="true">
-            <div class="basic-container">
-             </div>
-         </footer>
-     
-    </div>
+				 <article class="content">
+					 <div id="{{ project_template_name }}-page_content_field" class="{% editable_state request.path %}">
+						 <!-- this is where page content (from wysiwyg editor) will go. -->
+					 </div>
+					 <ul class="attached-items">
+					 </ul>
+				 </article>
+				 <input type="hidden" name="page-id" id="hidden-page-id" value="" />
+				 <input type="hidden" name="project-id" id="hidden-project-id" value="{{ project.id }}" />
+			 </section>
+			 
+		 </div><!--/container-->
+		 
+		 <footer id="{{ project_template_name }}-page_footer" class="{% editable_state request.path %}" data-menu_edit="true" data-menu_privacy="true">
+			<div class="basic-container">
+			 </div>
+		 </footer>
+	 
+	</div>
  
  </section>

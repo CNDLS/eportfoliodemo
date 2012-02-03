@@ -1,14 +1,14 @@
 <h2>Reflection on '{{ obj.name }}'</h2>
 <div id="reflections_editor">
   {% if action == "create" %}
-    <form action="{% url ajax_create_reflection %}" id="reflection-form" method="POST">{% csrf_token %}
+	<form action="{% url ajax_create_reflection %}" id="reflection-form" method="POST">{% csrf_token %}
   {% endif %}
   {% if action == "edit" %}
-    <form action="{% url ajax_update_reflection reflection.id %}" id="reflection-form" method="POST">{% csrf_token %}
+	<form action="{% url ajax_update_reflection reflection.id %}" id="reflection-form" method="POST">{% csrf_token %}
   {% endif %}
-      <table>
-          {{ form.as_table }}
-      </table>
-      <input type="submit" value="Submit" />
+	  <table>
+		  {{ form.as_table }}
+	  </table>
+	  <input type="submit" value="Submit" />
   </form>
 </div>

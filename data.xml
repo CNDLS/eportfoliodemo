@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <django-objects version="1.0">
   <object pk="1" model="present.templatetype">
-    <field type="CharField" name="name">Project</field>
-    <field type="TextField" name="description"></field>
+	<field type="CharField" name="name">Project</field>
+	<field type="TextField" name="description"></field>
   </object>
   <object pk="2" model="present.templatetype">
-    <field type="CharField" name="name">Page</field>
-    <field type="TextField" name="description"></field>
+	<field type="CharField" name="name">Page</field>
+	<field type="TextField" name="description"></field>
   </object>
   <object pk="1" model="present.projecttype">
-    <field type="CharField" name="name">Site</field>
-    <field type="TextField" name="description">Website a la Poster Tool, but with multiple pages.</field>
+	<field type="CharField" name="name">Site</field>
+	<field type="TextField" name="description">Website a la Poster Tool, but with multiple pages.</field>
   </object>
   <object pk="1" model="present.template">
-    <field type="CharField" name="name">Basic</field>
-    <field type="TextField" name="description"></field>
-    <field type="DateTimeField" name="created">2011-12-12 13:12:26</field>
-    <field type="DateTimeField" name="modified">2011-12-12 13:12:26</field>
-    <field to="present.templatetype" name="type" rel="ManyToOneRel">1</field>
-    <field type="CharField" name="template_path">basic/</field>
-    <field to="auth.user" name="owner" rel="ManyToOneRel">1</field>
-    <field type="BooleanField" name="is_default">True</field>
+	<field type="CharField" name="name">Basic</field>
+	<field type="TextField" name="description"></field>
+	<field type="DateTimeField" name="created">2011-12-12 13:12:26</field>
+	<field type="DateTimeField" name="modified">2011-12-12 13:12:26</field>
+	<field to="present.templatetype" name="type" rel="ManyToOneRel">1</field>
+	<field type="CharField" name="template_path">basic/</field>
+	<field to="auth.user" name="owner" rel="ManyToOneRel">1</field>
+	<field type="BooleanField" name="is_default">True</field>
   </object>
 </django-objects>

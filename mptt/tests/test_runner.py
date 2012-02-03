@@ -9,10 +9,10 @@ sys.path.insert(0, test_dir)
 #sys.path.insert(0, os.path.abspath('./..'))
 
 def run_tests(test_labels=('mptt',), verbosity=1, interactive=True,
-        extra_tests=[]):
-    results = django_test_runner(test_labels, verbosity, interactive,
-        extra_tests)
-    sys.exit(results)
+		extra_tests=[]):
+	results = django_test_runner(test_labels, verbosity, interactive,
+		extra_tests)
+	sys.exit(results)
 
 if __name__ == '__main__':
-    run_tests()
+	run_tests()
