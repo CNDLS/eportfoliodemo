@@ -5,6 +5,11 @@
 	<script type="text/javascript">
 		var project_template_name = "basic";
 		var media_base_url = "{{ MEDIA_URL }}/basic";
+		var media_url = "{{ MEDIA_URL }}";
+		var app_url = "{{ request.META.SCRIPT_NAME }}";
+		var ajax_prefix = "{{ AJAX_PREFIX }}";
+		var username = "{{ request.user }}";
+		var userid = "{{ request.user.id }}"
 	</script>
 	{% endblock %}
 {% endblock %}
@@ -22,7 +27,7 @@
 		 <header id="{{ project_template_name }}-mast" class="{% editable_state request.path %}" data-menu_edit="true" data-menu_privacy="true" data-menu_move="true">
 			 <div id="project_heading" class="{{ project_template_name }}-container">
 				 <hgroup>
-					 <h1>{{ project.name }}</h1>			
+					 <h1>{{ project.name }}</h1>
 				 </hgroup>
 				 {% if request.path|is_composition %}
 				  <a href="{{ request.META.SCRIPT_NAME }}/present/{{ request.user.id }}/public/{{ project.slug }}">Display</a>

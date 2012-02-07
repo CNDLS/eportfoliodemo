@@ -55,7 +55,8 @@ def display_project(request, user_id, project_slug):
 	return render_to_response('present/display_project.html',
 								{ 'project': project,
 								  'project_template_name': project_template_name,
-								  'project_stylesheet': project_stylesheet
+								  'project_stylesheet': project_stylesheet,
+								  'AJAX_PREFIX': AJAX_PREFIX
 								},
 								context_instance=RequestContext(request))
 				  
