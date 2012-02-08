@@ -216,11 +216,11 @@
 		
 	<nav id="actions">
 		<ul>
-			<li><a href="#" class="disabled" id="edit_btn">Edit</a></li>
-			<li><a href="{{ request.META.SCRIPT_NAME }}/reflect/on" class="disabled" id="reflect_btn">Reflect</a></li>
-			<li><a href="#" id="publish_btn">Publish</a></li>
-			<li><a href="#" class="disabled" id="share_btn">Share</a></li>
-			<li><a href="#" class="disabled" id="submit_btn">Submit</a></li>
+			<li><a id="edit_btn" class="remote" href="{{ request.META.SCRIPT_NAME }}/{app}/{object_id}/edit/">Edit</a></li>
+			<li><a id="reflect_btn" class="remote" href="{{ request.META.SCRIPT_NAME }}/reflect/on/{content_type}/{object_id}">Reflect</a></li>
+			<li><a id="compose_btn" class="remote" href="{js}/tabs.add_tab()">Compose</a></li>
+			<li><a id="publish_btn" class="remote" href="#">Publish</a></li>
+			<li><a id="submit_btn" class="remote" href="#">Submit</a></li>
 		</ul>
 	</nav>
 

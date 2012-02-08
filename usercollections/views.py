@@ -41,7 +41,10 @@ def create(request):
    	json_serializer = serializers.get_serializer("json")()
    	return HttpResponse (json_serializer.serialize([collection]), mimetype='application/json')
 
-
+def edit(request, collection_id):
+	collection = Collection.objects.get(pk=collection_id)
+	collection_form = CollectionForm(instance=collection)
+	return render_to_response('usercollections/edit.html', { 'collection_form': collection_form }, context_instance=RequestContext(request))
 
 # requires request.method == "POST"
 def update(request, collection_id):

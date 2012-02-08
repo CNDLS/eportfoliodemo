@@ -9,7 +9,7 @@ from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 
 from eportfoliodemo.assets.models import Asset, CustomMetaData, FileType
-from eportfoliodemo.assets.forms import MetaDataForm, TagForm
+from eportfoliodemo.assets.forms import MetaDataForm, TagForm, AssetForm
 from eportfoliodemo.settings import MEDIA_ROOT
 
 import tagging
@@ -169,6 +169,11 @@ def ajax_delete_asset_tags(request):
 		updated_asset_tags = json_serializer.serialize(updated_asset_tags)
 		return HttpResponse(updated_asset_tags, mimetype='application/json')
 
+def ajax_edit_asset(request, asset_id):
+	asset = Asset.objects.get(pk=asset_id)
+	asset_form = AssetForm(instance=asset)
+	return render_to_response('assets/edit.html', { 'asset_form': asset_form, 'asset_id': asset_id }, context_instance=RequestContext(request))
+	
 def ajax_rename_asset(request, asset_id):
 	if request.is_ajax():
 		try:
