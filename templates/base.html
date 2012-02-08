@@ -38,7 +38,7 @@
 	<![endif]-->  
 </head>
 
-<body>
+<body class="{% block bodyClass %}{% endblock %}">
 
 	<header id="header">
 		<h1><a href="{{ request.META.SCRIPT_NAME }}/">Pegasus</a></h1>
@@ -48,13 +48,13 @@
 			{% block navbar %}
 			<ul>
 			  <li><a id="nav-collect" href="{{ request.META.SCRIPT_NAME }}/library/{{ request.user.id }}">Collect</a></li>
-			  <li><a id="nav-organize" class="active" href="{{ request.META.SCRIPT_NAME }}/library/{{ request.user.id }}">My Library</a></li>
+			  <li><a id="nav-organize" href="{{ request.META.SCRIPT_NAME }}/library/{{ request.user.id }}">My Library</a></li>
 			  <li><a id="nav-present" href="{{ request.META.SCRIPT_NAME }}/present/{{ request.user.id }}">Present</a></li>
 			  <li><a id="nav-assess" href="{{ request.META.SCRIPT_NAME }}/library/{{ request.user.id }}">Assess</a></li>			  
 			</ul>
 			{% endblock %}
 		</nav>
-		  
+		 
 		{% if home != 1 %}
 		  <nav id="tabs">
 			  <ul>
@@ -62,7 +62,7 @@
 				  {% block nav_tabs %}
 					
 				  {% endblock %}
-				  <li><a href="#" class="new-project">+</a></li>
+				  <li><a href="#" class="new-project">+</a></li>	
 			  </ul>
 		  </nav>
 	   {% endif %}

@@ -1,14 +1,16 @@
 {% extends "base.html" %}
 {% load present_tags %}
 
+{% block bodyClass %}dashboard{% endblock %}
+
 {% block extra_styles %}
 	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/library.css" />
 	<!-- Stuff for the public page can go here -->
 	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/home.css" />
 {% endblock %}
 
-{% if projects %}
 {% block nav_tabs %}
+{% if projects %}
   
   {% if request.path|is_composition %}
 	<!-- link to library. list projects; one project is active link. -->
@@ -30,28 +32,64 @@
    	
   {% endif %}
 
-{% endblock %}
 {% endif %}
+{% endblock %}
 
 {% block content %}
-<div id="library">
+<div id="start">
 {% if request.user.is_anonymous %}
+	<h1><small>Welcome, ELI!</small> This is <strong>Pegasus</strong>.</h1>
+    <h2>Pegasus is an app for building academic, personal, and professional ePortfolios.</h2>
 	<ul>
-	  <li><a href="{{ request.META.SCRIPT_NAME }}/public/collect/">Collect</a></li>
-	  <li><a href="{{ request.META.SCRIPT_NAME }}/public/organize/">Organize</a></li>
-	  <li><a href="{{ request.META.SCRIPT_NAME }}/public/present/">Present</a></li>
-	  <li><a href="{{ request.META.SCRIPT_NAME }}/public/assess/">Assess</a></li>
+	  <li class="step-collect">
+      	<a class="step" href="{{ request.META.SCRIPT_NAME }}/public/collect/"><span class="num">1</span>Collect
+        	<p>Upload documents, video clips, or whatever you can think of to your Library, which you can access from any computer, tablet, or mobile device!</p>
+        </a>
+      </li>
+	  <li class="step-select">
+      	<a class="step" href="{{ request.META.SCRIPT_NAME }}/public/organize/}"><span class="num">2</span>Select
+        	<p>Once you have items in your library, you can tag them, write reflections for them, group them into sets, and share them with anyone.</p>
+        </a>
+      </li>
+	  <li class="step-present">
+      	<a class="step" href="{{ request.META.SCRIPT_NAME }}/public/present/"><span class="num">3</span>Present
+        	<p>Build rich, beautiful representations of your collections with a simple drag-and-drop editor. Then share them with the world!</p>
+        </a>
+      </li>
+	  <li class="step-assess">
+      	<a class="step" href="{{ request.META.SCRIPT_NAME }}/public/assess/"><span class="num">4</span>Assess
+        	<p>Open your ePortfolios to feedback from peers, family, and your social networks! Find your professors' rubrics, and see how they graded you.</p>
+        </a>
+      </li>
 	</ul>
 {% else %}
+	<h1><small>Welcome, ELI!</small> This is <strong>Pegasus</strong>.</h1>
+    <h2>Pegasus is an app for building academic, personal, and professional ePortfolios.</h2>
 	<ul>
-	  <li><a href="{{ request.META.SCRIPT_NAME }}/library/{{ request.user.id }}">Collect</a></li>
-	  <li><a href="{{ request.META.SCRIPT_NAME }}/library/{{ request.user.id }}">Organize</a></li>
-	  <li><a href="#">Present</a></li>
-	  <li><a href="#">Assess</a></li>
+	  <li class="step-collect">
+      	<a class="step" href="{{ request.META.SCRIPT_NAME }}/library/{{ request.user.id }}"><span class="num">1</span>Collect
+        	<p>Upload documents, video clips, or whatever you can think of to your Library, which you can access from any computer, tablet, or mobile device!</p>
+        </a>
+      </li>
+	  <li class="step-select">
+      	<a class="step" href="{{ request.META.SCRIPT_NAME }}/library/{{ request.user.id }}"><span class="num">2</span>Select
+        	<p>Once you have items in your library, you can tag them, write reflections, group them into sets, and share them with your peers.</p>
+        </a>
+      </li>
+	  <li class="step-present">
+      	<a class="step" href="#"><span class="num">3</span>Present
+        	<p>Build exciting, beautiful representations of your collections with a simple, flexible, drag-and-drop editor. Then share them with the world!</p>
+        </a>
+      </li>
+	  <li class="step-assess">
+      	<a class="step" href="#"><span class="num">4</span>Assess
+        	<p>Open your ePortfolios to feedback from peers, family, and your social networks! Find your professors' rubrics, and see how they graded your work.</p>
+        </a>
+      </li>
 	</ul>
 {% endif %}
 
-</div> <!-- /#library -->
+</div> <!-- /#start -->
 
 <div id="projects">
 </div> <!-- /#projects -->
