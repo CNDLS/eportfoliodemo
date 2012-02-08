@@ -21,6 +21,12 @@
 	<div class="{% editable_state request.path %}" id="{{ project_template_name }}-outterwrap">		 
 	</div>
     {% endcomment %}
+    
+     {% if request.path|is_composition %}
+      <a href="{{ request.META.SCRIPT_NAME }}/present/{{ request.user.id }}/public/{{ project.slug }}" id="display_toggle">Display</a>
+      {% else %}
+       <a href="{{ request.META.SCRIPT_NAME }}/present/{{ request.user.id }}/{{ project.slug }}/compose" id="display_toggle">Compose</a>
+     {% endif %}
 		
 	<div id="{{ project_template_name }}-wrap">
 	 
@@ -28,12 +34,8 @@
 			 <div id="project_heading" class="{{ project_template_name }}-container">
 				 <hgroup>
 					 <h1>{{ project.name }}</h1>
+				 	 <h2>{{ project.description|safe }}</h2>
 				 </hgroup>
-				 {% if request.path|is_composition %}
-				  <a href="{{ request.META.SCRIPT_NAME }}/present/{{ request.user.id }}/public/{{ project.slug }}">Display</a>
-				  {% else %}
-				   <a href="{{ request.META.SCRIPT_NAME }}/present/{{ request.user.id }}/{{ project.slug }}/compose">Compose</a>
-				 {% endif %}
 			 </div>
 		 </header>
 		 
@@ -55,10 +57,13 @@
 			 <section id="{{ project_template_name }}-sidebar" class="{% editable_state request.path %} droppable" data-menu_edit="true" data-menu_privacy="true">
 				 <ul class="attached-items">
 				 </ul>
+                 <!--Demo content-->
+                 <div class="video"><iframe width="290" height="177" src="http://www.youtube.com/embed/DOMuU6wb7ag" frameborder="0" allowfullscreen id="kelsey-video" style="width:18.1em; height:10em;"></iframe></div>
+
+                 <p>Welcome to my Georgetown E-portfolio! On this blog I will post information about my research and intellectual pursuits throughout my Masters Degree experience at the Communication, Culture and Technology (CCT) program, Georgetown University. What am I going to do in the CCT program? What are my goals? Why did I move to Washington, D.C from Santa Barbara, California? Over the course of my study at Georgeotown the answers to these questions will become more clear — for now, the most definitive answer to my intellectual pursuits is located on the "About Me" page.</p>
 			 </section>
 			 
 			 <section id="{{ project_template_name }}-page_content" class="{% editable_state request.path %} droppable" data-menu_edit="true" data-menu_privacy="true"> 
-				 <h2>{{ project.description|safe }}</h2>
 				 <article class="content">
 					 <div id="{{ project_template_name }}-page_content_field" class="{% editable_state request.path %}">
 						 <!-- this is where page content (from wysiwyg editor) will go. -->
