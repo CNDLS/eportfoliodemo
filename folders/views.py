@@ -53,8 +53,14 @@ def create(request):
 	# return HttpResponseRedirect(request.META['SCRIPT_NAME'] + '/library/' + str(folder.owner_id))
 	json_serializer = serializers.get_serializer("json")()
 	return HttpResponse (json_serializer.serialize([folder]), mimetype='application/json')
-
-
+	
+	
+def edit(request, folder_id):
+	folder = Folder.objects.get(pk=folder_id)
+	folder_form = FolderForm(instance=folder)
+	return render_to_response('folders/edit.html', { 'folder_form': folder_form }, context_instance=RequestContext(request))
+	
+	
 def update(request, folder_id):
 	folder = Folder.objects.get(pk=folder_id)
 	for field_name in folder._meta.get_all_field_names():

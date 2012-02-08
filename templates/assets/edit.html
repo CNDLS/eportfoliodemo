@@ -2,9 +2,9 @@
 
 {% block content %}
 
-<form action="{{ request.META.SCRIPT_NAME }}/folders/update/" method="POST">{% csrf_token %}
+<form action="{% url ajax_edit_asset asset_id %}" method="POST">{% csrf_token %}
 	<table>
-		{{ folder_form.as_table }}
+		{{ asset_form.as_table }}
 	</table>
 	<input type="submit" value="Submit" />
 </form>
