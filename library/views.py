@@ -71,6 +71,7 @@ def show(request, user_id):
 					  'collections_nodes': items_in_collections_tree,
 					  'file_upload_form': file_upload_form,
 					  'AJAX_PREFIX': AJAX_PREFIX,
-					  'projects': projects
+					  'projects': projects,
+					  'project_slug': ''
 					},
 					context_instance=RequestContext(request))
