@@ -1,38 +1,33 @@
-<html>
-<head>
-{% block head %}{% endblock %}
+{% extends "base.html" %}
+{% block bodyClass %}login{% endblock %}
 
-</head>
-<body>
-	<div id="wrap">
-	
-	<div id="title">
-	<p id="breadcrumb"></p>
-	<h1>ePortfolio</h1>
-	</div>
+{% block extra_styles %}
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/library.css" />
+	<!-- Stuff for the public page can go here -->
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/home.css" />
+{% endblock %}
 
-	<div id="content">
+{% block content %}
+<div id="start">
+
 	<div id="login">
-	<form action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}
-  	<p>
-		<label for="id_username">Username</label> <input type="text" name="username" id="id_username" />
-  	</p>
-  	<p>
-		<label for="id_password">Password</label> <input type="password" name="password" id="id_password" />
-		<input type="hidden" name="this_is_the_login_form" value="1" />
-  	</p>
-  	<p>
-		<label>&nbsp;</label><input type="submit" value="Log in" />
-  	</p>
-	</form>
+    	<h2>Pegasus Login</h2>
+        <form action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}
+        <p>
+            <label for="id_username">Username</label> <input type="text" name="username" id="id_username" />
+        </p>
+        <p>
+            <label for="id_password">Password</label> <input type="password" name="password" id="id_password" />
+            <input type="hidden" name="this_is_the_login_form" value="1" />
+        </p>
+        <p>
+            <label>&nbsp;</label><input type="submit" value="Go!" />
+        </p>
+        </form>
 	</div>
 	
-<script type="text/javascript">
-document.getElementById('id_username').focus()
-</script>
-</div>
-	
-	<div id="footer"></div>
-	</div>
-</body>	
-</html>	
+	<script type="text/javascript">
+    document.getElementById('id_username').focus()
+    </script>
+
+{% endblock %}

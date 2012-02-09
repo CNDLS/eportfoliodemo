@@ -1,4 +1,6 @@
 {% load present_tags %}
+{% load gravatar %}
+
 
 <!doctype html>
 <!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
@@ -18,8 +20,9 @@
 	<!-- stylesheets -->
 	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/reset.css" />
 	<link rel="stylesheet" type="text/css" href="{{ project_stylesheet }}" /> 
-	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/skins/narwhal/style.css" /> 
-	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/css/action_buttons.css" /> 
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}skins/narwhal/style.css" /> 
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/action_buttons.css" /> 
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/comments.css" /> 
 	
 	<!-- icons -->
 	<link rel="shortcut icon" href="{{ MEDIA_URL }}favicon.ico">
@@ -44,6 +47,73 @@
 
 <body>
 	{% include "present/project_in_template.html" %}
+    <aside id="comments">
+    
+		<nav id="account">
+			{% if not request.user or request.user.is_anonymous %}
+				<a href="{{ request.META.SCRIPT_NAME }}/accounts/login/?next={{ request.META.SCRIPT_NAME }}/">Login</a>
+			{% else %}
+				<a href="{{ request.META.SCRIPT_NAME }}/profiles/{{ request.user.id }}"><img class="avatar" src="{% gravatar_for_user request.user 30 %}"/> {{ request.user.first_name  }} {{ request.user.last_name }}</a>
+				<a class="signout" href="{{ request.META.SCRIPT_NAME }}/accounts/logout/">Sign out</a>				   
+			{% endif %}
+		</nav>
+        
+    	<header>Comments <span class="count">4</span></header>
+        <ol id="comment_list">
+        	<li>
+            	<header class="identity">
+                    <img class="avatar" height="22" width="22" alt="avatar" src="{{ MEDIA_URL }}images/sample-avatar1.jpg" />
+                    <a href="#">Anna Kruse</a> <span class="freshness">2 hours ago</span>
+                </header>
+                <div class="comment">
+                	<p>Kelsey, I think you have a lot of great content here. Great selections! I also really love your video. 
+                    One thought I had was to bring more of your academic work to the front page.</p>
+                    <a href="#" class="reply_link">reply</a>
+                </div>
+            </li>
+        	<li>
+            	<header class="identity">
+                    <img class="avatar" height="22" width="22" alt="avatar" src="{{ MEDIA_URL }}images/sample-avatar2.jpg" />
+                    <a href="#">Matthias Oppermann</a> <span class="freshness">1 day ago</span>
+                </header>
+                <div class="comment">
+                	<p>The video is a great way to introduce your work, great idea. I noticed that your pages are a bit light on reflection,
+                    which I was hoping to see more of. Perhaps you could take more time to reflect on the connections between some of the items in 
+                    your collections, and use those to introduce the various elements of your work.</p>
+                    <a href="#" class="reply_link">reply</a>
+                </div>
+                <ol class="replies">
+                	<li class="creator-comment">
+                        <header class="identity">
+                            <img class="avatar" height="22" width="22" alt="avatar" src="{% gravatar_for_user request.user 30 %}" />
+                            <a href="#">Kelsey Brannan</a> <span class="freshness">1 day ago</span>
+                        </header>
+                        <div class="comment">
+                            <p>Thanks for the suggestion! I'll do some more writing to frame the "assignments" page.</p>
+                            <a href="#" class="reply_link">reply</a>
+                        </div> 
+                    </li>               	
+                </ol>
+            </li>
+        	<li>
+            	<header class="identity">
+                    <img class="avatar" height="22" width="22" alt="avatar" src="{{ MEDIA_URL }}images/sample-avatar3.jpg" />
+                    <a href="#">Marie Selvanadin</a> <span class="freshness">2 days ago</span>
+                </header>
+                <div class="comment">
+                	<p>Kelsey, I think you have a lot of great content here. Great selections! I also really love your video. 
+                    One thought I had was to bring more of your academic work to the front page.</p>
+                    <a href="#" class="reply_link">reply</a>
+                </div>
+            </li>
+        </ol>
+        <form id="new_comment">
+        	<textarea>Add a new comment...</textarea>
+        </form>
+    	<div class="handle" id="comment-handle" href="#"> </div>
+        <a href="#" id="comment_toggle"><span class="count">3</span></a>
+    </aside>
+    
 	<footer id="footer"> 
     	<nav id="actions">
     		<ul>
@@ -57,5 +127,6 @@
 	<script src="{{ MEDIA_URL }}js/jquery.js"></script>
 	<script type="text/javascript" src="{{ MEDIA_URL }}js/application.js"></script>
 	<script type="text/javascript" src="{{ MEDIA_URL }}js/projects.js"></script>
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/comments.js"></script>
 </body>
 </html>
