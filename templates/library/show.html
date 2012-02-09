@@ -209,7 +209,7 @@
 {% endblock %}
 
 {% block footer %}	
-		
+	
 	<div id="upload-button">
 		<p>Upload +</p>
 	</div>
@@ -219,9 +219,8 @@
 			<li><a id="edit_btn" class="remote" href="{{ request.META.SCRIPT_NAME }}/{app}/{object_id}/edit/">Edit</a></li>
 			<li><a id="reflect_btn" class="remote" href="{{ request.META.SCRIPT_NAME }}/reflect/on/{content_type}/{object_id}">Reflect</a></li>
 			<li><a id="compose_btn" class="remote" href="{js}/tabs.add_tab()">Compose</a></li>
-			<li><a id="publish_btn" class="remote" href="#">Publish</a></li>
-			<li><a id="submit_btn" class="remote" href="#">Submit</a></li>
+			<li><a id="publish_btn" href="{{ request.META.SCRIPT_NAME }}/present/{{ requested_user.id }}/public/{{ project_slug }}">Publish</a></li>
+			<li><a id="submit_btn" href="#">Submit</a></li>
 		</ul>
 	</nav>
-
 {% endblock %}

@@ -19,6 +19,7 @@
 	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/reset.css" />
 	<link rel="stylesheet" type="text/css" href="{{ project_stylesheet }}" /> 
 	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/skins/narwhal/style.css" /> 
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}/css/action_buttons.css" /> 
 	
 	<!-- icons -->
 	<link rel="shortcut icon" href="{{ MEDIA_URL }}favicon.ico">
@@ -43,6 +44,15 @@
 
 <body>
 	{% include "present/project_in_template.html" %}
+	<footer id="footer"> 
+    	<nav id="actions">
+    		<ul>
+    			<li><a href="#">Comment</a></li>
+    			<li><a href="#">Share</a></li>
+    			<li><a href="#">Submit</a></li>
+    		</ul>
+    	</nav>
+	</footer>
 	<script src="{{ MEDIA_URL }}js/jquery.js"></script>
 	<script type="text/javascript" src="{{ MEDIA_URL }}js/application.js"></script>
 	<script type="text/javascript" src="{{ MEDIA_URL }}js/projects.js"></script>

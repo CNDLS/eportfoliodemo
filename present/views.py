@@ -162,7 +162,8 @@ def compose_project(request, user_id, project_slug=None):
 																'folder_nodes': items_in_library_tree,
 																'collections_nodes': items_in_collections_tree,
 																'AJAX_PREFIX': AJAX_PREFIX,
-																'projects': projects },
+																'projects': projects,
+																'project_slug': project.slug },
 																  context_instance=RequestContext(request))
 	# return render_to_response('present/create_project.html',
 	#  							{'form': form},
