@@ -276,16 +276,13 @@ def add_content(request, user_id, content_type, object_id, project_slug, page_id
 	json_serializer = serializers.get_serializer("json")()
 
 	if content_type == 'assetalias':
-		asset = obj.asset
-	else:
-		asset = obj
+		obj = obj.asset
 		
-	asset.html_content = asset.contents()	
-	# print "asset.html_content " + asset.html_content
-	# asset.save()
+	if isinstance(obj, Asset):
+		obj.html_content = obj.contents()
 		
 	page_item = PageItem()
-	page_item.content_object = asset
+	page_item.content_object = obj
 	page_item.page = request_page
 
 	# store the path spec into the node of the doc where the content was added.
@@ -295,6 +292,6 @@ def add_content(request, user_id, content_type, object_id, project_slug, page_id
 	page_item.ordinal = 0
 	page_item.save()
 
-	obj_data = [asset]
+	obj_data = [obj]
 	json_obj = json_serializer.serialize(obj_data)
 	return HttpResponse(json_obj, mimetype='application/json')
