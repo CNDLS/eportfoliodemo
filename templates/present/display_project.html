@@ -58,8 +58,9 @@
 			{% endif %}
 		</nav>
         
-    	<header>Comments <span class="count">4</span></header>
-        <ol id="comment_list">
+    	<header>Comments <span class="count">4</span><span id="toggle_selector">Select</span></header>
+        
+        <ol class="comment_list">
         	<li>
             	<header class="identity">
                     <img class="avatar" height="22" width="22" alt="avatar" src="{{ MEDIA_URL }}images/sample-avatar1.jpg" />
@@ -107,9 +108,9 @@
                 </div>
             </li>
         </ol>
-        <form id="new_comment">
+        <!--<form id="new_comment">
         	<textarea>Add a new comment...</textarea>
-        </form>
+        </form>-->
     	<div class="handle" id="comment-handle" href="#"> </div>
         <a href="#" id="comment_toggle"><span class="count">3</span></a>
     </aside>
@@ -124,9 +125,10 @@
     		</ul>
     	</nav>
 	</footer>
-	<script src="{{ MEDIA_URL }}js/jquery.js"></script>
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.js"></script>
 	<script type="text/javascript" src="{{ MEDIA_URL }}js/application.js"></script>
 	<script type="text/javascript" src="{{ MEDIA_URL }}js/projects.js"></script>
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-ui-1.8.17.custom.min.js"></script>	
 	<script type="text/javascript" src="{{ MEDIA_URL }}js/comments.js"></script>
 </body>
 </html>
