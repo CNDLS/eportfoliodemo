@@ -126,7 +126,8 @@ def create_project(request, user_id, project_slug = None):
 		project.pages.add(page)
 		project.save()
 
-		return HttpResponseRedirect(request.META['SCRIPT_NAME']+'/present/'+str(request.user.id)+'/public/'+project.slug+'/')
+		# return HttpResponseRedirect(request.META['SCRIPT_NAME']+'/present/'+str(request.user.id)+'/public/'+project.slug+'/')
+		return HttpResponseRedirect(request.META['SCRIPT_NAME']+'/present/'+str(request.user.id)+'/'+project.slug+'/compose/')
 
 	# return render_to_response('present/create_project.html',
 	#  							{'form': form},
