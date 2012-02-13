@@ -43,14 +43,14 @@
 		 
 			 <nav id="{{ project_template_name }}-primary_nav" class="{% editable_state request.path %}">  
 				 <ul id="project-pages">
-				 {% if collections_nodes %}
-					<li> <a href="#" class="add-page" data-project-slug="{{ project.slug }}"> Add a page </a></li>
-				 {% endif %}
 					 {% if project.pages %}
 						 {% for page in project.pages.all %}
 							 <li id="{{ page.id }}" attached-to-project="{{ project.id }}"><a href="#">{{ page }}</a></li>
 						 {% endfor %}
 					 {% endif %}
+				 {% if collections_nodes %}
+					<li> <a href="#" class="add-page" data-project-slug="{{ project.slug }}"> + Add page </a></li>
+				 {% endif %}
 				 </ul>
 			 </nav>
 		 
