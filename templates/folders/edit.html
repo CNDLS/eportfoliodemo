@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<form id="folder-form" action="{{ request.META.SCRIPT_NAME }}/folders/update/" method="POST">{% csrf_token %}
+<form id="folder-form" action="{% url update_folder folder_id %}" method="POST">{% csrf_token %}
 	<table>
 		{{ folder_form.as_table }}
 	</table>

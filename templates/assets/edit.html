@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<form id="asset-form" action="{% url ajax_update_asset asset_id %}" method="POST">{% csrf_token %}
+<form id="asset-form" action="{% url update_asset asset_id %}" method="POST">{% csrf_token %}
 	<table>
 		{{ asset_form.as_table }}
 	</table>

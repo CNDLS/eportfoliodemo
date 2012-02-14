@@ -44,7 +44,8 @@ def create(request):
 def edit(request, collection_id):
 	collection = Collection.objects.get(pk=collection_id)
 	collection_form = CollectionForm(instance=collection)
-	return render_to_response('usercollections/edit.html', { 'collection_form': collection_form }, context_instance=RequestContext(request))
+	return render_to_response('usercollections/edit.html', { 'collection_form': collection_form, 'collection_id': collection_id }, context_instance=RequestContext(request))
+	
 
 # requires request.method == "POST"
 def update(request, collection_id):
@@ -61,6 +62,7 @@ def update(request, collection_id):
 	# if collection_form.is_valid():
    	collection.save()
 
+	# have to change this to return a json object that we update on the page.
    	return HttpResponseRedirect(request.META['SCRIPT_NAME'] + '/library/' + str(collection.owner_id))
 
 

@@ -58,7 +58,7 @@ def create(request):
 def edit(request, folder_id):
 	folder = Folder.objects.get(pk=folder_id)
 	folder_form = FolderForm(instance=folder)
-	return render_to_response('folders/edit.html', { 'folder_form': folder_form }, context_instance=RequestContext(request))
+	return render_to_response('folders/edit.html', { 'folder_form': folder_form, 'folder_id': folder_id }, context_instance=RequestContext(request))
 	
 	
 def update(request, folder_id):

@@ -89,6 +89,7 @@ def ajax_get_asset(request):
 	asset_details = simplejson.dumps(asset_details)
 	return HttpResponse (asset_details, mimetype='application/json')
 
+# assigning assets to folders in library
 def ajax_update_asset(request):
 	if request.is_ajax():
 		asset_id = request.GET['asset_id']
@@ -101,6 +102,21 @@ def ajax_update_asset(request):
 		new_asset = json_serializer.serialize(Asset.objects.filter(id=asset.id))
 		return HttpResponse (new_asset, mimetype='text/plain')
 
+
+# vanilla asset update (can be called via ajax)
+def update_asset(request, asset_id):
+	asset = Asset.objects.get(pk=asset_id)
+	for field_name in ['name','description','privacy']:
+		# don't need primary key, user, or many-to-many associations
+		if (field_name in request.POST):
+			setattr(asset, field_name, request.POST[field_name])
+			
+	asset.save()
+	json_serializer = serializers.get_serializer("json")()
+	asset_json = json_serializer.serialize([asset])
+	return HttpResponse (asset_json, mimetype='application/json')
+	
+			
 def ajax_get_file_type(request):
 	if request.is_ajax:
 		filetype = FileType.objects.filter(id=request.GET['filetypeid'][0])

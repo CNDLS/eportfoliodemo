@@ -14,6 +14,7 @@ from django.core import serializers
 
 from django.contrib.auth.models import User
 from eportfoliodemo.assets.models import Asset, AssetAlias
+from eportfoliodemo.present.models import PageItem
 
 
 def ajax_new(request, content_type = None, object_id = None):
@@ -86,6 +87,10 @@ def ajax_delete(request, reflection_id):
 		content_type = reflection.content_type
 		object_id = reflection.object_id
 		reflection.delete()
+		# need to also explicitly any delete page items that point to this reflection.
+		reflection_type = ContentType.objects.get(app_label="reflections", model="reflection")
+		reflection_placements_in_pages = PageItem.objects.filter(content_type=reflection_type, object_id=reflection_id)
+		reflection_placements_in_pages.delete()
 		return ajax_list(request, content_type, object_id)
 	
 	
