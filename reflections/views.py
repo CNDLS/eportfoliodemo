@@ -90,16 +90,20 @@ def ajax_delete(request, reflection_id):
 	
 	
 def get_content_type_and_object(content_type = None, object_id = None):
-	if (content_type == "asset"):
-		app_label = "assets"
-	elif (content_type == "assetalias"):
-		app_label = "assets"
-	elif (content_type == "collection"):
-		app_label = "usercollections"
-	elif (content_type == "reflection"):
-		app_label = "reflections"
+	if (isinstance(content_type, basestring) == False):
+		reflectedOnType = content_type
 	else:
-		app_label = "unknown"
+		if (content_type == "asset"):
+			app_label = "assets"
+		elif (content_type == "assetalias"):
+			app_label = "assets"
+		elif (content_type == "collection"):
+			app_label = "usercollections"
+		elif (content_type == "reflection"):
+			app_label = "reflections"
+		else:
+			app_label = "unknown"
 		
-	reflectedOnType = ContentType.objects.get(app_label=app_label, model=content_type)
+		reflectedOnType = ContentType.objects.get(app_label=app_label, model=content_type)
+		
 	return [reflectedOnType, reflectedOnType.get_object_for_this_type(id=object_id)]
