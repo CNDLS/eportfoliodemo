@@ -1,11 +1,6 @@
-{% extends "modal.html" %}
-
-{% block content %}
-
 <form id="collection-form" action="{% url update_collection collection_id %}" method="POST">{% csrf_token %}
 	<table>
 		{{ collection_form.as_table }}
 	</table>
 	<input type="submit" value="Submit" />
 </from>
-{% endblock %}

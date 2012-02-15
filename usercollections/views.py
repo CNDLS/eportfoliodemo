@@ -49,7 +49,6 @@ def edit(request, collection_id):
 
 # requires request.method == "POST"
 def update(request, collection_id):
-	# make user_profile from post
    	collection_owner = User.objects.get(pk=request.POST.get("owner"))
    	collection = Collection.objects.get(pk=collection_id)
    	for field_name in collection._meta.get_all_field_names():
@@ -62,8 +61,12 @@ def update(request, collection_id):
 	# if collection_form.is_valid():
    	collection.save()
 
-	# have to change this to return a json object that we update on the page.
-   	return HttpResponseRedirect(request.META['SCRIPT_NAME'] + '/library/' + str(collection.owner_id))
+	# return a json object that we update on the page.
+	json_serializer = serializers.get_serializer("json")()
+	collection = json_serializer.serialize([collection])
+	return HttpResponse (collection, mimetype='application/json')
+	
+   	# return HttpResponseRedirect(request.META['SCRIPT_NAME'] + '/library/' + str(collection.owner_id))
 
 
 
