@@ -35,13 +35,17 @@
 	<script type="text/javascript" src="{{ MEDIA_URL }}js/library_contextual_buttons.js"></script>
 	<script type="text/javascript" src="{{ MEDIA_URL }}js/reflections.js"></script>
 	<script type="text/javascript" src="{{ MEDIA_URL }}js/collectionitems.js"></script>
+
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/evernote_sync.js"></script>
+
 	<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.timeago.js"></script>
 	<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.slug.js"></script>
 	<script type="text/javascript" src="{{ MEDIA_URL }}js/librarydisplay.js"></script>
 	<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-ui-1.8.16.custom.min.js"></script>
 	  <script type="text/javascript" src="{{ MEDIA_URL }}js/jwysiwyg/jquery.wysiwyg.js"></script>
 		<script type="text/javascript" src="{{ MEDIA_URL }}js/jwysiwyg/controls/wysiwyg.link.js"></script>
-		<script type="text/javascript" src="{{ MEDIA_URL }}js/jwysiwyg.init.js"></script>jquery.resize.min.js
+		<script type="text/javascript" src="{{ MEDIA_URL }}js/jwysiwyg.init.js"></script>
+		<!-- jquery.resize.min.js -->
 {% endblock %}
 
 {% block title %}
@@ -69,12 +73,12 @@
 			</div>  
 			
 			<div id="collections">
-				<h2>Your Collections</h2>				
+				<h2>My Selections</h2>				
 				<div id="collection_tree">
 					{% include "collectionitems/index.html" %}
 				</div>
 				{% if requested_user == current_user %}
-					<a id="new_collection" class="button modal remote" href="{{ request.META.SCRIPT_NAME }}/collections/new">new&nbsp;collection</a>
+					<a id="new_collection" class="button modal remote" href="{{ request.META.SCRIPT_NAME }}/collections/new">new&nbsp;selections&nbsp;folder</a>
 				{% endif %}
 				
 			</div>
@@ -89,16 +93,7 @@
 				<header class="panelheader">
 				</header>
 				
-				<div id="collection_options">
-					<h1>Collect stuff to add to your Library!</h1>
-					<h2>How should you collect? Here are your options.</h2>
-					<ul>
-						<li><a href="#" id="upload"><h3>Simple File Upload</h3> Upload documents one at-a-time (or as a batch)!</a></li>
-						<li><a href="#" id="dropbox"><h3>Sync with DropBox</h3> Install a plug-in to manage your files easily from your DropBox folder.</a></li>
-						<li><a href="#" id="citations"><h3>Import citations</h3> Connect your Zotero, Diigo, or Endnote account.</a></li>
-						<li><a href="#" id="email"><h3>E-mail attachments</h3> Add items to your library by attaching them to an e-mail!</a></li>
-					</ul>
-				</div>
+				{% include "library/collection_options.html" %}
 				
 			</div>
 		
@@ -211,7 +206,7 @@
 {% block footer %}	
 	
 	<div id="upload-button">
-		<p>Upload +</p>
+		<p>Collect +</p>
 	</div>
 		
 	<nav id="actions">
