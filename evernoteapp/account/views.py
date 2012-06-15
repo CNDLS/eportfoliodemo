@@ -7,17 +7,17 @@ from django.template import RequestContext
 from urllib import urlencode
 
 def home_page(request):
-    if not request.user.is_authenticated():
-        return HttpResponseRedirect(reverse('account.views.login_page', args=[]))
-    return render_to_response('home.html', {}, context_instance=RequestContext(request))
+    # if not request.user.is_authenticated():
+    #     return HttpResponseRedirect(reverse('account.views.login_page', args=[]))z
+    return render_to_response('evernoteapp/home.html', {}, context_instance=RequestContext(request))
 
 def login_page(request):
-    next_page = request.GET.get('next')
-    if next_page is None:
-        next_page = reverse('basic.views.landing', args=[])
-    if request.user.is_authenticated():
-        return HttpResponseRedirect(next_page)
-    return render_to_response('login.html', { 'redirect_to': next_page},
+    # next_page = request.GET.get('next')
+    # if next_page is None:
+    #     next_page = reverse('eportfoliodemo.evernoteapp.basic.views.landing', args=[])
+    # if request.user.is_authenticated():
+    #     return HttpResponseRedirect(next_page)
+    return render_to_response('evernoteapp/login.html', {},
         context_instance=RequestContext(request))
 
 def auth(request):
@@ -26,14 +26,14 @@ def auth(request):
     user = authenticate(username=username, password=password)
     redirect_to = request.REQUEST.get('next')
     if redirect_to is None:
-        redirect_to = reverse('basic.views.landing', args=[])
+        redirect_to = reverse('eportfoliodemo.evernoteapp.basic.views.landing', args=[])
     if user is not None:
         messages.info(request, "Logged in as %s" % username)
         login(request, user)
         return HttpResponseRedirect(redirect_to)
     else:
         messages.error(request, "Could not log you in as %s" % username)
-    next_url = reverse('account.views.login_page', args=[])
+    next_url = reverse('eportfoliodemo.evernoteapp.account.views.login_page', args=[])
     if request.GET.get('next') is not None:
         next_url += "?%s" % urlencode(dict(next=redirect_to))
     return HttpResponseRedirect(next_url)
@@ -41,5 +41,5 @@ def auth(request):
 def logout_page(request):
     logout(request)
     messages.info(request, "Successfully logged out")
-    return HttpResponseRedirect(reverse('account.views.login_page',
+    return HttpResponseRedirect(reverse('eportfoliodemo.evernoteapp.account.views.login_page',
         args=[]))
