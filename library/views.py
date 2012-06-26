@@ -24,6 +24,14 @@ from eportfoliodemo.assets.models import Asset, FileType, AssetAlias
 from eportfoliodemo.settings import MEDIA_ROOT, AJAX_PREFIX
 from present.models import Project
 
+from eportfoliodemo.dropboxapi.models import Dropbox
+from dropbox.session import DropboxSession
+from dropbox.client import DropboxClient
+from dropbox import client, rest, session
+# Dropbox app settings
+from settings import DROPBOX_APP_KEY, DROPBOX_APP_SECRET, ACCESS_TYPE
+from dropbox.rest import ErrorResponse
+
 def show(request, user_id):
    	requested_user = User.objects.get(pk=user_id)
    	if (request.user.is_authenticated()):

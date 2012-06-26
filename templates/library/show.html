@@ -70,6 +70,7 @@
 				{% if requested_user == current_user %}
 					<a id="new_folder" class="button modal remote" href="{{ request.META.SCRIPT_NAME }}/folders/new">new&nbsp;folder</a>
 				{% endif %}		  
+
 			</div>  
 			
 			<div id="collections">
@@ -92,9 +93,7 @@
 	
 				<header class="panelheader">
 				</header>
-				
-				{% include "library/collection_options.html" %}
-				
+				{% include "library/collection_options.html" %}	
 			</div>
 		
 			<div id="library-items">
