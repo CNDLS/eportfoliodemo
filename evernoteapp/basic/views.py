@@ -1,13 +1,13 @@
 from datetime import datetime
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from eportfoliodemo.evernoteapp.evernote_auth import EvernoteAPI
 import logging
 
 def landing(request):
-    return render_to_response('home.html', {},
+    return render_to_response('evernoteapp/home.html', {},
             context_instance=RequestContext(request))
 
 def run_evernote_auth(request):
@@ -15,10 +15,11 @@ def run_evernote_auth(request):
         to request the user's token
     """
     callback_url = request.build_absolute_uri(reverse(
-        'basic.views.get_evernote_token', args=[]))
+        'eportfoliodemo.evernoteapp.basic.views.get_evernote_token', args=[]))
             
     everAuth = EvernoteAPI()
-    return everAuth.get_token(request, callback_url)
+    tok = everAuth.get_token(request, callback_url)
+    return tok
 
 def get_evernote_token(request):
     """ View that handles the callback from the Evernote OAuth call and
@@ -38,7 +39,7 @@ def get_evernote_token(request):
         profile.evernote_token = credentials['oauth_token']
         profile.evernote_token_expires_time = expires_time
         profile.save()
-    return HttpResponseRedirect(reverse('basic.views.post_evernote_token',
+    return HttpResponseRedirect(reverse('eportfoliodemo.evernoteapp.basic.views.post_evernote_token',
         args=[]))
  
 def post_evernote_token(request):

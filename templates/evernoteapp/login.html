@@ -1,0 +1,7 @@
+<h2>Log in to Evernote</h2>
+<form action="{% url eportfoliodemo.evernoteapp.account.views.auth %}" method="post">
+    <input type="text" name="username" placeholder="username" />
+    <input type="password" name="password" />
+    <input type="submit" value="Submit" />
+    {% csrf_token %}
+</form>

@@ -43,7 +43,7 @@ class EvernoteAPI:
 
         authUrl = "%s?format=%s&oauth_token=%s" % (self.resOwnerAuthUri,
                                                    self.resFormat, oauth_token)
-        return HttpResponseRedirect(authUrl)
+        return (authUrl)
 
     def _get_timestamp(self):
         timestamp = int(round(time() * 1000))
