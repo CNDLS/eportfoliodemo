@@ -12,13 +12,23 @@ from eportfoliodemo.libraryitems.models import LibraryItem
 from eportfoliodemo.collectionitems.models import CollectionItem
 
 from eportfoliodemo.mptt.models import MPTTModel
-
+from os.path import basename
 
 class FileType(models.Model):
 	name = models.CharField(max_length=100)
+	icon = models.FileField(upload_to=UPLOAD_PATH+'filetype-icons/', blank=True, null=True)
 	
 	def __unicode__(self):
 		return self.name
+
+	def get_icon_url(self):
+		# file_location = MEDIA_ROOT+'uploads/filetype-icons/'
+		# file_url = MEDIA_URL+"uploads/filetype-icons/"
+		# icon_location = str(self.icon)
+		# filename = str.replace(file_location,file_url,icon_location)
+		# return str(filename)
+		filename = os.path.basename(str(self.icon))
+		return MEDIA_URL+"uploads/filetype-icons/"+filename
 
 
 class CustomMetaData(models.Model):

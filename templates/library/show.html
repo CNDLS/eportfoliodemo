@@ -42,10 +42,13 @@
 	<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.slug.js"></script>
 	<script type="text/javascript" src="{{ MEDIA_URL }}js/librarydisplay.js"></script>
 	<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery-ui-1.8.16.custom.min.js"></script>
-	  <script type="text/javascript" src="{{ MEDIA_URL }}js/jwysiwyg/jquery.wysiwyg.js"></script>
-		<script type="text/javascript" src="{{ MEDIA_URL }}js/jwysiwyg/controls/wysiwyg.link.js"></script>
-		<script type="text/javascript" src="{{ MEDIA_URL }}js/jwysiwyg.init.js"></script>
-		<!-- jquery.resize.min.js -->
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/jwysiwyg/jquery.wysiwyg.js"></script>
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/jwysiwyg/controls/wysiwyg.link.js"></script>
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/jwysiwyg.init.js"></script>
+
+	<!-- JS for the cool zoomable library goes in this file 
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/iconview.js"></script> -->
+	<!-- jquery.resize.min.js -->
 {% endblock %}
 
 {% block title %}
@@ -152,7 +155,25 @@
 					
 					</form>
 				</div>	 
-				
+
+				<!-- Icon view --zoomable interface -->
+				<div id="fileicons">
+					<ul>
+					{% for asset in current_assets %}
+						<li id="{{asset.id}}" data-asset-id="{{asset.id}}">
+							<a href="#">
+							<abbr class="filetype">
+							{% for type in asset.filetype.all %}
+								<img src="{{ type.get_icon_url }}" />
+							{% endfor %}
+							</abbr>
+							<h3>{{ asset.name }}</h3>										
+							</a>
+						</li>  
+					{% endfor %}
+					</ul>
+				</div>
+
 			</div><!--/#library-items-->
 					
 		  </div><!--/#library-->
