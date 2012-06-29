@@ -1,0 +1,9 @@
+[
+	{
+		"model": "assets.filetype",
+		"pk": 1,
+		"fields": {
+		  "name": "Word Document"
+		}
+	}
+]

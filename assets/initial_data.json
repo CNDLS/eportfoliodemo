@@ -1,0 +1,8 @@
+[
+	{
+		"model": "assets.filetype",
+		"fields": {
+		  "name": "Word Document"
+		}
+	}
+]
