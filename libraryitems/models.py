@@ -9,6 +9,9 @@ class LibraryItem(MPTTModel):
 	def klass( self ):
 		return self.__class__.__name__
 
+	def __unicode__(self):
+		return self.name   
+
 
 	class MPTTMeta:
 		level_attr = 'mptt_level'

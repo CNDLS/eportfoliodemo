@@ -13,10 +13,11 @@ from eportfoliodemo.mptt.models import MPTTModel
 
 
 class Folder(LibraryItem):
-	name = models.CharField(max_length=255, blank=True)
-	description = models.TextField(blank=True)
-	created = models.DateTimeField(auto_now_add=True)
-	modified = models.DateTimeField(auto_now=True)
+	name = models.CharField(max_length=255)
+	folder_type = models.CharField(max_length=255, blank=True, null=True)
+	description = models.TextField(blank=True, null=True)
+	created = models.DateTimeField(auto_now_add=True, null=True)
+	modified = models.DateTimeField(auto_now=True, null=True)
 	privacy = models.CharField(max_length=1, choices=PRIVACY, blank=False, default='1')
 	owner = models.ForeignKey(User, blank=False)
 	tags = TagField()

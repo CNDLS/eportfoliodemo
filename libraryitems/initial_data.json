@@ -1,0 +1,35 @@
+[
+  {
+	"model": "libraryitems.libraryitem",
+	"pk": 1,
+	"fields": {
+  	"parent_id": null,
+	  "lft": 1,
+	  "rght": 2,
+	  "tree_id": 1,
+	  "mptt_level": 0
+	}
+  },
+  {
+	"model": "libraryitems.libraryitem",
+	"pk": 2,
+	"fields": {
+    "parent_id": null,
+	  "lft": 1,
+	  "rght": 2,
+	  "tree_id": 2,
+	  "mptt_level": 0
+	}
+  },
+  {
+	"model": "libraryitems.libraryitem",
+	"pk": 3,
+	"fields": {
+    "parent_id": null,
+	  "lft": 1,
+	  "rght": 2,
+	  "tree_id": 3,
+	  "mptt_level": 0
+	}
+  }
+]

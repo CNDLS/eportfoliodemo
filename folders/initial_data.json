@@ -1,0 +1,38 @@
+[
+  {
+	"model": "folders.folder",
+	"libraryitem_ptr_id": 1,
+	"fields": {
+	  "name": "First Year Items",
+	  "folder_type": "default",
+	  "description": null,
+	  "privacy":1,
+	  "owner_id":1,
+	  "tags":""
+	}
+  },
+  {
+	"model": "folders.folder",
+	"libraryitem_ptr_id": 2,
+	"fields": {
+	  "name": "My Evernote Notebook",
+	  "folder_type": "evernote",
+	  "description": "A Pegasus folder connected to one of my Evernote notebooks.",
+	  "privacy":1,
+	  "owner_id":1,
+	  "tags":""
+	}
+  },
+  {
+	"model": "folders.folder",
+	"libraryitem_ptr_id": 3,
+	"fields": {
+	  "name": "My Dropbox Folder",
+	  "folder_type": "dropbox",
+	  "description": "A Pegasus folder connected to one of my Dropbox folders.",
+	  "privacy":1,
+	  "owner_id":1,
+	  "tags":""
+	}
+  }
+]
