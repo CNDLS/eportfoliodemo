@@ -93,6 +93,10 @@ def _find_groups(ls, username):
 					  "memberUid=" + username, [])
 	return [x[1]['cn'][0] for x in res]
 
+class FakeLdapAuthBackend(ModelBackend):
+	def authenticate(ModelBackend):
+		return (User.find(pk=1)[0])
+		
 class LdapAuthBackend(ModelBackend):
 	def authenticate(self, username=None, password=None):
 		# Authenticate against ldap
