@@ -13,5 +13,6 @@ urlpatterns = patterns('',
 	url(r'file_type/', 'assets.views.ajax_get_file_type', name='ajax_get_file_type'),
 	url(r'^(?P<asset_id>\d+)/rename/$', 'assets.views.ajax_rename_asset', name='ajax_rename_asset'),
 	url(r'^(?P<asset_id>\d+)/delete/$', 'assets.views.ajax_delete_asset', name='ajax_delete_asset'),
-	url(r'^(?P<asset_id>\d+)/create_alias_in/(?P<collection_id>\d+)$', 'assets.views.ajax_create_alias_in', name='ajax_create_alias_in')
+	url(r'^(?P<asset_id>\d+)/create_alias_in/(?P<collection_id>\d+)$', 'assets.views.ajax_create_alias_in', name='ajax_create_alias_in'),
+	url(r'^(?P<assetalias_id>\d+)/preview/$', 'assets.views.ajax_preview_asset', name='ajax_preview_asset')
 )

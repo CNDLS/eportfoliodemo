@@ -211,6 +211,16 @@ def ajax_delete_asset(request, asset_id):
 		return HttpResponseRedirect(reverse('libraryitems_index', args=[asset_owner_id]))
 		
 		
+
+def ajax_preview_asset(request, assetalias_id):
+	if request.is_ajax():
+		asset_alias = AssetAlias.objects.get(pk=assetalias_id)
+		asset = Asset.objects.get(pk=asset_alias.asset_id)
+		return HttpResponse(asset.contents())
+		# json_serializer = serializers.get_serializer("json")()
+		# return HttpResponse (json_serializer.serialize([asset]), mimetype='text/plain')
+		
+		
 def ajax_create_alias_in(request, asset_id, collection_id):
 	position = int(request.POST.get("position"))
 	target_id = int(request.POST.get("target_id"))
