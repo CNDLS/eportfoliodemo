@@ -38,26 +38,26 @@
 {% block content %}
 <div id="start">
 {% if request.user.is_anonymous %}
-	<h1><small>Welcome, AAEEBL!</small> This is <strong>Pegasus</strong>.</h1>
-    <h2>Pegasus is an app for building academic, personal, and professional ePortfolios.</h2>
+	<h1>Pegasus</h1>
+    <!-- <h2>Pegasus is an app for building academic, personal, and professional ePortfolios.</h2> -->
 	<ul>
 	  <li class="step-collect">
-      	<a class="step" href="{{ request.META.SCRIPT_NAME }}/public/collect/"><span class="num">1</span>Collect
+      	<a class="step" href="{{ request.META.SCRIPT_NAME }}/public/collect/">Collect
         	<p>Upload documents, video clips, or whatever you can think of to your Library, which you can access from any computer, tablet, or mobile device!</p>
         </a>
       </li>
 	  <li class="step-select">
-      	<a class="step" href="{{ request.META.SCRIPT_NAME }}/public/organize/}"><span class="num">2</span>Select
+      	<a class="step" href="{{ request.META.SCRIPT_NAME }}/public/organize/}">Select
         	<p>Once you have items in your library, you can tag them, write reflections for them, group them into sets, and share them with anyone.</p>
         </a>
       </li>
 	  <li class="step-present">
-      	<a class="step" href="{{ request.META.SCRIPT_NAME }}/public/present/"><span class="num">3</span>Present
+      	<a class="step" href="{{ request.META.SCRIPT_NAME }}/public/present/">Present
         	<p>Build rich, beautiful representations of your collections with a simple drag-and-drop editor. Then share them with the world!</p>
         </a>
       </li>
 	  <li class="step-assess">
-      	<a class="step" href="{{ request.META.SCRIPT_NAME }}/public/assess/"><span class="num">4</span>Assess
+      	<a class="step" href="{{ request.META.SCRIPT_NAME }}/public/assess/">Assess
         	<p>Open your ePortfolios to feedback from peers, family, and your social networks! Find your professors' rubrics, and see how they graded you.</p>
         </a>
       </li>
