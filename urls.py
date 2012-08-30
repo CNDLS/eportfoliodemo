@@ -19,7 +19,7 @@ urlpatterns = patterns('',
 
 	# (r'^$', 'django.views.generic.list_detail.object_list', projects_list_dict),
 	# (r'^$', direct_to_template, { 'template': 'index.html' }),
-	(r'^$', include('eportfoliodemo.home.urls')),
+	(r'^app/$', include('eportfoliodemo.home.urls')), # This was the old landing page. Directing it to /app for now
 	(r'^assets/', include('eportfoliodemo.assets.urls')),
 	(r'^assetaliases/', include('eportfoliodemo.assetaliases.urls')),
 	(r'^profiles/', include('eportfoliodemo.profiles.urls')),

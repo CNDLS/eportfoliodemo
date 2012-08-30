@@ -1,0 +1,122 @@
+<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>	<html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>	<html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>	<html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="description" content="">
+	<meta name="author" content="">	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+	   
+	<title>{% block title %}EPortfolio Tool{% endblock %}</title>	
+	
+	<!-- stylesheets -->
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/reset.css" /> 
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}bootstrap/css/bootstrap-responsive.min.css" />
+
+	<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}css/public.css" />
+	
+	{% block extra_styles %} {% endblock %}
+	
+	<!-- icons -->
+	<link rel="shortcut icon" href="{{ MEDIA_URL }}favicon.ico">
+	<link rel="apple-touch-icon" href="{{ MEDIA_URL }}apple-touch-icon.png">
+
+	<script type="text/javascript">
+		var media_url = "{{ MEDIA_URL }}";
+		var app_url = "{{ request.META.SCRIPT_NAME }}";
+		var ajax_prefix = "{{ AJAX_PREFIX }}";
+		var username = "{{ request.user }}";
+		var userid = "{{ request.user.id }}"
+		//alert(ajax_prefix)
+	</script>
+
+	<!--[if lt IE 9]>
+	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->  
+</head>
+
+<body class="{% block bodyClass %}{% endblock %}">
+	<div class="container">
+	
+	<div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">Pegasus</a>
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="{{ request.META.SCRIPT_NAME }}/public/about/">About</a></li>
+              <li><a href="{{ request.META.SCRIPT_NAME }}/public/faq/">FAQs</a></li>
+              <li><a href="{{ request.META.SCRIPT_NAME }}/public/contact/">Contact</a></li>
+              <li><a href="{{ request.META.SCRIPT_NAME }}/library/{{ request.user.id }}">App</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+		
+	<section id="content">
+		{% block content %}
+		<div id="start">
+			<div class="row">
+				<h1>Pegasus</h1>
+
+				<h2>ePortfolios give students the opportunity to organize and reflect on their work while making integrative connections between their varied curricular and extracurricular experiences. Despite our vision for their use, current eportfolio systems still focus on one aspect of the process—collection, reflection, representation, or evaluation. Pegasus is an ePortfolio application currently under development that brings those eportfolio processes together in one tool, as well as expand on the possibilities of adaptive spaces for reflection.</h2>
+			</div>
+    		
+    		<!-- Screenshot -->
+			<!-- <div class="row feature">
+				<img src="{{ MEDIA_URL }}images/front-feature1.jpg" />
+    		</div> -->
+	<ul class="row steps">
+	  <li class="step-collect">
+      	<a class="step" href="{{ request.META.SCRIPT_NAME }}/public/collect/">Collect
+        	<p>Upload documents, video clips, or whatever you can think of to your Library, which you can access from any computer, tablet, or mobile device!</p>
+        </a>
+      </li>
+	  <li class="step-select">
+      	<a class="step" href="{{ request.META.SCRIPT_NAME }}/public/select/">Select
+        	<p>Once you have items in your library, you can tag them, write reflections for them, group them into sets, and share them with anyone.</p>
+        </a>
+      </li>
+	  <li class="step-present">
+      	<a class="step" href="{{ request.META.SCRIPT_NAME }}/public/present/">Present
+        	<p>Build rich, beautiful representations of your collections with a simple drag-and-drop editor. Then share them with the world!</p>
+        </a>
+      </li>
+	  <li class="step-assess">
+      	<a class="step" href="{{ request.META.SCRIPT_NAME }}/public/assess/">Assess
+        	<p>Open your ePortfolios to feedback from peers, family, and your social networks! Find your professors' rubrics, and see how they graded you.</p>
+        </a>
+      </li>
+	</ul>
+		</div> <!-- #start -->
+		{% endblock %}
+	</section>
+	<!-- /middle-->
+	
+
+	<footer id="footer">  
+		{% block footer %}{% endblock %}	  
+	</footer>
+	
+	
+	<!-- scripts and extras -->
+	<!-- Note: Needed jQuery 1.7 or higher for new version of bootstrap -->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script src="{{ MEDIA_URL }}bootstrap/js/bootstrap.min.js"></script>
+	{% block custom_scripts %}{% endblock %}
+	</div> <!-- .container -->
+	
+</body>
+</html>
