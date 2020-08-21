@@ -4,3 +4,4 @@ lockdown.py
 *.pyc
 */*.pyc
 /settings.py
+.DS_Store
